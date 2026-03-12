@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2, Mail, Send } from 'lucide-react'
+import { Loader2, Mail, Send, Copy, Eye } from 'lucide-react'
 import { toast } from 'sonner'
 import { supabase } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
@@ -33,6 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Card, CardContent } from '@/components/ui/card'
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Formato de e-mail inválido.' }),
@@ -130,6 +131,16 @@ export function EmailDispatchDialog({
     form.setValue('message', replacePlaceholders(template.corpo))
   }
 
+  const handleCopyPreview = () => {
+    const text = form.getValues('message')
+    if (!text) {
+      toast.error('O corpo do e-mail está vazio.')
+      return
+    }
+    navigator.clipboard.writeText(text)
+    toast.success('Corpo do e-mail copiado para a área de transferência!')
+  }
+
   const onSubmit = async (values: FormValues) => {
     if (documentIds.length === 0) {
       toast.error('Nenhum documento selecionado para envio.')
@@ -184,7 +195,7 @@ export function EmailDispatchDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[550px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Mail className="h-5 w-5 text-primary" />
@@ -235,37 +246,62 @@ export function EmailDispatchDialog({
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="subject"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Assunto</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Assunto do e-mail" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <Card className="border-primary/20 bg-muted/10 shadow-sm mt-4">
+              <CardContent className="p-4 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-primary">
+                    <Eye className="h-4 w-4" />
+                    Pré-visualização e Edição
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-8 text-xs bg-background"
+                    onClick={handleCopyPreview}
+                  >
+                    <Copy className="h-3.5 w-3.5 mr-1.5" />
+                    Copiar Corpo
+                  </Button>
+                </div>
 
-            <FormField
-              control={form.control}
-              name="message"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Mensagem</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Escreva sua mensagem aqui..."
-                      className="resize-none h-32"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="subject"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs font-semibold">Assunto</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Assunto do e-mail"
+                          {...field}
+                          className="bg-background"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs font-semibold">Corpo do E-mail</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Escreva sua mensagem aqui..."
+                          className="resize-none h-40 bg-background text-sm leading-relaxed"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
 
             <DialogFooter className="pt-4">
               <Button
