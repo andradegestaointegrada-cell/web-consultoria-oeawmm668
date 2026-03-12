@@ -111,6 +111,41 @@ export type Database = {
           },
         ]
       }
+      email_templates: {
+        Row: {
+          assunto: string
+          corpo: string
+          data_criacao: string
+          id: string
+          nome: string
+          usuario_id: string
+        }
+        Insert: {
+          assunto: string
+          corpo: string
+          data_criacao?: string
+          id?: string
+          nome: string
+          usuario_id: string
+        }
+        Update: {
+          assunto?: string
+          corpo?: string
+          data_criacao?: string
+          id?: string
+          nome?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'email_templates_usuario_id_fkey'
+            columns: ['usuario_id']
+            isOneToOne: false
+            referencedRelation: 'usuarios'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       mapeamento_placeholders: {
         Row: {
           coluna_excel_mapeada: string
@@ -454,6 +489,13 @@ export const Constants = {
 //   status: text (not null)
 //   arquivo_url: text (nullable)
 //   conteudo: jsonb (nullable, default: '{}'::jsonb)
+// Table: email_templates
+//   id: uuid (not null, default: gen_random_uuid())
+//   nome: text (not null)
+//   assunto: text (not null)
+//   corpo: text (not null)
+//   usuario_id: uuid (not null)
+//   data_criacao: timestamp with time zone (not null, default: now())
 // Table: mapeamento_placeholders
 //   id: uuid (not null, default: gen_random_uuid())
 //   template_id: uuid (not null)
@@ -503,6 +545,9 @@ export const Constants = {
 //   PRIMARY KEY documentos_pkey: PRIMARY KEY (id)
 //   CHECK documentos_status_check: CHECK ((status = ANY (ARRAY['rascunho'::text, 'finalizado'::text])))
 //   FOREIGN KEY documentos_usuario_id_fkey: FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+// Table: email_templates
+//   PRIMARY KEY email_templates_pkey: PRIMARY KEY (id)
+//   FOREIGN KEY email_templates_usuario_id_fkey: FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 // Table: mapeamento_placeholders
 //   PRIMARY KEY mapeamento_placeholders_pkey: PRIMARY KEY (id)
 //   FOREIGN KEY mapeamento_placeholders_template_id_fkey: FOREIGN KEY (template_id) REFERENCES templates(id) ON DELETE CASCADE
@@ -538,6 +583,16 @@ export const Constants = {
 //   Policy "Users can select their own documents" (SELECT, PERMISSIVE) roles={authenticated}
 //     USING: (auth.uid() = usuario_id)
 //   Policy "Users can update their own documents" (UPDATE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//     WITH CHECK: (auth.uid() = usuario_id)
+// Table: email_templates
+//   Policy "email_templates_delete" (DELETE, PERMISSIVE) roles={public}
+//     USING: (auth.uid() = usuario_id)
+//   Policy "email_templates_insert" (INSERT, PERMISSIVE) roles={public}
+//     WITH CHECK: (auth.uid() = usuario_id)
+//   Policy "email_templates_select" (SELECT, PERMISSIVE) roles={public}
+//     USING: (auth.uid() = usuario_id)
+//   Policy "email_templates_update" (UPDATE, PERMISSIVE) roles={public}
 //     USING: (auth.uid() = usuario_id)
 //     WITH CHECK: (auth.uid() = usuario_id)
 // Table: mapeamento_placeholders

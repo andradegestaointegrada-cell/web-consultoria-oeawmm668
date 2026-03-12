@@ -25,6 +25,7 @@ export async function processBatchGeneration({
   let successCount = 0
   let errorCount = 0
   const documentIds: string[] = []
+  const generatedItems: { id: string; row: any }[] = []
 
   for (let i = 0; i < selectedRows.length; i++) {
     const rowIdx = selectedRows[i]
@@ -67,7 +68,7 @@ export async function processBatchGeneration({
       // 2. Add to local ZIP for user download
       zip.file(fileName, blob)
 
-      // 3. Upload to Supabase Storage (for Email dispatching later)
+      // 3. Upload to Supabase Storage
       const storagePath = `${userId}/${Date.now()}_${fileName}`
       const { error: uploadError } = await supabase.storage
         .from('generated_docs')
@@ -87,13 +88,14 @@ export async function processBatchGeneration({
           upload_excel_id: uploadId,
           linha_numero: rowIdx,
           usuario_id: userId,
-          arquivo_url: uploadError ? fileName : storagePath, // Prefer storage path for emails
+          arquivo_url: uploadError ? fileName : storagePath,
         })
         .select('id')
         .single()
 
       if (insertedDoc) {
         documentIds.push(insertedDoc.id)
+        generatedItems.push({ id: insertedDoc.id, row })
       }
 
       successCount++
@@ -116,7 +118,7 @@ export async function processBatchGeneration({
     URL.revokeObjectURL(url)
   }
 
-  return { successCount, errorCount, documentIds }
+  return { successCount, errorCount, documentIds, generatedItems }
 }
 
 export async function processSingleDocument(
@@ -139,7 +141,6 @@ export async function processSingleDocument(
   if (error) throw new Error(error.message)
   if (!data?.base64) throw new Error('Dados não retornados pela função de geração')
 
-  // 1. Convert Base64 to Blob
   const byteChars = atob(data.base64)
   const byteNumbers = new Array(byteChars.length)
   for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i)
@@ -159,7 +160,6 @@ export async function processSingleDocument(
     .toLowerCase()
   const fileName = `Documento_${dateStr}_${safeClienteStr}.docx`
 
-  // 2. Upload to Supabase Storage
   const storagePath = `${userId}/${Date.now()}_${fileName}`
   const { error: uploadError } = await supabase.storage
     .from('generated_docs')
@@ -168,7 +168,6 @@ export async function processSingleDocument(
       upsert: false,
     })
 
-  // 3. Save to Database
   const { data: insertedDoc } = await supabase
     .from('documento_gerado')
     .insert({
@@ -176,12 +175,11 @@ export async function processSingleDocument(
       upload_excel_id: uploadId,
       linha_numero: idx,
       usuario_id: userId,
-      arquivo_url: uploadError ? fileName : storagePath, // Save Storage path if success
+      arquivo_url: uploadError ? fileName : storagePath,
     })
     .select('id')
     .single()
 
-  // 4. Trigger download
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url

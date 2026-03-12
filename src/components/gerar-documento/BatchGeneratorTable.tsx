@@ -15,6 +15,7 @@ import { Loader2, FileDown, Layers, Mail, CheckCircle2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { processBatchGeneration, processSingleDocument } from '@/lib/generate-docs'
 import { EmailDispatchDialog } from './EmailDispatchDialog'
+import { BatchEmailDispatchDialog } from './BatchEmailDispatchDialog'
 
 interface BatchTableProps {
   rows: any[]
@@ -38,10 +39,9 @@ export function BatchGeneratorTable({
   const [isBatching, setIsBatching] = useState(false)
   const [batchProgress, setBatchProgress] = useState({ current: 0, total: 0 })
 
-  // States for Email Dispatch feature
-  const [lastGeneratedIds, setLastGeneratedIds] = useState<string[]>([])
-  const [lastGeneratedRow, setLastGeneratedRow] = useState<any>(null)
+  const [lastGeneratedItems, setLastGeneratedItems] = useState<{ id: string; row: any }[]>([])
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
+  const [isBatchEmailModalOpen, setIsBatchEmailModalOpen] = useState(false)
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -66,14 +66,12 @@ export function BatchGeneratorTable({
   const handleSingleGenerate = async (row: any, idx: number) => {
     if (!template) return
     setGeneratingRowId(idx)
-    setLastGeneratedIds([])
-    setLastGeneratedRow(null)
+    setLastGeneratedItems([])
 
     try {
       const result = await processSingleDocument(row, idx, template, mappings, uploadId, userId)
       if (result?.documentId) {
-        setLastGeneratedIds([result.documentId])
-        setLastGeneratedRow(row)
+        setLastGeneratedItems([{ id: result.documentId, row }])
       }
       toast.success('Documento gerado com sucesso!')
     } catch (error: any) {
@@ -86,12 +84,11 @@ export function BatchGeneratorTable({
   const handleBatchGenerate = async () => {
     if (!template || selectedRows.length === 0) return
     setIsBatching(true)
-    setLastGeneratedIds([])
-    setLastGeneratedRow(null)
+    setLastGeneratedItems([])
     setBatchProgress({ current: 0, total: selectedRows.length })
 
     try {
-      const { successCount, errorCount, documentIds } = await processBatchGeneration({
+      const { successCount, errorCount, generatedItems } = await processBatchGeneration({
         rows,
         selectedRows,
         template,
@@ -105,9 +102,8 @@ export function BatchGeneratorTable({
         toast.success('Lote gerado com sucesso!', {
           description: `${successCount} documentos gerados. ${errorCount > 0 ? `${errorCount} falhas.` : ''}`,
         })
-        if (documentIds?.length > 0) {
-          setLastGeneratedIds(documentIds)
-          setLastGeneratedRow(rows[selectedRows[0]])
+        if (generatedItems?.length > 0) {
+          setLastGeneratedItems(generatedItems)
         }
         setSelectedRows([])
       } else {
@@ -123,19 +119,26 @@ export function BatchGeneratorTable({
 
   return (
     <div className="space-y-4">
-      {lastGeneratedIds.length > 0 && !isBatching && generatingRowId === null && (
+      {lastGeneratedItems.length > 0 && !isBatching && generatingRowId === null && (
         <div className="bg-primary/10 border border-primary/20 p-4 rounded-md flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 animate-in fade-in slide-in-from-top-2">
           <div className="flex items-center gap-3">
             <CheckCircle2 className="h-8 w-8 text-primary shrink-0" />
             <div>
               <h4 className="font-semibold text-primary">Ação Concluída!</h4>
               <p className="text-sm text-primary/80">
-                {lastGeneratedIds.length} documento(s) pronto(s). Deseja automatizar a entrega?
+                {lastGeneratedItems.length} documento(s) pronto(s). Deseja automatizar a entrega?
               </p>
             </div>
           </div>
-          <Button onClick={() => setIsEmailModalOpen(true)} className="gap-2 shrink-0">
-            <Mail className="h-4 w-4" /> Enviar por E-mail
+          <Button
+            onClick={() => {
+              if (lastGeneratedItems.length === 1) setIsEmailModalOpen(true)
+              else setIsBatchEmailModalOpen(true)
+            }}
+            className="gap-2 shrink-0"
+          >
+            <Mail className="h-4 w-4" />
+            {lastGeneratedItems.length === 1 ? 'Enviar por E-mail' : 'Enviar E-mails em Lote'}
           </Button>
         </div>
       )}
@@ -246,12 +249,16 @@ export function BatchGeneratorTable({
       <EmailDispatchDialog
         isOpen={isEmailModalOpen}
         onOpenChange={setIsEmailModalOpen}
-        documentIds={lastGeneratedIds}
-        rowData={lastGeneratedRow}
-        onSuccess={() => {
-          setLastGeneratedIds([])
-          setLastGeneratedRow(null)
-        }}
+        documentIds={lastGeneratedItems.map((i) => i.id)}
+        rowData={lastGeneratedItems[0]?.row}
+        onSuccess={() => setLastGeneratedItems([])}
+      />
+
+      <BatchEmailDispatchDialog
+        isOpen={isBatchEmailModalOpen}
+        onOpenChange={setIsBatchEmailModalOpen}
+        batchItems={lastGeneratedItems}
+        onSuccess={() => setLastGeneratedItems([])}
       />
     </div>
   )
