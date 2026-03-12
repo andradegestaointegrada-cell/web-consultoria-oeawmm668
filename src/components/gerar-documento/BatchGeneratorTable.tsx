@@ -1,0 +1,192 @@
+import { useState } from 'react'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { Progress } from '@/components/ui/progress'
+import { Loader2, FileDown, Layers } from 'lucide-react'
+import { toast } from 'sonner'
+import { processBatchGeneration, processSingleDocument } from '@/lib/generate-docs'
+
+interface BatchTableProps {
+  rows: any[]
+  columns: string[]
+  template: any
+  mappings: any[]
+  uploadId: string
+  userId: string
+}
+
+export function BatchGeneratorTable({
+  rows,
+  columns,
+  template,
+  mappings,
+  uploadId,
+  userId,
+}: BatchTableProps) {
+  const [selectedRows, setSelectedRows] = useState<number[]>([])
+  const [generatingRowId, setGeneratingRowId] = useState<number | null>(null)
+  const [isBatching, setIsBatching] = useState(false)
+  const [batchProgress, setBatchProgress] = useState({ current: 0, total: 0 })
+
+  const toggleRow = (idx: number) => {
+    setSelectedRows((prev) => (prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]))
+  }
+
+  const toggleAll = () => {
+    if (selectedRows.length === rows.length) setSelectedRows([])
+    else setSelectedRows(rows.map((_, i) => i))
+  }
+
+  const handleSingleGenerate = async (row: any, idx: number) => {
+    if (!template) return
+    setGeneratingRowId(idx)
+    try {
+      await processSingleDocument(row, idx, template, mappings, uploadId, userId)
+      toast.success('Documento gerado com sucesso!')
+    } catch (error: any) {
+      toast.error('Erro na geração', { description: error.message })
+    } finally {
+      setGeneratingRowId(null)
+    }
+  }
+
+  const handleBatchGenerate = async () => {
+    if (!template || selectedRows.length === 0) return
+    setIsBatching(true)
+    setBatchProgress({ current: 0, total: selectedRows.length })
+
+    try {
+      const { successCount, errorCount } = await processBatchGeneration({
+        rows,
+        selectedRows,
+        template,
+        mappings,
+        uploadId,
+        userId,
+        onProgress: (c, t) => setBatchProgress({ current: c, total: t }),
+      })
+
+      if (successCount > 0) {
+        toast.success('Lote gerado com sucesso!', {
+          description: `${successCount} documentos gerados. ${errorCount > 0 ? `${errorCount} falhas.` : ''}`,
+        })
+        setSelectedRows([])
+      } else {
+        toast.error('Nenhum documento gerado no lote.')
+      }
+    } catch (error: any) {
+      toast.error('Erro no lote', { description: error.message })
+    } finally {
+      setIsBatching(false)
+    }
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-muted/30 p-3 rounded-md gap-4">
+        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+          <Layers className="h-4 w-4" /> {selectedRows.length} registro(s) selecionado(s)
+        </span>
+        <Button
+          onClick={handleBatchGenerate}
+          disabled={
+            !template || selectedRows.length === 0 || isBatching || generatingRowId !== null
+          }
+        >
+          {isBatching ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processando lote...
+            </>
+          ) : (
+            <>Gerar em Lote ({selectedRows.length})</>
+          )}
+        </Button>
+      </div>
+
+      {isBatching && (
+        <div className="space-y-1.5 animate-in fade-in slide-in-from-top-2">
+          <div className="flex justify-between text-xs font-medium text-muted-foreground">
+            <span>Processando documentos...</span>
+            <span>
+              {batchProgress.current} de {batchProgress.total}
+            </span>
+          </div>
+          <Progress value={(batchProgress.current / batchProgress.total) * 100} className="h-2" />
+        </div>
+      )}
+
+      <ScrollArea className="w-full rounded-md border">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-muted/50">
+              <TableHead className="w-[50px] text-center">
+                <Checkbox
+                  checked={selectedRows.length === rows.length && rows.length > 0}
+                  onCheckedChange={toggleAll}
+                  aria-label="Selecionar todos"
+                />
+              </TableHead>
+              <TableHead className="w-[80px]">Linha</TableHead>
+              {columns.map((col) => (
+                <TableHead key={col} className="whitespace-nowrap">
+                  {col}
+                </TableHead>
+              ))}
+              <TableHead className="text-right sticky right-0 bg-muted/50 w-[180px]">
+                Ação
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {rows.map((row, idx) => (
+              <TableRow key={idx} data-state={selectedRows.includes(idx) ? 'selected' : undefined}>
+                <TableCell className="text-center">
+                  <Checkbox
+                    checked={selectedRows.includes(idx)}
+                    onCheckedChange={() => toggleRow(idx)}
+                    aria-label={`Selecionar linha ${idx + 1}`}
+                  />
+                </TableCell>
+                <TableCell className="font-medium text-muted-foreground">{idx + 1}</TableCell>
+                {columns.map((col) => (
+                  <TableCell key={col} className="max-w-[200px] truncate" title={row[col]}>
+                    {row[col]}
+                  </TableCell>
+                ))}
+                <TableCell className="text-right sticky right-0 bg-background/95 backdrop-blur">
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    disabled={!template || isBatching || generatingRowId !== null}
+                    onClick={() => handleSingleGenerate(row, idx)}
+                    className="w-full sm:w-auto"
+                  >
+                    {generatingRowId === idx ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Gerando
+                      </>
+                    ) : (
+                      <>
+                        <FileDown className="mr-2 h-4 w-4" /> Gerar
+                      </>
+                    )}
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
+    </div>
+  )
+}
