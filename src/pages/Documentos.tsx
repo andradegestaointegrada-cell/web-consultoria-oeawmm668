@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { CalendarIcon, FileText, Loader2, FileDown, Edit } from 'lucide-react'
@@ -26,6 +26,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { toast } from 'sonner'
+import { supabase } from '@/lib/supabase/client'
 
 const recentDocs = [
   { id: 'DOC-102', name: 'Auditoria_TechCorp.pdf', date: '12/10/2023', author: 'João Silva' },
@@ -39,6 +40,24 @@ export default function Documentos() {
   const [date, setDate] = useState<Date>()
   const [description, setDescription] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
+  const [templates, setTemplates] = useState<{ id: string; tipo: string; nome: string }[]>([])
+  const [isLoadingTemplates, setIsLoadingTemplates] = useState(true)
+
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      setIsLoadingTemplates(true)
+      const { data, error } = await supabase
+        .from('templates')
+        .select('*')
+        .order('criado_em', { ascending: true })
+      if (!error && data) {
+        const uniqueTemplates = Array.from(new Map(data.map((item) => [item.tipo, item])).values())
+        setTemplates(uniqueTemplates)
+      }
+      setIsLoadingTemplates(false)
+    }
+    fetchTemplates()
+  }, [])
 
   const handleGenerate = (e: React.FormEvent) => {
     e.preventDefault()
@@ -81,16 +100,18 @@ export default function Documentos() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="docType">Tipo de Documento</Label>
-                  <Select value={docType} onValueChange={setDocType}>
+                  <Select value={docType} onValueChange={setDocType} disabled={isLoadingTemplates}>
                     <SelectTrigger id="docType">
-                      <SelectValue placeholder="Selecione o tipo..." />
+                      <SelectValue
+                        placeholder={isLoadingTemplates ? 'Carregando...' : 'Selecione o tipo...'}
+                      />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Proposta Comercial">Proposta Comercial</SelectItem>
-                      <SelectItem value="Relatório de Auditoria">Relatório de Auditoria</SelectItem>
-                      <SelectItem value="Manual">Manual</SelectItem>
-                      <SelectItem value="Procedimentos">Procedimentos</SelectItem>
-                      <SelectItem value="Instrução de Trabalho">Instrução de Trabalho</SelectItem>
+                      {templates.map((t) => (
+                        <SelectItem key={t.id} value={t.tipo}>
+                          {t.tipo}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>

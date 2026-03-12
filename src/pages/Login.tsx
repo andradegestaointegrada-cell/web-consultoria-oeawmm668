@@ -18,7 +18,7 @@ export default function Login() {
 
   useEffect(() => {
     if (user && !loading) {
-      navigate('/')
+      navigate('/dashboard')
     }
   }, [user, loading, navigate])
 
@@ -41,7 +41,7 @@ export default function Login() {
     }
 
     toast.success('Bem-vindo de volta!')
-    navigate('/')
+    navigate('/dashboard')
   }
 
   return (
