@@ -9,6 +9,7 @@ import {
   Database,
   Link2,
   Cpu,
+  History,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import {
@@ -31,6 +32,7 @@ const navItems = [
   { title: 'Gerenciar Dados', url: '/gerenciar-dados', icon: Database },
   { title: 'Conectar Dados', url: '/mapeamento-placeholders', icon: Link2 },
   { title: 'Gerar Documento', url: '/gerar-documento', icon: Cpu },
+  { title: 'Histórico', url: '/historico-documentos', icon: History },
   { title: 'Auditorias', url: '/auditorias', icon: ClipboardCheck },
   { title: 'Configurações', url: '/configuracoes', icon: Settings },
 ]
