@@ -20,6 +20,7 @@ import GerarDocumento from './pages/GerarDocumento'
 import HistoricoDocumentos from './pages/HistoricoDocumentos'
 import TemplatesEmail from './pages/TemplatesEmail'
 import Analytics from './pages/Analytics'
+import GerenciadorArquivos from './pages/GerenciadorArquivos'
 
 const App = () => (
   <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme" attribute="class">
@@ -45,6 +46,7 @@ const App = () => (
                 <Route path="/gerar-documento" element={<GerarDocumento />} />
                 <Route path="/templates-email" element={<TemplatesEmail />} />
                 <Route path="/historico-documentos" element={<HistoricoDocumentos />} />
+                <Route path="/gerenciador-arquivos" element={<GerenciadorArquivos />} />
                 <Route path="/auditorias" element={<Auditorias />} />
                 <Route path="/configuracoes" element={<Configuracoes />} />
                 <Route path="/templates" element={<Templates />} />

@@ -12,6 +12,7 @@ import {
   History,
   LayoutTemplate,
   BarChart3,
+  Trash2,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import {
@@ -38,6 +39,7 @@ const navItems = [
   { title: 'Templates de E-mail', url: '/templates-email', icon: LayoutTemplate },
   { title: 'Histórico', url: '/historico-documentos', icon: History },
   { title: 'Auditorias', url: '/auditorias', icon: ClipboardCheck },
+  { title: 'Gerenciador de Arquivos', url: '/gerenciador-arquivos', icon: Trash2 },
   { title: 'Configurações', url: '/configuracoes', icon: Settings },
 ]
 
