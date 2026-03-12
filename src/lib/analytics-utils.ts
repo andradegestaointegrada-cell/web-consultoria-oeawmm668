@@ -7,9 +7,10 @@ export function processMonthlyData(docs: any[]) {
     const date = parseISO(doc.data_geracao)
     const monthKey = format(date, 'yyyy-MM')
     const monthLabel = format(date, 'MMM/yy', { locale: ptBR })
+    const capitalizedLabel = monthLabel.charAt(0).toUpperCase() + monthLabel.slice(1)
 
     if (!acc[monthKey]) {
-      acc[monthKey] = { sortKey: monthKey, label: monthLabel, generated: 0, sent: 0 }
+      acc[monthKey] = { sortKey: monthKey, label: capitalizedLabel, generated: 0, sent: 0 }
     }
 
     acc[monthKey].generated += 1

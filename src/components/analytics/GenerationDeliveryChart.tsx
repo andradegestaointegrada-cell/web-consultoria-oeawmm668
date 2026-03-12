@@ -16,14 +16,14 @@ export function GenerationDeliveryChart({ data }: { data: any[] }) {
   } satisfies ChartConfig
 
   return (
-    <Card className="shadow-sm">
+    <Card className="shadow-sm flex flex-col">
       <CardHeader>
         <CardTitle className="text-lg">Geração vs. Entrega</CardTitle>
         <CardDescription>
           Comparativo mensal de documentos criados e enviados com sucesso
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1 pb-6">
         {data.length === 0 ? (
           <div className="h-[300px] flex items-center justify-center text-muted-foreground border rounded-md border-dashed">
             Sem dados no período
@@ -36,8 +36,13 @@ export function GenerationDeliveryChart({ data }: { data: any[] }) {
               <YAxis tickLine={false} axisLine={false} tickMargin={10} />
               <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dashed" />} />
               <ChartLegend content={<ChartLegendContent />} />
-              <Bar dataKey="generated" fill="var(--color-generated)" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="sent" fill="var(--color-sent)" radius={[4, 4, 0, 0]} />
+              <Bar
+                dataKey="generated"
+                fill="var(--color-generated)"
+                radius={[4, 4, 0, 0]}
+                maxBarSize={50}
+              />
+              <Bar dataKey="sent" fill="var(--color-sent)" radius={[4, 4, 0, 0]} maxBarSize={50} />
             </BarChart>
           </ChartContainer>
         )}

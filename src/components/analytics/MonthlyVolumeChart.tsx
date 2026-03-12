@@ -13,12 +13,12 @@ export function MonthlyVolumeChart({ data }: { data: any[] }) {
   } satisfies ChartConfig
 
   return (
-    <Card className="shadow-sm">
+    <Card className="shadow-sm flex flex-col">
       <CardHeader>
         <CardTitle className="text-lg">Volume de Geração</CardTitle>
         <CardDescription>Documentos gerados ao longo do tempo</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1 pb-6">
         {data.length === 0 ? (
           <div className="h-[300px] flex items-center justify-center text-muted-foreground border rounded-md border-dashed">
             Sem dados no período
@@ -34,9 +34,9 @@ export function MonthlyVolumeChart({ data }: { data: any[] }) {
                 type="monotone"
                 dataKey="generated"
                 stroke="var(--color-generated)"
-                strokeWidth={2}
-                dot={{ r: 4 }}
-                activeDot={{ r: 6 }}
+                strokeWidth={3}
+                dot={{ r: 4, strokeWidth: 2 }}
+                activeDot={{ r: 6, strokeWidth: 0 }}
               />
             </LineChart>
           </ChartContainer>

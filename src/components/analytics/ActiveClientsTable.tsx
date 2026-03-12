@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
-import { Users } from 'lucide-react'
+import { Users, Trophy } from 'lucide-react'
 
 export function ActiveClientsTable({ clients }: { clients: any[] }) {
   return (
@@ -23,10 +23,11 @@ export function ActiveClientsTable({ clients }: { clients: any[] }) {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1">
-        <div className="rounded-md border h-[300px] overflow-auto">
+        <div className="rounded-md border overflow-hidden">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/50">
+                <TableHead className="w-12 text-center">#</TableHead>
                 <TableHead>Cliente</TableHead>
                 <TableHead className="text-right">Volume de Documentos</TableHead>
               </TableRow>
@@ -34,16 +35,22 @@ export function ActiveClientsTable({ clients }: { clients: any[] }) {
             <TableBody>
               {clients.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={2} className="text-center text-muted-foreground py-8">
+                  <TableCell colSpan={3} className="text-center text-muted-foreground py-8">
                     Nenhum cliente registrado no momento.
                   </TableCell>
                 </TableRow>
               ) : (
                 clients.map((c, i) => (
-                  <TableRow key={i}>
-                    <TableCell className="font-medium">{c.client}</TableCell>
+                  <TableRow key={i} className="hover:bg-muted/30 transition-colors">
+                    <TableCell className="text-center font-medium text-muted-foreground">
+                      {i === 0 ? <Trophy className="h-4 w-4 text-amber-500 mx-auto" /> : i + 1}
+                    </TableCell>
+                    <TableCell className="font-medium text-foreground">{c.client}</TableCell>
                     <TableCell className="text-right">
-                      <Badge variant="secondary" className="font-mono">
+                      <Badge
+                        variant="secondary"
+                        className="font-mono bg-primary/10 text-primary border-primary/20 hover:bg-primary/20"
+                      >
                         {c.count} docs
                       </Badge>
                     </TableCell>

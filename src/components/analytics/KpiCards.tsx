@@ -53,7 +53,7 @@ export function KpiCards({ totalGenerated, totalSent }: KpiProps) {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stat.value}</div>
+            <div className="text-2xl font-bold text-foreground">{stat.value}</div>
           </CardContent>
         </Card>
       ))}

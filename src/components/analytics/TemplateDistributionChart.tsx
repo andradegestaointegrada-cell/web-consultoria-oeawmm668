@@ -36,10 +36,11 @@ export function TemplateDistributionChart({ data }: { data: any[] }) {
                 data={data}
                 dataKey="value"
                 nameKey="name"
-                innerRadius={60}
-                outerRadius={80}
-                paddingAngle={2}
+                innerRadius={70}
+                outerRadius={100}
+                paddingAngle={4}
                 stroke="none"
+                cornerRadius={5}
               >
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.fill} />
