@@ -32,35 +32,44 @@ export default function Index() {
     if (!user) return
 
     const loadDashboardData = async () => {
-      // Recent docs
-      const { data: docs } = await supabase
-        .from('documentos')
-        .select('*')
-        .eq('usuario_id', user.id)
-        .order('data_criacao', { ascending: false })
-        .limit(5)
+      try {
+        // Recent docs
+        const { data: docs } = await supabase
+          .from('documentos')
+          .select('*')
+          .eq('usuario_id', user.id)
+          .order('data_criacao', { ascending: false })
+          .limit(5)
 
-      if (docs) setRecentDocs(docs)
+        if (docs) setRecentDocs(docs)
 
-      const now = new Date()
-      const startOfCurrent = new Date(now.getFullYear(), now.getMonth(), 1)
-      const startOfPrev = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+        const now = new Date()
+        const startOfCurrent = new Date(now.getFullYear(), now.getMonth(), 1)
+        const startOfPrev = new Date(now.getFullYear(), now.getMonth() - 1, 1)
 
-      const { count: currentCount } = await supabase
-        .from('documentos')
-        .select('*', { count: 'exact', head: true })
-        .eq('usuario_id', user.id)
-        .gte('data_criacao', startOfCurrent.toISOString())
+        // Using select('id', { count: 'exact' }) and limit(0) instead of head: true
+        // avoids the "Unexpected end of JSON input" error on some platforms when parsing
+        // empty bodies from HEAD requests, while still efficiently retrieving the row count.
+        const { count: currentCount } = await supabase
+          .from('documentos')
+          .select('id', { count: 'exact' })
+          .eq('usuario_id', user.id)
+          .gte('data_criacao', startOfCurrent.toISOString())
+          .limit(0)
 
-      const { count: prevCount } = await supabase
-        .from('documentos')
-        .select('*', { count: 'exact', head: true })
-        .eq('usuario_id', user.id)
-        .gte('data_criacao', startOfPrev.toISOString())
-        .lt('data_criacao', startOfCurrent.toISOString())
+        const { count: prevCount } = await supabase
+          .from('documentos')
+          .select('id', { count: 'exact' })
+          .eq('usuario_id', user.id)
+          .gte('data_criacao', startOfPrev.toISOString())
+          .lt('data_criacao', startOfCurrent.toISOString())
+          .limit(0)
 
-      setCurrentMonthCount(currentCount || 0)
-      setPrevMonthCount(prevCount || 0)
+        setCurrentMonthCount(currentCount || 0)
+        setPrevMonthCount(prevCount || 0)
+      } catch (error) {
+        console.error('Erro ao carregar dados do dashboard:', error)
+      }
     }
 
     loadDashboardData()
