@@ -12,27 +12,36 @@ export type Database = {
       documento_gerado: {
         Row: {
           arquivo_url: string | null
+          data_envio: string | null
           data_geracao: string
           id: string
           linha_numero: number
+          status: string | null
+          status_envio: string | null
           template_id: string
           upload_excel_id: string
           usuario_id: string
         }
         Insert: {
           arquivo_url?: string | null
+          data_envio?: string | null
           data_geracao?: string
           id?: string
           linha_numero: number
+          status?: string | null
+          status_envio?: string | null
           template_id: string
           upload_excel_id: string
           usuario_id: string
         }
         Update: {
           arquivo_url?: string | null
+          data_envio?: string | null
           data_geracao?: string
           id?: string
           linha_numero?: number
+          status?: string | null
+          status_envio?: string | null
           template_id?: string
           upload_excel_id?: string
           usuario_id?: string
@@ -433,6 +442,9 @@ export const Constants = {
 //   arquivo_url: text (nullable)
 //   data_geracao: timestamp with time zone (not null, default: now())
 //   usuario_id: uuid (not null)
+//   status: text (nullable, default: 'gerado'::text)
+//   status_envio: text (nullable, default: 'pendente'::text)
+//   data_envio: timestamp with time zone (nullable)
 // Table: documentos
 //   id: uuid (not null, default: gen_random_uuid())
 //   usuario_id: uuid (not null)
@@ -509,10 +521,15 @@ export const Constants = {
 
 // --- ROW LEVEL SECURITY POLICIES ---
 // Table: documento_gerado
+//   Policy "documento_gerado_delete" (DELETE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
 //   Policy "documento_gerado_insert" (INSERT, PERMISSIVE) roles={authenticated}
 //     WITH CHECK: (auth.uid() = usuario_id)
 //   Policy "documento_gerado_select" (SELECT, PERMISSIVE) roles={authenticated}
 //     USING: (auth.uid() = usuario_id)
+//   Policy "documento_gerado_update" (UPDATE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//     WITH CHECK: (auth.uid() = usuario_id)
 // Table: documentos
 //   Policy "Users can delete their own documents" (DELETE, PERMISSIVE) roles={authenticated}
 //     USING: (auth.uid() = usuario_id)

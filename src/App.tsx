@@ -18,6 +18,7 @@ import GerenciarDados from './pages/GerenciarDados'
 import MapeamentoPlaceholders from './pages/MapeamentoPlaceholders'
 import GerarDocumento from './pages/GerarDocumento'
 import HistoricoDocumentos from './pages/HistoricoDocumentos'
+import TemplatesEmail from './pages/TemplatesEmail'
 
 const App = () => (
   <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme" attribute="class">
@@ -40,6 +41,7 @@ const App = () => (
                 <Route path="/gerenciar-dados" element={<GerenciarDados />} />
                 <Route path="/mapeamento-placeholders" element={<MapeamentoPlaceholders />} />
                 <Route path="/gerar-documento" element={<GerarDocumento />} />
+                <Route path="/templates-email" element={<TemplatesEmail />} />
                 <Route path="/historico-documentos" element={<HistoricoDocumentos />} />
                 <Route path="/auditorias" element={<Auditorias />} />
                 <Route path="/configuracoes" element={<Configuracoes />} />

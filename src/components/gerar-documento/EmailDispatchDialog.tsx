@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, Mail, Send } from 'lucide-react'
 import { toast } from 'sonner'
 import { supabase } from '@/lib/supabase/client'
+import { useAuth } from '@/contexts/AuthContext'
 
 import {
   Dialog,
@@ -25,6 +26,13 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Formato de e-mail inválido.' }),
@@ -38,6 +46,7 @@ interface EmailDispatchDialogProps {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
   documentIds: string[]
+  rowData?: any
   onSuccess?: () => void
 }
 
@@ -45,9 +54,13 @@ export function EmailDispatchDialog({
   isOpen,
   onOpenChange,
   documentIds,
+  rowData,
   onSuccess,
 }: EmailDispatchDialogProps) {
+  const { user } = useAuth()
   const [isSending, setIsSending] = useState(false)
+  const [templates, setTemplates] = useState<any[]>([])
+  const [isLoadingTemplates, setIsLoadingTemplates] = useState(false)
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -59,6 +72,63 @@ export function EmailDispatchDialog({
     },
   })
 
+  useEffect(() => {
+    if (isOpen && user) {
+      const fetchTemplates = async () => {
+        setIsLoadingTemplates(true)
+        const { data } = await supabase
+          .from('email_templates' as any)
+          .select('*')
+          .eq('usuario_id', user.id)
+          .order('nome')
+
+        if (data) setTemplates(data)
+        setIsLoadingTemplates(false)
+      }
+      fetchTemplates()
+    }
+  }, [isOpen, user])
+
+  const handleTemplateSelect = (templateId: string) => {
+    const template = templates.find((t) => t.id === templateId)
+    if (!template) return
+
+    const replacePlaceholders = (text: string) => {
+      if (!text) return ''
+      let replaced = text
+
+      const context = {
+        cliente:
+          rowData?.cliente ||
+          rowData?.Cliente ||
+          rowData?.['Nome do Cliente'] ||
+          rowData?.nome ||
+          rowData?.Nome ||
+          '',
+        data: rowData?.data || rowData?.Data || new Date().toLocaleDateString('pt-BR'),
+        valor: rowData?.valor || rowData?.Valor || rowData?.['Valor Total'] || '',
+        documento: 'Documento Gerado',
+      }
+
+      replaced = replaced.replace(/{{cliente}}/gi, context.cliente)
+      replaced = replaced.replace(/{{data}}/gi, context.data)
+      replaced = replaced.replace(/{{valor}}/gi, context.valor)
+      replaced = replaced.replace(/{{documento}}/gi, context.documento)
+
+      if (rowData) {
+        Object.keys(rowData).forEach((key) => {
+          const regex = new RegExp(`{{${key}}}`, 'gi')
+          replaced = replaced.replace(regex, String(rowData[key] || ''))
+        })
+      }
+
+      return replaced
+    }
+
+    form.setValue('subject', replacePlaceholders(template.assunto))
+    form.setValue('message', replacePlaceholders(template.corpo))
+  }
+
   const onSubmit = async (values: FormValues) => {
     if (documentIds.length === 0) {
       toast.error('Nenhum documento selecionado para envio.')
@@ -67,14 +137,11 @@ export function EmailDispatchDialog({
 
     setIsSending(true)
     try {
-      // 1. Atualiza status no banco para 'pendente'
-      // Need to cast to any since we updated the DB schema manually and types.ts wasn't regenerated
       await supabase
         .from('documento_gerado')
         .update({ status_envio: 'pendente' } as any)
         .in('id', documentIds)
 
-      // 2. Dispara a Edge Function
       const { data, error } = await supabase.functions.invoke('send-email-document', {
         body: {
           documentIds,
@@ -87,7 +154,6 @@ export function EmailDispatchDialog({
       if (error) throw new Error(error.message)
       if (data?.error) throw new Error(data.error)
 
-      // 3. Atualiza status para 'enviado'
       await supabase
         .from('documento_gerado')
         .update({
@@ -105,7 +171,6 @@ export function EmailDispatchDialog({
       onOpenChange(false)
       onSuccess?.()
     } catch (err: any) {
-      // Volta status para 'erro' em caso de falha
       await supabase
         .from('documento_gerado')
         .update({ status_envio: 'erro' } as any)
@@ -128,13 +193,36 @@ export function EmailDispatchDialog({
             Enviar Documento(s) por E-mail
           </DialogTitle>
           <DialogDescription>
-            Preencha os dados abaixo para enviar {documentIds.length} documento(s) gerado(s)
-            diretamente para o cliente.
+            Preencha os dados abaixo ou selecione um template para enviar {documentIds.length}{' '}
+            documento(s) gerado(s).
           </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-2">
+            <div className="space-y-2">
+              <FormLabel>Carregar Template (Opcional)</FormLabel>
+              <Select onValueChange={handleTemplateSelect} disabled={isLoadingTemplates}>
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder={isLoadingTemplates ? 'Carregando...' : 'Selecione um template...'}
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  {templates.map((t) => (
+                    <SelectItem key={t.id} value={t.id}>
+                      {t.nome}
+                    </SelectItem>
+                  ))}
+                  {templates.length === 0 && !isLoadingTemplates && (
+                    <SelectItem value="none" disabled>
+                      Nenhum template cadastrado
+                    </SelectItem>
+                  )}
+                </SelectContent>
+              </Select>
+            </div>
+
             <FormField
               control={form.control}
               name="email"

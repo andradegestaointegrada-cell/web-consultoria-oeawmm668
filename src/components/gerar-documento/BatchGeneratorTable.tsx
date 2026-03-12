@@ -40,6 +40,7 @@ export function BatchGeneratorTable({
 
   // States for Email Dispatch feature
   const [lastGeneratedIds, setLastGeneratedIds] = useState<string[]>([])
+  const [lastGeneratedRow, setLastGeneratedRow] = useState<any>(null)
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
 
   useEffect(() => {
@@ -65,12 +66,14 @@ export function BatchGeneratorTable({
   const handleSingleGenerate = async (row: any, idx: number) => {
     if (!template) return
     setGeneratingRowId(idx)
-    setLastGeneratedIds([]) // Clear previous runs
+    setLastGeneratedIds([])
+    setLastGeneratedRow(null)
 
     try {
       const result = await processSingleDocument(row, idx, template, mappings, uploadId, userId)
       if (result?.documentId) {
         setLastGeneratedIds([result.documentId])
+        setLastGeneratedRow(row)
       }
       toast.success('Documento gerado com sucesso!')
     } catch (error: any) {
@@ -83,7 +86,8 @@ export function BatchGeneratorTable({
   const handleBatchGenerate = async () => {
     if (!template || selectedRows.length === 0) return
     setIsBatching(true)
-    setLastGeneratedIds([]) // Clear previous runs
+    setLastGeneratedIds([])
+    setLastGeneratedRow(null)
     setBatchProgress({ current: 0, total: selectedRows.length })
 
     try {
@@ -101,10 +105,11 @@ export function BatchGeneratorTable({
         toast.success('Lote gerado com sucesso!', {
           description: `${successCount} documentos gerados. ${errorCount > 0 ? `${errorCount} falhas.` : ''}`,
         })
-        setSelectedRows([])
         if (documentIds?.length > 0) {
           setLastGeneratedIds(documentIds)
+          setLastGeneratedRow(rows[selectedRows[0]])
         }
+        setSelectedRows([])
       } else {
         toast.error('Nenhum documento gerado no lote.')
       }
@@ -242,7 +247,11 @@ export function BatchGeneratorTable({
         isOpen={isEmailModalOpen}
         onOpenChange={setIsEmailModalOpen}
         documentIds={lastGeneratedIds}
-        onSuccess={() => setLastGeneratedIds([])}
+        rowData={lastGeneratedRow}
+        onSuccess={() => {
+          setLastGeneratedIds([])
+          setLastGeneratedRow(null)
+        }}
       />
     </div>
   )
