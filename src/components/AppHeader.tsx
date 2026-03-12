@@ -25,7 +25,7 @@ export function AppHeader() {
   }
 
   return (
-    <header className="flex h-16 shrink-0 items-center justify-between border-b bg-background px-4 shadow-sm transition-all animate-fade-in-down">
+    <header className="flex h-16 shrink-0 items-center justify-between border-b bg-background px-4 shadow-sm transition-all animate-fade-in-down print-hidden">
       <div className="flex items-center gap-4">
         <SidebarTrigger className="-ml-1" />
         <div className="hidden md:block relative w-64">

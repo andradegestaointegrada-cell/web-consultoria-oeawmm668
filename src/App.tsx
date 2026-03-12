@@ -21,6 +21,7 @@ import HistoricoDocumentos from './pages/HistoricoDocumentos'
 import TemplatesEmail from './pages/TemplatesEmail'
 import Analytics from './pages/Analytics'
 import GerenciadorArquivos from './pages/GerenciadorArquivos'
+import StatusReport from './pages/StatusReport'
 
 const App = () => (
   <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme" attribute="class">
@@ -39,6 +40,7 @@ const App = () => (
                 <Route path="/" element={<Navigate to="/dashboard" replace />} />
                 <Route path="/dashboard" element={<Index />} />
                 <Route path="/analytics" element={<Analytics />} />
+                <Route path="/status-report" element={<StatusReport />} />
                 <Route path="/documentos" element={<Documentos />} />
                 <Route path="/documentos/:id/editor" element={<DocumentEditor />} />
                 <Route path="/gerenciar-dados" element={<GerenciarDados />} />
