@@ -7,12 +7,15 @@ export interface ExportContent {
 
 const sanitizeForWord = (html: string) => {
   if (!html) return ''
-  return html
-    .replace(/<br\s*\/?>/gi, '<br/>')
-    .replace(/<hr\s*\/?>/gi, '<hr/>')
-    .replace(/<img([^>]+)>/gi, (match, p1) => (p1.endsWith('/') ? match : `<img${p1}/>`))
-    .replace(/&nbsp;/g, '&#160;')
-    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
+  return (
+    html
+      .replace(/<br\s*\/?>/gi, '<br/>')
+      .replace(/<hr\s*\/?>/gi, '<hr/>')
+      .replace(/<img([^>]+)>/gi, (match, p1) => (p1.endsWith('/') ? match : `<img${p1}/>`))
+      .replace(/&nbsp;/g, '&#160;')
+      // eslint-disable-next-line no-control-regex
+      .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
+  )
 }
 
 export const exportToWord = (content: ExportContent) => {
@@ -63,7 +66,7 @@ export const exportToWord = (content: ExportContent) => {
   `
 
   const blob = new Blob(['\ufeff', htmlContent], {
-    type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    type: 'application/msword',
   })
 
   const date = new Date()
@@ -78,7 +81,7 @@ export const exportToWord = (content: ExportContent) => {
     .replace(/_+/g, '_')
     .replace(/^_|_$/g, '')
 
-  const fileName = `${normalizedTitle || 'Documento'}_${dd}_${mm}_${yyyy}.docx`
+  const fileName = `${normalizedTitle || 'Documento'}_${dd}_${mm}_${yyyy}.doc`
 
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
