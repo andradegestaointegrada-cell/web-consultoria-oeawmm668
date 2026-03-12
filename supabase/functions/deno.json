@@ -3,7 +3,7 @@
     "gerar_documento_com_ia": 6,
     "parse_docx": 3,
     "generate_docx": 3,
-    "functions": 6,
+    "functions": 7,
     "parse-word-placeholders": 3,
     "generate-word-document": 5,
     "read-excel-rows": 3,
