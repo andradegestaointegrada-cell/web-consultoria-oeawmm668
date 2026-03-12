@@ -1,12 +1,9 @@
 {
   "_versions": {
     "gerar_documento_com_ia": 6,
-    "parse_docx": 3,
-    "generate_docx": 2,
-    "functions": 3,
-    "parse-word-placeholders": 1,
-    "generate-word-document": 3,
-    "read-excel-rows": 1,
-    "send-email-document": 5
+    "parse_docx": 1,
+    "generate_docx": 1,
+    "functions": 2,
+    "parse-word-placeholders": 1
   }
 }
