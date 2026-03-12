@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Table,
   TableBody,
@@ -36,6 +36,17 @@ export function BatchGeneratorTable({
   const [generatingRowId, setGeneratingRowId] = useState<number | null>(null)
   const [isBatching, setIsBatching] = useState(false)
   const [batchProgress, setBatchProgress] = useState({ current: 0, total: 0 })
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (isBatching) {
+        e.preventDefault()
+        e.returnValue = ''
+      }
+    }
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [isBatching])
 
   const toggleRow = (idx: number) => {
     setSelectedRows((prev) => (prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]))
@@ -84,9 +95,10 @@ export function BatchGeneratorTable({
         toast.error('Nenhum documento gerado no lote.')
       }
     } catch (error: any) {
-      toast.error('Erro no lote', { description: error.message })
+      toast.error('Erro no processamento em lote', { description: error.message })
     } finally {
       setIsBatching(false)
+      setBatchProgress({ current: 0, total: 0 })
     }
   }
 
@@ -113,11 +125,12 @@ export function BatchGeneratorTable({
       </div>
 
       {isBatching && (
-        <div className="space-y-1.5 animate-in fade-in slide-in-from-top-2">
-          <div className="flex justify-between text-xs font-medium text-muted-foreground">
+        <div className="space-y-1.5 animate-in fade-in slide-in-from-top-2 p-4 border rounded-md bg-muted/20">
+          <div className="flex justify-between text-sm font-medium text-foreground">
             <span>Processando documentos...</span>
             <span>
-              {batchProgress.current} de {batchProgress.total}
+              {batchProgress.current} de {batchProgress.total} (
+              {Math.round((batchProgress.current / batchProgress.total) * 100)}%)
             </span>
           </div>
           <Progress value={(batchProgress.current / batchProgress.total) * 100} className="h-2" />
@@ -133,6 +146,7 @@ export function BatchGeneratorTable({
                   checked={selectedRows.length === rows.length && rows.length > 0}
                   onCheckedChange={toggleAll}
                   aria-label="Selecionar todos"
+                  disabled={isBatching}
                 />
               </TableHead>
               <TableHead className="w-[80px]">Linha</TableHead>
@@ -154,12 +168,17 @@ export function BatchGeneratorTable({
                     checked={selectedRows.includes(idx)}
                     onCheckedChange={() => toggleRow(idx)}
                     aria-label={`Selecionar linha ${idx + 1}`}
+                    disabled={isBatching}
                   />
                 </TableCell>
                 <TableCell className="font-medium text-muted-foreground">{idx + 1}</TableCell>
                 {columns.map((col) => (
-                  <TableCell key={col} className="max-w-[200px] truncate" title={row[col]}>
-                    {row[col]}
+                  <TableCell
+                    key={col}
+                    className="max-w-[200px] truncate"
+                    title={String(row[col] || '')}
+                  >
+                    {String(row[col] || '')}
                   </TableCell>
                 ))}
                 <TableCell className="text-right sticky right-0 bg-background/95 backdrop-blur">

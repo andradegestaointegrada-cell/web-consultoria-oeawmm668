@@ -42,7 +42,8 @@ export async function processBatchGeneration({
         body: { path: template.arquivo_docx_url, data: payloadData },
       })
 
-      if (error || !data?.base64) throw new Error(error?.message || 'Erro na função de geração')
+      if (error) throw new Error(error.message)
+      if (!data?.base64) throw new Error('Dados não retornados pela função de geração')
 
       const clienteStr =
         row['Nome'] ||
@@ -50,7 +51,11 @@ export async function processBatchGeneration({
         row['nome'] ||
         template?.nome?.replace(/\s+/g, '_') ||
         `Cliente_${rowIdx}`
-      const fileName = `Documento_${clienteStr}_${rowIdx}.docx`
+
+      const safeClienteStr = String(clienteStr)
+        .replace(/[^a-z0-9]/gi, '_')
+        .toLowerCase()
+      const fileName = `Documento_${safeClienteStr}_${rowIdx}.docx`
 
       zip.file(fileName, data.base64, { base64: true })
 
@@ -59,11 +64,12 @@ export async function processBatchGeneration({
         upload_excel_id: uploadId,
         linha_numero: rowIdx,
         usuario_id: userId,
+        arquivo_url: fileName,
       })
 
       successCount++
     } catch (err) {
-      console.error(`Falha ao gerar linha ${rowIdx}`, err)
+      console.error(`Falha ao gerar linha ${rowIdx}:`, err)
       errorCount++
     }
   }
@@ -100,7 +106,8 @@ export async function processSingleDocument(
     body: { path: template.arquivo_docx_url, data: payloadData },
   })
 
-  if (error || !data?.base64) throw new Error(error?.message || 'Erro na geração')
+  if (error) throw new Error(error.message)
+  if (!data?.base64) throw new Error('Dados não retornados pela função de geração')
 
   const byteChars = atob(data.base64)
   const byteNumbers = new Array(byteChars.length)
@@ -119,7 +126,13 @@ export async function processSingleDocument(
     row['nome'] ||
     template?.nome?.replace(/\s+/g, '_') ||
     'Cliente'
-  a.download = `Documento_${dateStr}_${clienteStr}.docx`
+
+  const safeClienteStr = String(clienteStr)
+    .replace(/[^a-z0-9]/gi, '_')
+    .toLowerCase()
+  const fileName = `Documento_${dateStr}_${safeClienteStr}.docx`
+
+  a.download = fileName
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)
@@ -130,5 +143,6 @@ export async function processSingleDocument(
     upload_excel_id: uploadId,
     linha_numero: idx,
     usuario_id: userId,
+    arquivo_url: fileName,
   })
 }

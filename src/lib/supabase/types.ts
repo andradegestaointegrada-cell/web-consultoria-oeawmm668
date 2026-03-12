@@ -9,6 +9,58 @@ export type Database = {
   }
   public: {
     Tables: {
+      documento_gerado: {
+        Row: {
+          arquivo_url: string | null
+          data_geracao: string
+          id: string
+          linha_numero: number
+          template_id: string
+          upload_excel_id: string
+          usuario_id: string
+        }
+        Insert: {
+          arquivo_url?: string | null
+          data_geracao?: string
+          id?: string
+          linha_numero: number
+          template_id: string
+          upload_excel_id: string
+          usuario_id: string
+        }
+        Update: {
+          arquivo_url?: string | null
+          data_geracao?: string
+          id?: string
+          linha_numero?: number
+          template_id?: string
+          upload_excel_id?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'documento_gerado_template_id_fkey'
+            columns: ['template_id']
+            isOneToOne: false
+            referencedRelation: 'templates'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'documento_gerado_upload_excel_id_fkey'
+            columns: ['upload_excel_id']
+            isOneToOne: false
+            referencedRelation: 'uploads_excel'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'documento_gerado_usuario_id_fkey'
+            columns: ['usuario_id']
+            isOneToOne: false
+            referencedRelation: 'usuarios'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       documentos: {
         Row: {
           arquivo_url: string | null
@@ -373,6 +425,14 @@ export const Constants = {
 // --- COLUMN TYPES (actual PostgreSQL types) ---
 // Use this to know the real database type when writing migrations.
 // "string" in TypeScript types above may be uuid, text, varchar, timestamptz, etc.
+// Table: documento_gerado
+//   id: uuid (not null, default: gen_random_uuid())
+//   template_id: uuid (not null)
+//   upload_excel_id: uuid (not null)
+//   linha_numero: integer (not null)
+//   arquivo_url: text (nullable)
+//   data_geracao: timestamp with time zone (not null, default: now())
+//   usuario_id: uuid (not null)
 // Table: documentos
 //   id: uuid (not null, default: gen_random_uuid())
 //   usuario_id: uuid (not null)
@@ -422,6 +482,11 @@ export const Constants = {
 //   created_at: timestamp with time zone (not null, default: now())
 
 // --- CONSTRAINTS ---
+// Table: documento_gerado
+//   PRIMARY KEY documento_gerado_pkey: PRIMARY KEY (id)
+//   FOREIGN KEY documento_gerado_template_id_fkey: FOREIGN KEY (template_id) REFERENCES templates(id) ON DELETE CASCADE
+//   FOREIGN KEY documento_gerado_upload_excel_id_fkey: FOREIGN KEY (upload_excel_id) REFERENCES uploads_excel(id) ON DELETE CASCADE
+//   FOREIGN KEY documento_gerado_usuario_id_fkey: FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 // Table: documentos
 //   PRIMARY KEY documentos_pkey: PRIMARY KEY (id)
 //   CHECK documentos_status_check: CHECK ((status = ANY (ARRAY['rascunho'::text, 'finalizado'::text])))
@@ -443,6 +508,11 @@ export const Constants = {
 //   CHECK usuarios_role_check: CHECK ((role = ANY (ARRAY['admin'::text, 'consultor'::text, 'viewer'::text])))
 
 // --- ROW LEVEL SECURITY POLICIES ---
+// Table: documento_gerado
+//   Policy "documento_gerado_insert" (INSERT, PERMISSIVE) roles={authenticated}
+//     WITH CHECK: (auth.uid() = usuario_id)
+//   Policy "documento_gerado_select" (SELECT, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
 // Table: documentos
 //   Policy "Users can delete their own documents" (DELETE, PERMISSIVE) roles={authenticated}
 //     USING: (auth.uid() = usuario_id)
