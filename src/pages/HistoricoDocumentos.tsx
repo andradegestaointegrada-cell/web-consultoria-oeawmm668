@@ -8,11 +8,9 @@ import { Card, CardContent } from '@/components/ui/card'
 import { HistoryFilters } from '@/components/historico/HistoryFilters'
 import { HistoryTable, HistoricoDoc } from '@/components/historico/HistoryTable'
 import { HistoryDetailsDialog } from '@/components/historico/HistoryDetailsDialog'
-import { useDebounce } from '@/hooks/use-debounce'
 
 const PAGE_SIZE = 10
 
-// Simple debounce hook implementation inline to keep dependencies clean, or we can just use standard timeout
 function useDebounceValue<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value)
   useEffect(() => {
@@ -35,11 +33,12 @@ export default function HistoricoDocumentos() {
   const debouncedSearch = useDebounceValue(searchTerm, 500)
   const [templateFilter, setTemplateFilter] = useState('all')
   const [dateRange, setDateRange] = useState<DateRange | undefined>()
+  const [showErrorsOnly, setShowErrorsOnly] = useState(false)
 
   const [templates, setTemplates] = useState<{ id: string; nome: string }[]>([])
-
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
   const [selectedDoc, setSelectedDoc] = useState<HistoricoDoc | null>(null)
+  const [retryingId, setRetryingId] = useState<string | null>(null)
 
   useEffect(() => {
     if (!user) return
@@ -68,12 +67,16 @@ export default function HistoricoDocumentos() {
       if (debouncedSearch) {
         const num = parseInt(debouncedSearch)
         if (!isNaN(num)) {
-          query = query.eq('linha_numero', num - 1) // users see 1-based, DB is 0-based
+          query = query.eq('linha_numero', num - 1)
         }
       }
 
       if (templateFilter && templateFilter !== 'all') {
         query = query.eq('template_id', templateFilter)
+      }
+
+      if (showErrorsOnly) {
+        query = query.eq('status_envio', 'erro')
       }
 
       if (dateRange?.from) {
@@ -101,7 +104,7 @@ export default function HistoricoDocumentos() {
     }
 
     loadHistory()
-  }, [user, debouncedSearch, templateFilter, dateRange, page])
+  }, [user, debouncedSearch, templateFilter, dateRange, page, showErrorsOnly])
 
   const handleDelete = async (id: string) => {
     if (!confirm('Deseja realmente excluir este registro do histórico?')) return
@@ -137,9 +140,75 @@ export default function HistoricoDocumentos() {
     }
   }
 
-  const openDetails = (doc: HistoricoDoc) => {
-    setSelectedDoc(doc)
-    setIsDetailsOpen(true)
+  const handleRetry = async (doc: HistoricoDoc) => {
+    setRetryingId(doc.id)
+    try {
+      const { data: agendamento, error: agendamentoError } = await supabase
+        .from('agendamentos_email')
+        .select('destinatario, template_id')
+        .eq('documento_id', doc.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single()
+
+      if (agendamentoError || !agendamento) {
+        toast.error('Destinatário não encontrado para este documento.')
+        setRetryingId(null)
+        return
+      }
+
+      const { data: template } = await supabase
+        .from('email_templates')
+        .select('assunto, corpo')
+        .eq('id', agendamento.template_id)
+        .single()
+
+      const res = await supabase.functions.invoke('send-email-document', {
+        body: {
+          documentIds: [doc.id],
+          email: agendamento.destinatario,
+          subject: template?.assunto || 'Reenvio de Documento',
+          message: template?.corpo || 'Segue o documento reenviado.',
+        },
+      })
+
+      const success = !res.error && res.data?.success
+      const newTentativas = (doc.tentativas_envio || 0) + 1
+      const newStatus = success ? 'enviado' : 'erro'
+      const nowISO = new Date().toISOString()
+
+      await supabase
+        .from('documento_gerado')
+        .update({
+          tentativas_envio: newTentativas,
+          ultima_tentativa: nowISO,
+          status_envio: newStatus,
+        })
+        .eq('id', doc.id)
+
+      if (success) {
+        toast.success('Documento reenviado com sucesso!')
+      } else {
+        toast.error('Falha ao reenviar documento.', { description: res.error?.message })
+      }
+
+      setData((prev) =>
+        prev.map((d) =>
+          d.id === doc.id
+            ? {
+                ...d,
+                tentativas_envio: newTentativas,
+                status_envio: newStatus,
+                ultima_tentativa: nowISO,
+              }
+            : d,
+        ),
+      )
+    } catch (err: any) {
+      toast.error('Erro ao processar reenvio', { description: err.message })
+    } finally {
+      setRetryingId(null)
+    }
   }
 
   const totalPages = Math.ceil(totalCount / PAGE_SIZE)
@@ -151,7 +220,7 @@ export default function HistoricoDocumentos() {
           <History className="h-6 w-6 text-primary" /> Histórico de Documentos
         </h1>
         <p className="text-muted-foreground mt-1">
-          Acompanhe todos os documentos gerados, visualize metadados e baixe arquivos anteriores.
+          Acompanhe todos os documentos gerados, gerencie falhas de envio e baixe arquivos.
         </p>
       </div>
 
@@ -171,6 +240,11 @@ export default function HistoricoDocumentos() {
               setPage(0)
             }}
             templates={templates}
+            showErrorsOnly={showErrorsOnly}
+            setShowErrorsOnly={(val) => {
+              setShowErrorsOnly(val)
+              setPage(0)
+            }}
           />
 
           <HistoryTable
@@ -178,10 +252,15 @@ export default function HistoricoDocumentos() {
             loading={loading}
             page={page}
             totalPages={totalPages}
+            retryingId={retryingId}
             onPageChange={setPage}
-            onViewDetails={openDetails}
+            onViewDetails={(doc) => {
+              setSelectedDoc(doc)
+              setIsDetailsOpen(true)
+            }}
             onDelete={handleDelete}
             onDownload={handleDownload}
+            onRetry={handleRetry}
           />
         </CardContent>
       </Card>

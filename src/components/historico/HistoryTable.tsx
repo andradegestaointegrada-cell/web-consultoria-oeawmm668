@@ -1,8 +1,9 @@
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { Download, Eye, Trash2, FileText, Loader2 } from 'lucide-react'
+import { Download, Eye, Trash2, FileText, Loader2, RefreshCw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import {
   Table,
   TableBody,
@@ -15,7 +16,6 @@ import {
   Pagination,
   PaginationContent,
   PaginationItem,
-  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
@@ -29,6 +29,9 @@ export interface HistoricoDoc {
   arquivo_url: string | null
   data_geracao: string
   status: string
+  status_envio?: string
+  tentativas_envio?: number
+  ultima_tentativa?: string
   templates?: { nome: string }
 }
 
@@ -37,10 +40,12 @@ interface HistoryTableProps {
   loading: boolean
   page: number
   totalPages: number
+  retryingId: string | null
   onPageChange: (page: number) => void
   onViewDetails: (doc: HistoricoDoc) => void
   onDelete: (id: string) => void
   onDownload: (url: string | null) => void
+  onRetry: (doc: HistoricoDoc) => void
 }
 
 export function HistoryTable({
@@ -48,10 +53,12 @@ export function HistoryTable({
   loading,
   page,
   totalPages,
+  retryingId,
   onPageChange,
   onViewDetails,
   onDelete,
   onDownload,
+  onRetry,
 }: HistoryTableProps) {
   return (
     <div className="space-y-4">
@@ -62,8 +69,8 @@ export function HistoryTable({
               <TableHead>Nome do Documento</TableHead>
               <TableHead>Template</TableHead>
               <TableHead>Data de Geração</TableHead>
-              <TableHead>Cliente / Linha</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead>Status Doc.</TableHead>
+              <TableHead>Status Envio</TableHead>
               <TableHead className="text-right">Ações</TableHead>
             </TableRow>
           </TableHeader>
@@ -96,7 +103,6 @@ export function HistoryTable({
                   <TableCell>
                     {format(new Date(doc.data_geracao), 'dd/MM/yyyy HH:mm', { locale: ptBR })}
                   </TableCell>
-                  <TableCell>Registro #{doc.linha_numero + 1}</TableCell>
                   <TableCell>
                     <Badge
                       variant={doc.status === 'deletado' ? 'destructive' : 'secondary'}
@@ -105,8 +111,52 @@ export function HistoryTable({
                       {doc.status || 'Gerado'}
                     </Badge>
                   </TableCell>
+                  <TableCell>
+                    <div className="flex flex-col items-start gap-1">
+                      <Badge
+                        variant={
+                          doc.status_envio === 'erro'
+                            ? 'destructive'
+                            : doc.status_envio === 'enviado'
+                              ? 'default'
+                              : 'secondary'
+                        }
+                        className="capitalize"
+                      >
+                        {doc.status_envio || 'N/A'}
+                      </Badge>
+                      {(doc.tentativas_envio ?? 0) > 0 && (
+                        <span className="text-[10px] text-muted-foreground">
+                          {doc.tentativas_envio} tentativas
+                          {doc.ultima_tentativa && (
+                            <> - {format(new Date(doc.ultima_tentativa), 'HH:mm')}</>
+                          )}
+                        </span>
+                      )}
+                    </div>
+                  </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
+                      {doc.status_envio === 'erro' && (doc.tentativas_envio ?? 0) < 3 && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => onRetry(doc)}
+                              disabled={retryingId === doc.id}
+                            >
+                              <RefreshCw
+                                className={cn(
+                                  'h-4 w-4 text-orange-500',
+                                  retryingId === doc.id && 'animate-spin',
+                                )}
+                              />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Reenviar Documento</TooltipContent>
+                        </Tooltip>
+                      )}
                       <Button
                         variant="ghost"
                         size="icon"

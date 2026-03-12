@@ -7,8 +7,9 @@
     "parse-word-placeholders": 1,
     "generate-word-document": 3,
     "read-excel-rows": 1,
-    "send-email-document": 7,
+    "send-email-document": 8,
     "cleanup-bucket": 1,
-    "process-scheduled-emails": 2
+    "process-scheduled-emails": 2,
+    "retry-failed-emails": 1
   }
 }

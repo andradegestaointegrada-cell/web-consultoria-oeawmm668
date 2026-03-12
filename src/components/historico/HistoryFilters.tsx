@@ -1,6 +1,8 @@
 import { DateRange } from 'react-day-picker'
 import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { Switch } from '@/components/ui/switch'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -18,6 +20,8 @@ interface HistoryFiltersProps {
   dateRange: DateRange | undefined
   setDateRange: (range: DateRange | undefined) => void
   templates: { id: string; nome: string }[]
+  showErrorsOnly: boolean
+  setShowErrorsOnly: (val: boolean) => void
 }
 
 export function HistoryFilters({
@@ -28,34 +32,44 @@ export function HistoryFilters({
   dateRange,
   setDateRange,
   templates,
+  showErrorsOnly,
+  setShowErrorsOnly,
 }: HistoryFiltersProps) {
   return (
-    <div className="flex flex-col sm:flex-row gap-4 w-full">
-      <div className="relative flex-1">
-        <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Buscar por linha/referência..."
-          className="pl-9 bg-background"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+    <div className="flex flex-col space-y-4 w-full">
+      <div className="flex flex-col sm:flex-row gap-4 w-full">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Buscar por linha/referência..."
+            className="pl-9 bg-background"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <div className="w-full sm:w-[220px]">
+          <Select value={templateFilter} onValueChange={setTemplateFilter}>
+            <SelectTrigger className="bg-background">
+              <SelectValue placeholder="Todos os Templates" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos os Templates</SelectItem>
+              {templates.map((t) => (
+                <SelectItem key={t.id} value={t.id}>
+                  {t.nome}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <DatePickerWithRange date={dateRange} setDate={setDateRange} />
       </div>
-      <div className="w-full sm:w-[220px]">
-        <Select value={templateFilter} onValueChange={setTemplateFilter}>
-          <SelectTrigger className="bg-background">
-            <SelectValue placeholder="Todos os Templates" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Todos os Templates</SelectItem>
-            {templates.map((t) => (
-              <SelectItem key={t.id} value={t.id}>
-                {t.nome}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <div className="flex items-center gap-2 px-1">
+        <Switch id="errors-only" checked={showErrorsOnly} onCheckedChange={setShowErrorsOnly} />
+        <Label htmlFor="errors-only" className="cursor-pointer text-sm font-medium">
+          Filtrar apenas com erro de envio
+        </Label>
       </div>
-      <DatePickerWithRange date={dateRange} setDate={setDateRange} />
     </div>
   )
 }
