@@ -1,14 +1,78 @@
 // AVOID UPDATING THIS FILE DIRECTLY. It is automatically generated.
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
 
 export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: '14.4'
+    PostgrestVersion: "14.4"
   }
   public: {
     Tables: {
+      agendamentos_email: {
+        Row: {
+          created_at: string
+          data_agendada: string
+          destinatario: string
+          documento_id: string
+          hora_agendada: string
+          id: string
+          status: string
+          template_id: string
+          usuario_id: string
+        }
+        Insert: {
+          created_at?: string
+          data_agendada: string
+          destinatario: string
+          documento_id: string
+          hora_agendada: string
+          id?: string
+          status?: string
+          template_id: string
+          usuario_id: string
+        }
+        Update: {
+          created_at?: string
+          data_agendada?: string
+          destinatario?: string
+          documento_id?: string
+          hora_agendada?: string
+          id?: string
+          status?: string
+          template_id?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agendamentos_email_documento_id_fkey"
+            columns: ["documento_id"]
+            isOneToOne: false
+            referencedRelation: "documento_gerado"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agendamentos_email_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "email_templates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agendamentos_email_usuario_id_fkey"
+            columns: ["usuario_id"]
+            isOneToOne: false
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       documento_gerado: {
         Row: {
           arquivo_url: string | null
@@ -48,25 +112,25 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'documento_gerado_template_id_fkey'
-            columns: ['template_id']
+            foreignKeyName: "documento_gerado_template_id_fkey"
+            columns: ["template_id"]
             isOneToOne: false
-            referencedRelation: 'templates'
-            referencedColumns: ['id']
+            referencedRelation: "templates"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'documento_gerado_upload_excel_id_fkey'
-            columns: ['upload_excel_id']
+            foreignKeyName: "documento_gerado_upload_excel_id_fkey"
+            columns: ["upload_excel_id"]
             isOneToOne: false
-            referencedRelation: 'uploads_excel'
-            referencedColumns: ['id']
+            referencedRelation: "uploads_excel"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'documento_gerado_usuario_id_fkey'
-            columns: ['usuario_id']
+            foreignKeyName: "documento_gerado_usuario_id_fkey"
+            columns: ["usuario_id"]
             isOneToOne: false
-            referencedRelation: 'usuarios'
-            referencedColumns: ['id']
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -103,11 +167,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'documentos_usuario_id_fkey'
-            columns: ['usuario_id']
+            foreignKeyName: "documentos_usuario_id_fkey"
+            columns: ["usuario_id"]
             isOneToOne: false
-            referencedRelation: 'usuarios'
-            referencedColumns: ['id']
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -138,11 +202,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'email_templates_usuario_id_fkey'
-            columns: ['usuario_id']
+            foreignKeyName: "email_templates_usuario_id_fkey"
+            columns: ["usuario_id"]
             isOneToOne: false
-            referencedRelation: 'usuarios'
-            referencedColumns: ['id']
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -179,25 +243,25 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'mapeamento_placeholders_template_id_fkey'
-            columns: ['template_id']
+            foreignKeyName: "mapeamento_placeholders_template_id_fkey"
+            columns: ["template_id"]
             isOneToOne: false
-            referencedRelation: 'templates'
-            referencedColumns: ['id']
+            referencedRelation: "templates"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'mapeamento_placeholders_upload_excel_id_fkey'
-            columns: ['upload_excel_id']
+            foreignKeyName: "mapeamento_placeholders_upload_excel_id_fkey"
+            columns: ["upload_excel_id"]
             isOneToOne: false
-            referencedRelation: 'uploads_excel'
-            referencedColumns: ['id']
+            referencedRelation: "uploads_excel"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'mapeamento_placeholders_usuario_id_fkey'
-            columns: ['usuario_id']
+            foreignKeyName: "mapeamento_placeholders_usuario_id_fkey"
+            columns: ["usuario_id"]
             isOneToOne: false
-            referencedRelation: 'usuarios'
-            referencedColumns: ['id']
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -246,11 +310,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'templates_usuario_id_fkey'
-            columns: ['usuario_id']
+            foreignKeyName: "templates_usuario_id_fkey"
+            columns: ["usuario_id"]
             isOneToOne: false
-            referencedRelation: 'usuarios'
-            referencedColumns: ['id']
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -290,11 +354,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'uploads_excel_usuario_id_fkey'
-            columns: ['usuario_id']
+            foreignKeyName: "uploads_excel_usuario_id_fkey"
+            columns: ["usuario_id"]
             isOneToOne: false
-            referencedRelation: 'usuarios'
-            referencedColumns: ['id']
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -338,31 +402,33 @@ export type Database = {
   }
 }
 
-type DatabaseWithoutInternals = Omit<Database, '__InternalSupabase'>
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
 
-type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, 'public'>]
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
-    | keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
-        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
-      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])[TableName] extends {
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
-    ? (DefaultSchema['Tables'] & DefaultSchema['Views'])[DefaultSchemaTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
@@ -371,23 +437,23 @@ export type Tables<
 
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema['Tables']
+    | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
-    ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
         Insert: infer I
       }
       ? I
@@ -396,23 +462,23 @@ export type TablesInsert<
 
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema['Tables']
+    | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
-    ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
         Update: infer U
       }
       ? U
@@ -421,36 +487,36 @@ export type TablesUpdate<
 
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
-    | keyof DefaultSchema['Enums']
+    | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums']
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums'][EnumName]
-  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema['Enums']
-    ? DefaultSchema['Enums'][DefaultSchemaEnumNameOrOptions]
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof DefaultSchema['CompositeTypes']
+    | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema['CompositeTypes']
-    ? DefaultSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
 
 export const Constants = {
@@ -458,6 +524,7 @@ export const Constants = {
     Enums: {},
   },
 } as const
+
 
 // ====== DATABASE EXTENDED CONTEXT (auto-generated) ======
 // This section contains actual PostgreSQL column types, constraints, RLS policies,
@@ -469,6 +536,16 @@ export const Constants = {
 // --- COLUMN TYPES (actual PostgreSQL types) ---
 // Use this to know the real database type when writing migrations.
 // "string" in TypeScript types above may be uuid, text, varchar, timestamptz, etc.
+// Table: agendamentos_email
+//   id: uuid (not null, default: gen_random_uuid())
+//   documento_id: uuid (not null)
+//   data_agendada: date (not null)
+//   hora_agendada: time without time zone (not null)
+//   template_id: uuid (not null)
+//   destinatario: text (not null)
+//   status: text (not null, default: 'pendente'::text)
+//   usuario_id: uuid (not null)
+//   created_at: timestamp with time zone (not null, default: now())
 // Table: documento_gerado
 //   id: uuid (not null, default: gen_random_uuid())
 //   template_id: uuid (not null)
@@ -536,6 +613,12 @@ export const Constants = {
 //   created_at: timestamp with time zone (not null, default: now())
 
 // --- CONSTRAINTS ---
+// Table: agendamentos_email
+//   FOREIGN KEY agendamentos_email_documento_id_fkey: FOREIGN KEY (documento_id) REFERENCES documento_gerado(id) ON DELETE CASCADE
+//   PRIMARY KEY agendamentos_email_pkey: PRIMARY KEY (id)
+//   CHECK agendamentos_email_status_check: CHECK ((status = ANY (ARRAY['pendente'::text, 'enviado'::text, 'erro'::text])))
+//   FOREIGN KEY agendamentos_email_template_id_fkey: FOREIGN KEY (template_id) REFERENCES email_templates(id) ON DELETE CASCADE
+//   FOREIGN KEY agendamentos_email_usuario_id_fkey: FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 // Table: documento_gerado
 //   PRIMARY KEY documento_gerado_pkey: PRIMARY KEY (id)
 //   FOREIGN KEY documento_gerado_template_id_fkey: FOREIGN KEY (template_id) REFERENCES templates(id) ON DELETE CASCADE
@@ -565,6 +648,16 @@ export const Constants = {
 //   CHECK usuarios_role_check: CHECK ((role = ANY (ARRAY['admin'::text, 'consultor'::text, 'viewer'::text])))
 
 // --- ROW LEVEL SECURITY POLICIES ---
+// Table: agendamentos_email
+//   Policy "agendamentos_email_delete" (DELETE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//   Policy "agendamentos_email_insert" (INSERT, PERMISSIVE) roles={authenticated}
+//     WITH CHECK: (auth.uid() = usuario_id)
+//   Policy "agendamentos_email_select" (SELECT, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//   Policy "agendamentos_email_update" (UPDATE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//     WITH CHECK: (auth.uid() = usuario_id)
 // Table: documento_gerado
 //   Policy "documento_gerado_delete" (DELETE, PERMISSIVE) roles={authenticated}
 //     USING: (auth.uid() = usuario_id)
@@ -663,4 +756,5 @@ export const Constants = {
 //     END LOOP;
 //   END;
 //   $function$
-//
+//   
+
