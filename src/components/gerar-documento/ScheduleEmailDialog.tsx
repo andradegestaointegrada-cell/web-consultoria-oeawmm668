@@ -6,11 +6,9 @@ import { CalendarIcon, Clock, Loader2, CalendarClock } from 'lucide-react'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { toast } from 'sonner'
-
 import { supabase } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
 import { cn } from '@/lib/utils'
-
 import {
   Dialog,
   DialogContent,
@@ -45,10 +43,9 @@ const formSchema = z.object({
   date: z.date({ required_error: 'Selecione a data de envio.' }),
   time: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, { message: 'Formato de hora inválido.' }),
 })
-
 type FormValues = z.infer<typeof formSchema>
 
-interface ScheduleEmailDialogProps {
+interface Props {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
   documentId: string
@@ -62,48 +59,32 @@ export function ScheduleEmailDialog({
   documentId,
   rowData,
   onSuccess,
-}: ScheduleEmailDialogProps) {
+}: Props) {
   const { user } = useAuth()
   const [isScheduling, setIsScheduling] = useState(false)
   const [templates, setTemplates] = useState<any[]>([])
-  const [isLoadingTemplates, setIsLoadingTemplates] = useState(false)
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: '',
-      templateId: '',
-      time: '09:00',
-    },
+    defaultValues: { email: '', templateId: '', time: '09:00' },
   })
 
   useEffect(() => {
     if (isOpen && user) {
-      const fetchTemplates = async () => {
-        setIsLoadingTemplates(true)
-        const { data } = await supabase
-          .from('email_templates')
-          .select('*')
-          .eq('usuario_id', user.id)
-          .order('nome')
-
-        if (data) setTemplates(data)
-        setIsLoadingTemplates(false)
-      }
-      fetchTemplates()
+      supabase
+        .from('email_templates')
+        .select('*')
+        .eq('usuario_id', user.id)
+        .order('nome')
+        .then(({ data }) => data && setTemplates(data))
 
       const potentialEmail = rowData?.email || rowData?.Email || rowData?.['E-mail'] || ''
-      if (potentialEmail) {
-        form.setValue('email', potentialEmail)
-      }
+      if (potentialEmail) form.setValue('email', potentialEmail)
     }
   }, [isOpen, user, rowData, form])
 
   const onSubmit = async (values: FormValues) => {
-    if (!documentId) {
-      toast.error('Nenhum documento selecionado.')
-      return
-    }
+    if (!documentId) return toast.error('Nenhum documento selecionado.')
     if (!user) return
 
     setIsScheduling(true)
@@ -124,9 +105,7 @@ export function ScheduleEmailDialog({
       onOpenChange(false)
       onSuccess?.()
     } catch (err: any) {
-      toast.error('Falha ao agendar envio', {
-        description: err.message,
-      })
+      toast.error('Falha ao agendar envio', { description: err.message })
     } finally {
       setIsScheduling(false)
     }
@@ -137,14 +116,12 @@ export function ScheduleEmailDialog({
       <DialogContent className="sm:max-w-[450px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <CalendarClock className="h-5 w-5 text-primary" />
-            Agendar Envio de Documento
+            <CalendarClock className="h-5 w-5 text-primary" /> Agendar Envio
           </DialogTitle>
           <DialogDescription>
-            Escolha a data e hora em que este documento deve ser enviado ao cliente.
+            Escolha a data e hora em que este documento deve ser enviado.
           </DialogDescription>
         </DialogHeader>
-
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-2">
             <FormField
@@ -153,18 +130,10 @@ export function ScheduleEmailDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Template de E-mail</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    disabled={isLoadingTemplates}
-                  >
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue
-                          placeholder={
-                            isLoadingTemplates ? 'Carregando...' : 'Selecione um template...'
-                          }
-                        />
+                        <SelectValue placeholder="Selecione um template..." />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -173,18 +142,12 @@ export function ScheduleEmailDialog({
                           {t.nome}
                         </SelectItem>
                       ))}
-                      {templates.length === 0 && !isLoadingTemplates && (
-                        <SelectItem value="none" disabled>
-                          Nenhum template cadastrado
-                        </SelectItem>
-                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="email"
@@ -198,7 +161,6 @@ export function ScheduleEmailDialog({
                 </FormItem>
               )}
             />
-
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -239,7 +201,6 @@ export function ScheduleEmailDialog({
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="time"
@@ -257,7 +218,6 @@ export function ScheduleEmailDialog({
                 )}
               />
             </div>
-
             <DialogFooter className="pt-4">
               <Button
                 type="button"
@@ -274,7 +234,7 @@ export function ScheduleEmailDialog({
                   </>
                 ) : (
                   <>
-                    <CalendarClock className="mr-2 h-4 w-4" /> Confirmar Agendamento
+                    <CalendarClock className="mr-2 h-4 w-4" /> Confirmar
                   </>
                 )}
               </Button>
