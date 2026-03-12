@@ -50,6 +50,61 @@ export type Database = {
           },
         ]
       }
+      mapeamento_placeholders: {
+        Row: {
+          coluna_excel_mapeada: string
+          data_criacao: string
+          id: string
+          placeholder_nome: string
+          template_id: string
+          tipo_dado: string
+          upload_excel_id: string
+          usuario_id: string
+        }
+        Insert: {
+          coluna_excel_mapeada: string
+          data_criacao?: string
+          id?: string
+          placeholder_nome: string
+          template_id: string
+          tipo_dado: string
+          upload_excel_id: string
+          usuario_id: string
+        }
+        Update: {
+          coluna_excel_mapeada?: string
+          data_criacao?: string
+          id?: string
+          placeholder_nome?: string
+          template_id?: string
+          tipo_dado?: string
+          upload_excel_id?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'mapeamento_placeholders_template_id_fkey'
+            columns: ['template_id']
+            isOneToOne: false
+            referencedRelation: 'templates'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'mapeamento_placeholders_upload_excel_id_fkey'
+            columns: ['upload_excel_id']
+            isOneToOne: false
+            referencedRelation: 'uploads_excel'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'mapeamento_placeholders_usuario_id_fkey'
+            columns: ['usuario_id']
+            isOneToOne: false
+            referencedRelation: 'usuarios'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       templates: {
         Row: {
           arquivo_docx_url: string | null
@@ -327,6 +382,15 @@ export const Constants = {
 //   status: text (not null)
 //   arquivo_url: text (nullable)
 //   conteudo: jsonb (nullable, default: '{}'::jsonb)
+// Table: mapeamento_placeholders
+//   id: uuid (not null, default: gen_random_uuid())
+//   template_id: uuid (not null)
+//   upload_excel_id: uuid (not null)
+//   usuario_id: uuid (not null)
+//   placeholder_nome: text (not null)
+//   coluna_excel_mapeada: text (not null)
+//   tipo_dado: text (not null)
+//   data_criacao: timestamp with time zone (not null, default: now())
 // Table: templates
 //   id: uuid (not null, default: gen_random_uuid())
 //   nome: text (not null)
@@ -362,6 +426,11 @@ export const Constants = {
 //   PRIMARY KEY documentos_pkey: PRIMARY KEY (id)
 //   CHECK documentos_status_check: CHECK ((status = ANY (ARRAY['rascunho'::text, 'finalizado'::text])))
 //   FOREIGN KEY documentos_usuario_id_fkey: FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+// Table: mapeamento_placeholders
+//   PRIMARY KEY mapeamento_placeholders_pkey: PRIMARY KEY (id)
+//   FOREIGN KEY mapeamento_placeholders_template_id_fkey: FOREIGN KEY (template_id) REFERENCES templates(id) ON DELETE CASCADE
+//   FOREIGN KEY mapeamento_placeholders_upload_excel_id_fkey: FOREIGN KEY (upload_excel_id) REFERENCES uploads_excel(id) ON DELETE CASCADE
+//   FOREIGN KEY mapeamento_placeholders_usuario_id_fkey: FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 // Table: templates
 //   PRIMARY KEY templates_pkey: PRIMARY KEY (id)
 //   FOREIGN KEY templates_usuario_id_fkey: FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
@@ -382,6 +451,16 @@ export const Constants = {
 //   Policy "Users can select their own documents" (SELECT, PERMISSIVE) roles={authenticated}
 //     USING: (auth.uid() = usuario_id)
 //   Policy "Users can update their own documents" (UPDATE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//     WITH CHECK: (auth.uid() = usuario_id)
+// Table: mapeamento_placeholders
+//   Policy "mapeamento_placeholders_delete" (DELETE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//   Policy "mapeamento_placeholders_insert" (INSERT, PERMISSIVE) roles={authenticated}
+//     WITH CHECK: (auth.uid() = usuario_id)
+//   Policy "mapeamento_placeholders_select" (SELECT, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//   Policy "mapeamento_placeholders_update" (UPDATE, PERMISSIVE) roles={authenticated}
 //     USING: (auth.uid() = usuario_id)
 //     WITH CHECK: (auth.uid() = usuario_id)
 // Table: templates

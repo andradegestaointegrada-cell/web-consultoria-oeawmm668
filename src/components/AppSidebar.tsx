@@ -8,6 +8,7 @@ import {
   LogOut,
   Database,
   Link2,
+  Cpu,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import {
@@ -29,6 +30,7 @@ const navItems = [
   { title: 'Fábrica de Documentos', url: '/documentos', icon: FileText },
   { title: 'Gerenciar Dados', url: '/gerenciar-dados', icon: Database },
   { title: 'Conectar Dados', url: '/mapeamento-placeholders', icon: Link2 },
+  { title: 'Gerar Documento', url: '/gerar-documento', icon: Cpu },
   { title: 'Auditorias', url: '/auditorias', icon: ClipboardCheck },
   { title: 'Configurações', url: '/configuracoes', icon: Settings },
 ]
