@@ -13,20 +13,16 @@ Deno.serve(async (req: Request) => {
 
     if (!tipo_documento || !nome_cliente || !descricao_breve) {
       return new Response(
-        JSON.stringify({
-          error: 'Parâmetros obrigatórios ausentes: tipo_documento, nome_cliente, descricao_breve',
-        }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+        JSON.stringify({ error: 'Parâmetros obrigatórios ausentes: tipo_documento, nome_cliente, descricao_breve' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
     const apiKey = Deno.env.get('GEMINI_API_KEY')
     if (!apiKey) {
       return new Response(
-        JSON.stringify({
-          error: 'GEMINI_API_KEY não configurada nas variáveis de ambiente do Supabase.',
-        }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+        JSON.stringify({ error: 'GEMINI_API_KEY não configurada nas variáveis de ambiente do Supabase.' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
@@ -69,20 +65,14 @@ Não inclua blocos de código markdown (\`\`\`json) na resposta. Retorne apenas 
             responseMimeType: 'application/json',
           },
         }),
-      },
+      }
     )
 
     if (!response.ok) {
       const errorText = await response.text()
       return new Response(
-        JSON.stringify({
-          error: 'Falha ao gerar conteúdo devido a um erro do provedor de IA.',
-          details: errorText,
-        }),
-        {
-          status: response.status,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        },
+        JSON.stringify({ error: 'Falha ao gerar conteúdo devido a um erro do provedor de IA.', details: errorText }),
+        { status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
@@ -90,10 +80,10 @@ Não inclua blocos de código markdown (\`\`\`json) na resposta. Retorne apenas 
     const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text
 
     if (!aiText) {
-      return new Response(JSON.stringify({ error: 'Nenhum conteúdo gerado pela IA.' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
+      return new Response(
+        JSON.stringify({ error: 'Nenhum conteúdo gerado pela IA.' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
     }
 
     let parsedResult
@@ -102,34 +92,31 @@ Não inclua blocos de código markdown (\`\`\`json) na resposta. Retorne apenas 
     } catch (e) {
       let cleanText = aiText.trim()
       const match = cleanText.match(/```(?:json)?\s*([\s\S]*?)\s*```/i)
-
+      
       if (match && match[1]) {
         cleanText = match[1].trim()
       } else {
-        cleanText = cleanText
-          .replace(/^```json\s*/i, '')
-          .replace(/```$/i, '')
-          .trim()
+        cleanText = cleanText.replace(/^```json\s*/i, '').replace(/```$/i, '').trim()
       }
-
+      
       try {
         parsedResult = JSON.parse(cleanText)
       } catch (err) {
         return new Response(
           JSON.stringify({ error: 'O conteúdo gerado não é um JSON válido.', rawText: aiText }),
-          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
       }
     }
 
-    return new Response(JSON.stringify(parsedResult), {
-      status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
+    return new Response(
+      JSON.stringify(parsedResult),
+      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message || 'Erro interno no servidor.' }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
+    return new Response(
+      JSON.stringify({ error: error.message || 'Erro interno no servidor.' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
   }
 })
