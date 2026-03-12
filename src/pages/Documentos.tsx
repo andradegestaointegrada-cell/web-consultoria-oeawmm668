@@ -1,15 +1,22 @@
 import { useState } from 'react'
-import { FileText, Search, FileDown, Edit, Filter } from 'lucide-react'
-import { Input } from '@/components/ui/input'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { CalendarIcon, FileText, Loader2, FileDown, Edit } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Calendar } from '@/components/ui/calendar'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Table,
   TableBody,
@@ -18,41 +25,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { DocumentForm } from '@/components/documents/DocumentForm'
-
-const templates = [
-  {
-    id: 1,
-    title: 'Relatório de Auditoria',
-    desc: 'Modelo padrão para relatórios finais',
-    category: 'Auditoria',
-  },
-  {
-    id: 2,
-    title: 'Contrato de Prestação',
-    desc: 'Contrato padrão de serviços B2B',
-    category: 'Jurídico',
-  },
-  {
-    id: 3,
-    title: 'Plano de Ação',
-    desc: 'Planejamento de correções e melhorias',
-    category: 'Gestão',
-  },
-  {
-    id: 4,
-    title: 'Termo de Confidencialidade',
-    desc: 'NDA padrão para novos projetos',
-    category: 'Jurídico',
-  },
-]
+import { toast } from 'sonner'
 
 const recentDocs = [
   { id: 'DOC-102', name: 'Auditoria_TechCorp.pdf', date: '12/10/2023', author: 'João Silva' },
@@ -61,124 +34,182 @@ const recentDocs = [
 ]
 
 export default function Documentos() {
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null)
+  const [docType, setDocType] = useState<string>('')
+  const [clientName, setClientName] = useState('')
+  const [date, setDate] = useState<Date>()
+  const [description, setDescription] = useState('')
+  const [isGenerating, setIsGenerating] = useState(false)
 
-  const handleGenerate = (title: string) => {
-    setSelectedTemplate(title)
-    setIsDialogOpen(true)
+  const handleGenerate = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!docType || !clientName || !date || !description) {
+      toast.error('Preencha todos os campos antes de gerar o documento.')
+      return
+    }
+
+    setIsGenerating(true)
+
+    setTimeout(() => {
+      setIsGenerating(false)
+      toast.success('Documento gerado com sucesso!', {
+        description: `${docType} para ${clientName} foi processado.`,
+      })
+
+      setDocType('')
+      setClientName('')
+      setDate(undefined)
+      setDescription('')
+    }, 1500)
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Fábrica de Documentos</h1>
-          <p className="text-muted-foreground">Gere contratos, relatórios e planos rapidamente.</p>
-        </div>
+    <div className="space-y-6 max-w-6xl mx-auto">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight">Fábrica de Documentos</h1>
+        <p className="text-muted-foreground">Preencha o formulário para gerar um novo documento.</p>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 bg-white p-4 rounded-xl border shadow-sm">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Buscar templates..." className="pl-9 h-10" />
-        </div>
-        <div className="flex items-center gap-2">
-          <Filter className="h-4 w-4 text-muted-foreground" />
-          <Select defaultValue="todos">
-            <SelectTrigger className="w-[180px] h-10">
-              <SelectValue placeholder="Categoria" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="todos">Todas Categorias</SelectItem>
-              <SelectItem value="auditoria">Auditoria</SelectItem>
-              <SelectItem value="juridico">Jurídico</SelectItem>
-              <SelectItem value="gestao">Gestão</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {templates.map((tpl) => (
-          <Card
-            key={tpl.id}
-            className="group hover:border-primary/50 transition-colors shadow-sm flex flex-col"
-          >
-            <CardHeader className="pb-3">
-              <div className="flex justify-between items-start">
-                <div className="p-2 bg-blue-50 rounded-lg text-blue-600 mb-2">
-                  <FileText className="h-5 w-5" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <Card className="lg:col-span-2 shadow-sm border-slate-200">
+          <CardHeader>
+            <CardTitle>Novo Documento</CardTitle>
+            <CardDescription>Insira os dados do cliente e detalhes do projeto.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleGenerate} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="docType">Tipo de Documento</Label>
+                  <Select value={docType} onValueChange={setDocType}>
+                    <SelectTrigger id="docType">
+                      <SelectValue placeholder="Selecione o tipo..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Proposta Comercial">Proposta Comercial</SelectItem>
+                      <SelectItem value="Relatório de Auditoria">Relatório de Auditoria</SelectItem>
+                      <SelectItem value="Manual de Procedimentos">
+                        Manual de Procedimentos
+                      </SelectItem>
+                      <SelectItem value="Instrução de Trabalho">Instrução de Trabalho</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
-                <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded-full">
-                  {tpl.category}
-                </span>
+
+                <div className="space-y-2">
+                  <Label htmlFor="clientName">Nome do Cliente</Label>
+                  <Input
+                    id="clientName"
+                    placeholder="Ex: Tech Solutions Ltda"
+                    value={clientName}
+                    onChange={(e) => setClientName(e.target.value)}
+                  />
+                </div>
               </div>
-              <CardTitle className="text-base">{tpl.title}</CardTitle>
-              <CardDescription className="text-xs line-clamp-2">{tpl.desc}</CardDescription>
-            </CardHeader>
-            <CardContent className="mt-auto pt-0">
-              <Button
-                variant="outline"
-                className="w-full group-hover:bg-primary group-hover:text-white transition-colors"
-                onClick={() => handleGenerate(tpl.title)}
-              >
-                Gerar Agora
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
 
-      <Card className="shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-lg">Documentos Recentes</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Arquivo</TableHead>
-                <TableHead>Data de Geração</TableHead>
-                <TableHead>Gerado por</TableHead>
-                <TableHead className="text-right">Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {recentDocs.map((doc) => (
-                <TableRow key={doc.id}>
-                  <TableCell className="font-medium flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-slate-400" />
-                    {doc.name}
-                  </TableCell>
-                  <TableCell>{doc.date}</TableCell>
-                  <TableCell>{doc.author}</TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" title="Editar">
-                      <Edit className="h-4 w-4" />
+              <div className="space-y-2 flex flex-col">
+                <Label htmlFor="date">Data</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      id="date"
+                      variant="outline"
+                      className={cn(
+                        'w-full md:max-w-[240px] justify-start text-left font-normal',
+                        !date && 'text-muted-foreground',
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date ? (
+                        format(date, 'dd/MM/yyyy', { locale: ptBR })
+                      ) : (
+                        <span>Selecione uma data</span>
+                      )}
                     </Button>
-                    <Button variant="ghost" size="icon" title="Download">
-                      <FileDown className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="description">Descrição Breve</Label>
+                <Textarea
+                  id="description"
+                  placeholder="Descreva brevemente o propósito ou escopo deste documento..."
+                  className="min-h-[120px] resize-none"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
+
+              <div className="pt-2">
+                <Button
+                  type="submit"
+                  className="w-full md:w-auto h-11 px-8 text-base font-medium shadow-sm hover:shadow-md transition-all"
+                  disabled={isGenerating}
+                >
+                  {isGenerating ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Processando...
+                    </>
+                  ) : (
+                    'Gerar Documento'
+                  )}
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-sm border-slate-200 h-fit">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg">Gerados Recentemente</CardTitle>
+            <CardDescription>Seus últimos documentos criados</CardDescription>
+          </CardHeader>
+          <CardContent className="px-0">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent border-slate-100">
+                  <TableHead className="font-semibold text-slate-600">Arquivo</TableHead>
+                  <TableHead className="font-semibold text-slate-600 text-right">Ações</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Gerar {selectedTemplate}</DialogTitle>
-            <DialogDescription>
-              Preencha os dados abaixo para gerar o documento automaticamente.
-            </DialogDescription>
-          </DialogHeader>
-          <DocumentForm onSuccess={() => setIsDialogOpen(false)} />
-        </DialogContent>
-      </Dialog>
+              </TableHeader>
+              <TableBody>
+                {recentDocs.map((doc) => (
+                  <TableRow key={doc.id} className="border-slate-100">
+                    <TableCell className="font-medium">
+                      <div className="flex items-center gap-2">
+                        <div className="p-2 bg-slate-100 rounded-md text-slate-500">
+                          <FileText className="h-4 w-4" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-sm truncate w-[140px] text-slate-900">
+                            {doc.name}
+                          </span>
+                          <span className="text-xs text-slate-500">{doc.date}</span>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-1">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500">
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500">
+                          <FileDown className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }

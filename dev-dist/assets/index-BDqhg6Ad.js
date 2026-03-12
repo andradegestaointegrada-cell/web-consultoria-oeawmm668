@@ -6,6 +6,15 @@ var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __commonJSMin = (cb, mod) => () => (mod || cb((mod = { exports: {} }).exports, mod), mod.exports);
+var __exportAll = (all, no_symbols) => {
+	let target = {};
+	for (var name in all) __defProp(target, name, {
+		get: all[name],
+		enumerable: true
+	});
+	if (!no_symbols) __defProp(target, Symbol.toStringTag, { value: "Module" });
+	return target;
+};
 var __copyProps = (to, from, except, desc) => {
 	if (from && typeof from === "object" || typeof from === "function") for (var keys = __getOwnPropNames(from), i = 0, n = keys.length, key; i < n; i++) {
 		key = keys[i];
@@ -18133,15 +18142,15 @@ function handleAndDispatchCustomEvent$1(name, handler, detail, { discrete }) {
 	if (discrete) dispatchDiscreteCustomEvent(target, event);
 	else target.dispatchEvent(event);
 }
-var Root$8 = DismissableLayer;
+var Root$9 = DismissableLayer;
 var Branch = DismissableLayerBranch;
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@radix-ui+react-use-layout-effect@1.1.1_@types+react@19.2.14_react@19.2.4/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs
 var useLayoutEffect2 = globalThis?.document ? import_react.useLayoutEffect : () => {};
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@radix-ui+react-portal@1.1.9_@types+react-dom@19.2.3_@types+react@19.2.14__@types+react_7668895bec2444446faa4e0f4eb5244b/node_modules/@radix-ui/react-portal/dist/index.mjs
-var PORTAL_NAME$5 = "Portal";
-var Portal$3 = import_react.forwardRef((props, forwardedRef) => {
+var PORTAL_NAME$6 = "Portal";
+var Portal$4 = import_react.forwardRef((props, forwardedRef) => {
 	const { container: containerProp, ...portalProps } = props;
 	const [mounted, setMounted] = import_react.useState(false);
 	useLayoutEffect2(() => setMounted(true), []);
@@ -18151,7 +18160,7 @@ var Portal$3 = import_react.forwardRef((props, forwardedRef) => {
 		ref: forwardedRef
 	}), container) : null;
 });
-Portal$3.displayName = PORTAL_NAME$5;
+Portal$4.displayName = PORTAL_NAME$6;
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@radix-ui+react-presence@1.1.5_@types+react-dom@19.2.3_@types+react@19.2.14__@types+rea_c01c26c80b5ab5e3ecefbda6eca51ad1/node_modules/@radix-ui/react-presence/dist/index.mjs
 function useStateMachine(initialState, machine) {
@@ -18333,7 +18342,7 @@ var VisuallyHidden = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 VisuallyHidden.displayName = NAME$3;
-var Root$7 = VisuallyHidden;
+var Root$8 = VisuallyHidden;
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@radix-ui+react-toast@1.2.15_@types+react-dom@19.2.3_@types+react@19.2.14__@types+react_4581e89c6ba13e4159ce65546c8b2a16/node_modules/@radix-ui/react-toast/dist/index.mjs
 var PROVIDER_NAME$1 = "ToastProvider";
@@ -18633,7 +18642,7 @@ var ToastImpl = import_react.forwardRef((props, forwardedRef) => {
 		onClose: handleClose,
 		children: import_react_dom.createPortal(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Collection$3.ItemSlot, {
 			scope: __scopeToast,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$8, {
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$9, {
 				asChild: true,
 				onEscapeKeyDown: composeEventHandlers(onEscapeKeyDown, () => {
 					if (!context.isFocusedToastEscapeKeyDownRef.current) handleClose();
@@ -18724,7 +18733,7 @@ var ToastAnnounce = (props) => {
 		const timer = window.setTimeout(() => setIsAnnounced(true), 1e3);
 		return () => window.clearTimeout(timer);
 	}, []);
-	return isAnnounced ? null : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$3, {
+	return isAnnounced ? null : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$4, {
 		asChild: true,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, {
 			...announceProps,
@@ -18771,10 +18780,10 @@ var ToastAction$1 = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 ToastAction$1.displayName = ACTION_NAME;
-var CLOSE_NAME$1 = "ToastClose";
+var CLOSE_NAME$2 = "ToastClose";
 var ToastClose$1 = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeToast, ...closeProps } = props;
-	const interactiveContext = useToastInteractiveContext(CLOSE_NAME$1, __scopeToast);
+	const interactiveContext = useToastInteractiveContext(CLOSE_NAME$2, __scopeToast);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToastAnnounceExclude, {
 		asChild: true,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Primitive$1.button, {
@@ -18785,7 +18794,7 @@ var ToastClose$1 = import_react.forwardRef((props, forwardedRef) => {
 		})
 	});
 });
-ToastClose$1.displayName = CLOSE_NAME$1;
+ToastClose$1.displayName = CLOSE_NAME$2;
 var ToastAnnounceExclude = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeToast, altText, ...announceExcludeProps } = props;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Primitive$1.div, {
@@ -18863,7 +18872,7 @@ function focusFirst$3(candidates) {
 }
 var Provider$1 = ToastProvider$1;
 var Viewport$1 = ToastViewport$1;
-var Root2$4 = Toast$2;
+var Root2$5 = Toast$2;
 var Title$1 = ToastTitle$1;
 var Description$1 = ToastDescription$1;
 var Action = ToastAction$1;
@@ -19063,7 +19072,7 @@ var Briefcase = createLucideIcon("briefcase", [["path", {
 	rx: "2",
 	key: "i6l2r4"
 }]]);
-var Calendar = createLucideIcon("calendar", [
+var Calendar$1 = createLucideIcon("calendar", [
 	["path", {
 		d: "M8 2v4",
 		key: "1cmpym"
@@ -19104,15 +19113,6 @@ var ChevronRight = createLucideIcon("chevron-right", [["path", {
 var ChevronUp = createLucideIcon("chevron-up", [["path", {
 	d: "m18 15-6-6-6 6",
 	key: "153udz"
-}]]);
-var CircleCheck = createLucideIcon("circle-check", [["circle", {
-	cx: "12",
-	cy: "12",
-	r: "10",
-	key: "1mglay"
-}], ["path", {
-	d: "m9 12 2 2 4-4",
-	key: "dzmm74"
 }]]);
 var CirclePlus = createLucideIcon("circle-plus", [
 	["circle", {
@@ -19224,10 +19224,6 @@ var FileText = createLucideIcon("file-text", [
 		key: "z1uh3a"
 	}]
 ]);
-var Funnel = createLucideIcon("funnel", [["path", {
-	d: "M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z",
-	key: "sc7q7i"
-}]]);
 var LayoutDashboard = createLucideIcon("layout-dashboard", [
 	["rect", {
 		width: "7",
@@ -19262,6 +19258,10 @@ var LayoutDashboard = createLucideIcon("layout-dashboard", [
 		key: "ldoo1y"
 	}]
 ]);
+var LoaderCircle = createLucideIcon("loader-circle", [["path", {
+	d: "M21 12a9 9 0 1 1-6.219-8.56",
+	key: "13zald"
+}]]);
 var LogOut = createLucideIcon("log-out", [
 	["path", {
 		d: "m16 17 5-5-5-5",
@@ -20803,7 +20803,7 @@ var toastVariants = cva("group pointer-events-auto relative flex w-full items-ce
 	defaultVariants: { variant: "default" }
 });
 var Toast$1 = import_react.forwardRef(({ className, variant, ...props }, ref) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root2$4, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root2$5, {
 		"data-uid": "src/components/ui/toast.tsx:47:5",
 		"data-prohibitions": "[editContent]",
 		ref,
@@ -20811,7 +20811,7 @@ var Toast$1 = import_react.forwardRef(({ className, variant, ...props }, ref) =>
 		...props
 	});
 });
-Toast$1.displayName = Root2$4.displayName;
+Toast$1.displayName = Root2$5.displayName;
 var ToastAction = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Action, {
 	"data-uid": "src/components/ui/toast.tsx:60:3",
 	"data-prohibitions": "[editContent]",
@@ -21880,8 +21880,8 @@ var sides = [
 	"bottom",
 	"left"
 ];
-var min = Math.min;
-var max = Math.max;
+var min$1 = Math.min;
+var max$1 = Math.max;
 var round = Math.round;
 var floor = Math.floor;
 var createCoords = (v) => ({
@@ -21895,7 +21895,7 @@ var oppositeSideMap = {
 	top: "bottom"
 };
 function clamp$1(start, value, end) {
-	return max(start, min(value, end));
+	return max$1(start, min$1(value, end));
 }
 function evaluate(value, param) {
 	return typeof value === "function" ? value(param) : value;
@@ -22199,14 +22199,14 @@ var arrow$3 = (options) => ({
 		if (!clientSize || !await (platform.isElement == null ? void 0 : platform.isElement(arrowOffsetParent))) clientSize = elements.floating[clientProp] || rects.floating[length];
 		const centerToReference = endDiff / 2 - startDiff / 2;
 		const largestPossiblePadding = clientSize / 2 - arrowDimensions[length] / 2 - 1;
-		const minPadding = min(paddingObject[minProp], largestPossiblePadding);
-		const maxPadding = min(paddingObject[maxProp], largestPossiblePadding);
-		const min$1 = minPadding;
+		const minPadding = min$1(paddingObject[minProp], largestPossiblePadding);
+		const maxPadding = min$1(paddingObject[maxProp], largestPossiblePadding);
+		const min$1$1 = minPadding;
 		const max = clientSize - arrowDimensions[length] - maxPadding;
 		const center = clientSize / 2 - arrowDimensions[length] / 2 + centerToReference;
-		const offset = clamp$1(min$1, center, max);
-		const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset && rects.reference[length] / 2 - (center < min$1 ? minPadding : maxPadding) - arrowDimensions[length] / 2 < 0;
-		const alignmentOffset = shouldAddOffset ? center < min$1 ? center - min$1 : center - max : 0;
+		const offset = clamp$1(min$1$1, center, max);
+		const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset && rects.reference[length] / 2 - (center < min$1$1 ? minPadding : maxPadding) - arrowDimensions[length] / 2 < 0;
+		const alignmentOffset = shouldAddOffset ? center < min$1$1 ? center - min$1$1 : center - max : 0;
 		return {
 			[axis]: coords[axis] + alignmentOffset,
 			data: {
@@ -22539,20 +22539,20 @@ var size$2 = function(options) {
 			}
 			const maximumClippingHeight = height - overflow.top - overflow.bottom;
 			const maximumClippingWidth = width - overflow.left - overflow.right;
-			const overflowAvailableHeight = min(height - overflow[heightSide], maximumClippingHeight);
-			const overflowAvailableWidth = min(width - overflow[widthSide], maximumClippingWidth);
+			const overflowAvailableHeight = min$1(height - overflow[heightSide], maximumClippingHeight);
+			const overflowAvailableWidth = min$1(width - overflow[widthSide], maximumClippingWidth);
 			const noShift = !state.middlewareData.shift;
 			let availableHeight = overflowAvailableHeight;
 			let availableWidth = overflowAvailableWidth;
 			if ((_state$middlewareData = state.middlewareData.shift) != null && _state$middlewareData.enabled.x) availableWidth = maximumClippingWidth;
 			if ((_state$middlewareData2 = state.middlewareData.shift) != null && _state$middlewareData2.enabled.y) availableHeight = maximumClippingHeight;
 			if (noShift && !alignment) {
-				const xMin = max(overflow.left, 0);
-				const xMax = max(overflow.right, 0);
-				const yMin = max(overflow.top, 0);
-				const yMax = max(overflow.bottom, 0);
-				if (isYAxis) availableWidth = width - 2 * (xMin !== 0 || xMax !== 0 ? xMin + xMax : max(overflow.left, overflow.right));
-				else availableHeight = height - 2 * (yMin !== 0 || yMax !== 0 ? yMin + yMax : max(overflow.top, overflow.bottom));
+				const xMin = max$1(overflow.left, 0);
+				const xMax = max$1(overflow.right, 0);
+				const yMin = max$1(overflow.top, 0);
+				const yMax = max$1(overflow.bottom, 0);
+				if (isYAxis) availableWidth = width - 2 * (xMin !== 0 || xMax !== 0 ? xMin + xMax : max$1(overflow.left, overflow.right));
+				else availableHeight = height - 2 * (yMin !== 0 || yMax !== 0 ? yMin + yMax : max$1(overflow.top, overflow.bottom));
 			}
 			await apply({
 				...state,
@@ -22820,11 +22820,11 @@ function getDocumentRect(element) {
 	const html = getDocumentElement(element);
 	const scroll = getNodeScroll(element);
 	const body = element.ownerDocument.body;
-	const width = max(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
-	const height = max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
+	const width = max$1(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
+	const height = max$1(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
 	let x = -scroll.scrollLeft + getWindowScrollBarX(element);
 	const y = -scroll.scrollTop;
-	if (getComputedStyle$1(body).direction === "rtl") x += max(html.clientWidth, body.clientWidth) - width;
+	if (getComputedStyle$1(body).direction === "rtl") x += max$1(html.clientWidth, body.clientWidth) - width;
 	return {
 		width,
 		height,
@@ -22927,10 +22927,10 @@ function getClippingRect(_ref) {
 	let left = firstRect.left;
 	for (let i = 1; i < clippingAncestors.length; i++) {
 		const rect = getClientRectFromClippingAncestor(element, clippingAncestors[i], strategy);
-		top = max(rect.top, top);
-		right = min(rect.right, right);
-		bottom = min(rect.bottom, bottom);
-		left = max(rect.left, left);
+		top = max$1(rect.top, top);
+		right = min$1(rect.right, right);
+		bottom = min$1(rect.bottom, bottom);
+		left = max$1(rect.left, left);
 	}
 	return {
 		width: right - left,
@@ -23058,7 +23058,7 @@ function observeMove(element, onMove) {
 		const insetLeft = floor(left);
 		const options = {
 			rootMargin: -insetTop + "px " + -insetRight + "px " + -insetBottom + "px " + -insetLeft + "px",
-			threshold: max(0, min(1, threshold)) || 1
+			threshold: max$1(0, min$1(1, threshold)) || 1
 		};
 		let isFirstUpdate = true;
 		function handleObserve(entries) {
@@ -23537,7 +23537,7 @@ var Arrow$1 = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 Arrow$1.displayName = NAME$2;
-var Root$6 = Arrow$1;
+var Root$7 = Arrow$1;
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@radix-ui+react-use-size@1.1.1_@types+react@19.2.14_react@19.2.4/node_modules/@radix-ui/react-use-size/dist/index.mjs
 function useSize(element) {
@@ -23590,10 +23590,10 @@ var Popper = (props) => {
 	});
 };
 Popper.displayName = POPPER_NAME;
-var ANCHOR_NAME$1 = "PopperAnchor";
+var ANCHOR_NAME$2 = "PopperAnchor";
 var PopperAnchor = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopePopper, virtualRef, ...anchorProps } = props;
-	const context = usePopperContext(ANCHOR_NAME$1, __scopePopper);
+	const context = usePopperContext(ANCHOR_NAME$2, __scopePopper);
 	const ref = import_react.useRef(null);
 	const composedRefs = useComposedRefs(forwardedRef, ref);
 	const anchorRef = import_react.useRef(null);
@@ -23607,12 +23607,12 @@ var PopperAnchor = import_react.forwardRef((props, forwardedRef) => {
 		ref: composedRefs
 	});
 });
-PopperAnchor.displayName = ANCHOR_NAME$1;
-var CONTENT_NAME$6 = "PopperContent";
-var [PopperContentProvider, useContentContext] = createPopperContext(CONTENT_NAME$6);
+PopperAnchor.displayName = ANCHOR_NAME$2;
+var CONTENT_NAME$7 = "PopperContent";
+var [PopperContentProvider, useContentContext] = createPopperContext(CONTENT_NAME$7);
 var PopperContent = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopePopper, side = "bottom", sideOffset = 0, align = "center", alignOffset = 0, arrowPadding = 0, avoidCollisions = true, collisionBoundary = [], collisionPadding: collisionPaddingProp = 0, sticky = "partial", hideWhenDetached = false, updatePositionStrategy = "optimized", onPlaced, ...contentProps } = props;
-	const context = usePopperContext(CONTENT_NAME$6, __scopePopper);
+	const context = usePopperContext(CONTENT_NAME$7, __scopePopper);
 	const [content, setContent] = import_react.useState(null);
 	const composedRefs = useComposedRefs(forwardedRef, (node) => setContent(node));
 	const [arrow$4, setArrow] = import_react.useState(null);
@@ -23725,8 +23725,8 @@ var PopperContent = import_react.forwardRef((props, forwardedRef) => {
 		})
 	});
 });
-PopperContent.displayName = CONTENT_NAME$6;
-var ARROW_NAME$4 = "PopperArrow";
+PopperContent.displayName = CONTENT_NAME$7;
+var ARROW_NAME$5 = "PopperArrow";
 var OPPOSITE_SIDE = {
 	top: "bottom",
 	right: "left",
@@ -23735,7 +23735,7 @@ var OPPOSITE_SIDE = {
 };
 var PopperArrow = import_react.forwardRef(function PopperArrow2(props, forwardedRef) {
 	const { __scopePopper, ...arrowProps } = props;
-	const contentContext = useContentContext(ARROW_NAME$4, __scopePopper);
+	const contentContext = useContentContext(ARROW_NAME$5, __scopePopper);
 	const baseSide = OPPOSITE_SIDE[contentContext.placedSide];
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 		ref: contentContext.onArrowChange,
@@ -23758,7 +23758,7 @@ var PopperArrow = import_react.forwardRef(function PopperArrow2(props, forwarded
 			}[contentContext.placedSide],
 			visibility: contentContext.shouldHideArrow ? "hidden" : void 0
 		},
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$6, {
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$7, {
 			...arrowProps,
 			ref: forwardedRef,
 			style: {
@@ -23768,7 +23768,7 @@ var PopperArrow = import_react.forwardRef(function PopperArrow2(props, forwarded
 		})
 	});
 });
-PopperArrow.displayName = ARROW_NAME$4;
+PopperArrow.displayName = ARROW_NAME$5;
 function isNotNull(value) {
 	return value !== null;
 }
@@ -23813,14 +23813,14 @@ function getSideAndAlignFromPlacement(placement) {
 	const [side, align = "center"] = placement.split("-");
 	return [side, align];
 }
-var Root2$3 = Popper;
+var Root2$4 = Popper;
 var Anchor = PopperAnchor;
 var Content$2 = PopperContent;
 var Arrow = PopperArrow;
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@radix-ui+react-tooltip@1.2.8_@types+react-dom@19.2.3_@types+react@19.2.14__@types+reac_9074d9fb06315b089b2bee17c4c65951/node_modules/@radix-ui/react-tooltip/dist/index.mjs
 var [createTooltipContext, createTooltipScope] = createContextScope$1("Tooltip", [createPopperScope]);
-var usePopperScope$2 = createPopperScope();
+var usePopperScope$3 = createPopperScope();
 var PROVIDER_NAME = "TooltipProvider";
 var DEFAULT_DELAY_DURATION = 700;
 var TOOLTIP_OPEN = "tooltip.open";
@@ -23860,7 +23860,7 @@ var [TooltipContextProvider, useTooltipContext] = createTooltipContext(TOOLTIP_N
 var Tooltip$1 = (props) => {
 	const { __scopeTooltip, children, open: openProp, defaultOpen, onOpenChange, disableHoverableContent: disableHoverableContentProp, delayDuration: delayDurationProp } = props;
 	const providerContext = useTooltipProviderContext(TOOLTIP_NAME, props.__scopeTooltip);
-	const popperScope = usePopperScope$2(__scopeTooltip);
+	const popperScope = usePopperScope$3(__scopeTooltip);
 	const [trigger, setTrigger] = import_react.useState(null);
 	const contentId = useId();
 	const openTimerRef = import_react.useRef(0);
@@ -23909,7 +23909,7 @@ var Tooltip$1 = (props) => {
 			}
 		};
 	}, []);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root2$3, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root2$4, {
 		...popperScope,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipContextProvider, {
 			scope: __scopeTooltip,
@@ -23941,12 +23941,12 @@ var Tooltip$1 = (props) => {
 	});
 };
 Tooltip$1.displayName = TOOLTIP_NAME;
-var TRIGGER_NAME$5 = "TooltipTrigger";
+var TRIGGER_NAME$6 = "TooltipTrigger";
 var TooltipTrigger$1 = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeTooltip, ...triggerProps } = props;
-	const context = useTooltipContext(TRIGGER_NAME$5, __scopeTooltip);
-	const providerContext = useTooltipProviderContext(TRIGGER_NAME$5, __scopeTooltip);
-	const popperScope = usePopperScope$2(__scopeTooltip);
+	const context = useTooltipContext(TRIGGER_NAME$6, __scopeTooltip);
+	const providerContext = useTooltipProviderContext(TRIGGER_NAME$6, __scopeTooltip);
+	const popperScope = usePopperScope$3(__scopeTooltip);
 	const composedRefs = useComposedRefs(forwardedRef, import_react.useRef(null), context.onTriggerChange);
 	const isPointerDownRef = import_react.useRef(false);
 	const hasPointerMoveOpenedRef = import_react.useRef(false);
@@ -23986,18 +23986,18 @@ var TooltipTrigger$1 = import_react.forwardRef((props, forwardedRef) => {
 		})
 	});
 });
-TooltipTrigger$1.displayName = TRIGGER_NAME$5;
-var PORTAL_NAME$4 = "TooltipPortal";
-var [PortalProvider$2, usePortalContext$2] = createTooltipContext(PORTAL_NAME$4, { forceMount: void 0 });
+TooltipTrigger$1.displayName = TRIGGER_NAME$6;
+var PORTAL_NAME$5 = "TooltipPortal";
+var [PortalProvider$3, usePortalContext$3] = createTooltipContext(PORTAL_NAME$5, { forceMount: void 0 });
 var TooltipPortal = (props) => {
 	const { __scopeTooltip, forceMount, children, container } = props;
-	const context = useTooltipContext(PORTAL_NAME$4, __scopeTooltip);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PortalProvider$2, {
+	const context = useTooltipContext(PORTAL_NAME$5, __scopeTooltip);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PortalProvider$3, {
 		scope: __scopeTooltip,
 		forceMount,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Presence, {
 			present: forceMount || context.open,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$3, {
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$4, {
 				asChild: true,
 				container,
 				children
@@ -24005,12 +24005,12 @@ var TooltipPortal = (props) => {
 		})
 	});
 };
-TooltipPortal.displayName = PORTAL_NAME$4;
-var CONTENT_NAME$5 = "TooltipContent";
+TooltipPortal.displayName = PORTAL_NAME$5;
+var CONTENT_NAME$6 = "TooltipContent";
 var TooltipContent$1 = import_react.forwardRef((props, forwardedRef) => {
-	const portalContext = usePortalContext$2(CONTENT_NAME$5, props.__scopeTooltip);
+	const portalContext = usePortalContext$3(CONTENT_NAME$6, props.__scopeTooltip);
 	const { forceMount = portalContext.forceMount, side = "top", ...contentProps } = props;
-	const context = useTooltipContext(CONTENT_NAME$5, props.__scopeTooltip);
+	const context = useTooltipContext(CONTENT_NAME$6, props.__scopeTooltip);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Presence, {
 		present: forceMount || context.open,
 		children: context.disableHoverableContent ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipContentImpl, {
@@ -24025,8 +24025,8 @@ var TooltipContent$1 = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 var TooltipContentHoverable = import_react.forwardRef((props, forwardedRef) => {
-	const context = useTooltipContext(CONTENT_NAME$5, props.__scopeTooltip);
-	const providerContext = useTooltipProviderContext(CONTENT_NAME$5, props.__scopeTooltip);
+	const context = useTooltipContext(CONTENT_NAME$6, props.__scopeTooltip);
+	const providerContext = useTooltipProviderContext(CONTENT_NAME$6, props.__scopeTooltip);
 	const ref = import_react.useRef(null);
 	const composedRefs = useComposedRefs(forwardedRef, ref);
 	const [pointerGraceArea, setPointerGraceArea] = import_react.useState(null);
@@ -24103,8 +24103,8 @@ var [VisuallyHiddenContentContextProvider, useVisuallyHiddenContentContext] = cr
 var Slottable = /* @__PURE__ */ createSlottable("TooltipContent");
 var TooltipContentImpl = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeTooltip, children, "aria-label": ariaLabel, onEscapeKeyDown, onPointerDownOutside, ...contentProps } = props;
-	const context = useTooltipContext(CONTENT_NAME$5, __scopeTooltip);
-	const popperScope = usePopperScope$2(__scopeTooltip);
+	const context = useTooltipContext(CONTENT_NAME$6, __scopeTooltip);
+	const popperScope = usePopperScope$3(__scopeTooltip);
 	const { onClose } = context;
 	import_react.useEffect(() => {
 		document.addEventListener(TOOLTIP_OPEN, onClose);
@@ -24142,7 +24142,7 @@ var TooltipContentImpl = import_react.forwardRef((props, forwardedRef) => {
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Slottable, { children }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHiddenContentContextProvider, {
 				scope: __scopeTooltip,
 				isInside: true,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$7, {
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$8, {
 					id: context.contentId,
 					role: "tooltip",
 					children: ariaLabel || children
@@ -24151,18 +24151,18 @@ var TooltipContentImpl = import_react.forwardRef((props, forwardedRef) => {
 		})
 	});
 });
-TooltipContent$1.displayName = CONTENT_NAME$5;
-var ARROW_NAME$3 = "TooltipArrow";
+TooltipContent$1.displayName = CONTENT_NAME$6;
+var ARROW_NAME$4 = "TooltipArrow";
 var TooltipArrow = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeTooltip, ...arrowProps } = props;
-	const popperScope = usePopperScope$2(__scopeTooltip);
-	return useVisuallyHiddenContentContext(ARROW_NAME$3, __scopeTooltip).isInside ? null : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Arrow, {
+	const popperScope = usePopperScope$3(__scopeTooltip);
+	return useVisuallyHiddenContentContext(ARROW_NAME$4, __scopeTooltip).isInside ? null : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Arrow, {
 		...popperScope,
 		...arrowProps,
 		ref: forwardedRef
 	});
 });
-TooltipArrow.displayName = ARROW_NAME$3;
+TooltipArrow.displayName = ARROW_NAME$4;
 function getExitSideFromRect(point, rect) {
 	const top = Math.abs(rect.top - point.y);
 	const bottom = Math.abs(rect.bottom - point.y);
@@ -24295,14 +24295,14 @@ function getHullPresorted(points) {
 }
 var Provider = TooltipProvider$1;
 var Root3$1 = Tooltip$1;
-var Trigger$4 = TooltipTrigger$1;
-var Content2$3 = TooltipContent$1;
+var Trigger$5 = TooltipTrigger$1;
+var Content2$4 = TooltipContent$1;
 //#endregion
 //#region src/components/ui/tooltip.tsx
 var TooltipProvider = Provider;
 var Tooltip = Root3$1;
-var TooltipTrigger = Trigger$4;
-var TooltipContent = import_react.forwardRef(({ className, sideOffset = 4, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content2$3, {
+var TooltipTrigger = Trigger$5;
+var TooltipContent = import_react.forwardRef(({ className, sideOffset = 4, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content2$4, {
 	"data-uid": "src/components/ui/tooltip.tsx:17:3",
 	"data-prohibitions": "[editContent]",
 	ref,
@@ -24310,7 +24310,7 @@ var TooltipContent = import_react.forwardRef(({ className, sideOffset = 4, ...pr
 	className: cn$1("z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-tooltip-content-transform-origin]", className),
 	...props
 }));
-TooltipContent.displayName = Content2$3.displayName;
+TooltipContent.displayName = Content2$4.displayName;
 //#endregion
 //#region src/contexts/AuthContext.tsx
 var AuthContext = (0, import_react.createContext)(void 0);
@@ -24402,7 +24402,7 @@ function createSlot(ownerName) {
 	Slot2.displayName = `${ownerName}.Slot`;
 	return Slot2;
 }
-var Slot$3 = /* @__PURE__ */ createSlot("Slot");
+var Slot$4 = /* @__PURE__ */ createSlot("Slot");
 /* @__NO_SIDE_EFFECTS__ */
 function createSlotClone(ownerName) {
 	const SlotClone = import_react.forwardRef((props, forwardedRef) => {
@@ -24495,8 +24495,8 @@ var buttonVariants = cva("inline-flex items-center justify-center gap-2 whitespa
 		size: "default"
 	}
 });
-var Button = import_react.forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(asChild ? Slot$3 : "button", {
+var Button$1 = import_react.forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(asChild ? Slot$4 : "button", {
 		"data-uid": "src/components/ui/button.tsx:44:7",
 		"data-prohibitions": "[editContent]",
 		className: cn$1(buttonVariants({
@@ -24508,7 +24508,7 @@ var Button = import_react.forwardRef(({ className, variant, size, asChild = fals
 		...props
 	});
 });
-Button.displayName = "Button";
+Button$1.displayName = "Button";
 //#endregion
 //#region src/components/ui/input.tsx
 var Input = import_react.forwardRef(({ className, type, ...props }, ref) => {
@@ -24583,10 +24583,10 @@ Separator$3.displayName = NAME$1;
 function isValidOrientation(orientation) {
 	return ORIENTATIONS.includes(orientation);
 }
-var Root$5 = Separator$3;
+var Root$6 = Separator$3;
 //#endregion
 //#region src/components/ui/separator.tsx
-var Separator$2 = import_react.forwardRef(({ className, orientation = "horizontal", decorative = true, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$5, {
+var Separator$2 = import_react.forwardRef(({ className, orientation = "horizontal", decorative = true, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$6, {
 	"data-uid": "src/components/ui/separator.tsx:11:3",
 	"data-prohibitions": "[editContent]",
 	ref,
@@ -24595,7 +24595,7 @@ var Separator$2 = import_react.forwardRef(({ className, orientation = "horizonta
 	className: cn$1("shrink-0 bg-border", orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]", className),
 	...props
 }));
-Separator$2.displayName = Root$5.displayName;
+Separator$2.displayName = Root$6.displayName;
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@radix-ui+react-focus-scope@1.1.7_@types+react-dom@19.2.3_@types+react@19.2.14__@types+_f62f3af4ca2ba305a7aecf04c8534604/node_modules/@radix-ui/react-focus-scope/dist/index.mjs
 var AUTOFOCUS_ON_MOUNT = "focusScope.autoFocusOnMount";
@@ -25634,7 +25634,7 @@ var hideOthers = function(originalTarget, parentNode, markerName) {
 var DIALOG_NAME = "Dialog";
 var [createDialogContext, createDialogScope] = createContextScope$1(DIALOG_NAME);
 var [DialogProvider, useDialogContext] = createDialogContext(DIALOG_NAME);
-var Dialog$1 = (props) => {
+var Dialog = (props) => {
 	const { __scopeDialog, children, open: openProp, defaultOpen, onOpenChange, modal = true } = props;
 	const triggerRef = import_react.useRef(null);
 	const contentRef = import_react.useRef(null);
@@ -25658,35 +25658,35 @@ var Dialog$1 = (props) => {
 		children
 	});
 };
-Dialog$1.displayName = DIALOG_NAME;
-var TRIGGER_NAME$4 = "DialogTrigger";
-var DialogTrigger$1 = import_react.forwardRef((props, forwardedRef) => {
+Dialog.displayName = DIALOG_NAME;
+var TRIGGER_NAME$5 = "DialogTrigger";
+var DialogTrigger = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeDialog, ...triggerProps } = props;
-	const context = useDialogContext(TRIGGER_NAME$4, __scopeDialog);
+	const context = useDialogContext(TRIGGER_NAME$5, __scopeDialog);
 	const composedTriggerRef = useComposedRefs(forwardedRef, context.triggerRef);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Primitive$1.button, {
 		type: "button",
 		"aria-haspopup": "dialog",
 		"aria-expanded": context.open,
 		"aria-controls": context.contentId,
-		"data-state": getState$2(context.open),
+		"data-state": getState$3(context.open),
 		...triggerProps,
 		ref: composedTriggerRef,
 		onClick: composeEventHandlers(props.onClick, context.onOpenToggle)
 	});
 });
-DialogTrigger$1.displayName = TRIGGER_NAME$4;
-var PORTAL_NAME$3 = "DialogPortal";
-var [PortalProvider$1, usePortalContext$1] = createDialogContext(PORTAL_NAME$3, { forceMount: void 0 });
-var DialogPortal$1 = (props) => {
+DialogTrigger.displayName = TRIGGER_NAME$5;
+var PORTAL_NAME$4 = "DialogPortal";
+var [PortalProvider$2, usePortalContext$2] = createDialogContext(PORTAL_NAME$4, { forceMount: void 0 });
+var DialogPortal = (props) => {
 	const { __scopeDialog, forceMount, children, container } = props;
-	const context = useDialogContext(PORTAL_NAME$3, __scopeDialog);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PortalProvider$1, {
+	const context = useDialogContext(PORTAL_NAME$4, __scopeDialog);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PortalProvider$2, {
 		scope: __scopeDialog,
 		forceMount,
 		children: import_react.Children.map(children, (child) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Presence, {
 			present: forceMount || context.open,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$3, {
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$4, {
 				asChild: true,
 				container,
 				children: child
@@ -25694,10 +25694,10 @@ var DialogPortal$1 = (props) => {
 		}))
 	});
 };
-DialogPortal$1.displayName = PORTAL_NAME$3;
+DialogPortal.displayName = PORTAL_NAME$4;
 var OVERLAY_NAME = "DialogOverlay";
-var DialogOverlay$1 = import_react.forwardRef((props, forwardedRef) => {
-	const portalContext = usePortalContext$1(OVERLAY_NAME, props.__scopeDialog);
+var DialogOverlay = import_react.forwardRef((props, forwardedRef) => {
+	const portalContext = usePortalContext$2(OVERLAY_NAME, props.__scopeDialog);
 	const { forceMount = portalContext.forceMount, ...overlayProps } = props;
 	const context = useDialogContext(OVERLAY_NAME, props.__scopeDialog);
 	return context.modal ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Presence, {
@@ -25708,17 +25708,17 @@ var DialogOverlay$1 = import_react.forwardRef((props, forwardedRef) => {
 		})
 	}) : null;
 });
-DialogOverlay$1.displayName = OVERLAY_NAME;
-var Slot$2 = /* @__PURE__ */ createSlot$1("DialogOverlay.RemoveScroll");
+DialogOverlay.displayName = OVERLAY_NAME;
+var Slot$3 = /* @__PURE__ */ createSlot$1("DialogOverlay.RemoveScroll");
 var DialogOverlayImpl = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeDialog, ...overlayProps } = props;
 	const context = useDialogContext(OVERLAY_NAME, __scopeDialog);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ReactRemoveScroll, {
-		as: Slot$2,
+		as: Slot$3,
 		allowPinchZoom: true,
 		shards: [context.contentRef],
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Primitive$1.div, {
-			"data-state": getState$2(context.open),
+			"data-state": getState$3(context.open),
 			...overlayProps,
 			ref: forwardedRef,
 			style: {
@@ -25728,11 +25728,11 @@ var DialogOverlayImpl = import_react.forwardRef((props, forwardedRef) => {
 		})
 	});
 });
-var CONTENT_NAME$4 = "DialogContent";
-var DialogContent$1 = import_react.forwardRef((props, forwardedRef) => {
-	const portalContext = usePortalContext$1(CONTENT_NAME$4, props.__scopeDialog);
+var CONTENT_NAME$5 = "DialogContent";
+var DialogContent = import_react.forwardRef((props, forwardedRef) => {
+	const portalContext = usePortalContext$2(CONTENT_NAME$5, props.__scopeDialog);
 	const { forceMount = portalContext.forceMount, ...contentProps } = props;
-	const context = useDialogContext(CONTENT_NAME$4, props.__scopeDialog);
+	const context = useDialogContext(CONTENT_NAME$5, props.__scopeDialog);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Presence, {
 		present: forceMount || context.open,
 		children: context.modal ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogContentModal, {
@@ -25744,9 +25744,9 @@ var DialogContent$1 = import_react.forwardRef((props, forwardedRef) => {
 		})
 	});
 });
-DialogContent$1.displayName = CONTENT_NAME$4;
+DialogContent.displayName = CONTENT_NAME$5;
 var DialogContentModal = import_react.forwardRef((props, forwardedRef) => {
-	const context = useDialogContext(CONTENT_NAME$4, props.__scopeDialog);
+	const context = useDialogContext(CONTENT_NAME$5, props.__scopeDialog);
 	const contentRef = import_react.useRef(null);
 	const composedRefs = useComposedRefs(forwardedRef, context.contentRef, contentRef);
 	import_react.useEffect(() => {
@@ -25771,7 +25771,7 @@ var DialogContentModal = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 var DialogContentNonModal = import_react.forwardRef((props, forwardedRef) => {
-	const context = useDialogContext(CONTENT_NAME$4, props.__scopeDialog);
+	const context = useDialogContext(CONTENT_NAME$5, props.__scopeDialog);
 	const hasInteractedOutsideRef = import_react.useRef(false);
 	const hasPointerDownOutsideRef = import_react.useRef(false);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogContentImpl, {
@@ -25802,7 +25802,7 @@ var DialogContentNonModal = import_react.forwardRef((props, forwardedRef) => {
 });
 var DialogContentImpl = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeDialog, trapFocus, onOpenAutoFocus, onCloseAutoFocus, ...contentProps } = props;
-	const context = useDialogContext(CONTENT_NAME$4, __scopeDialog);
+	const context = useDialogContext(CONTENT_NAME$5, __scopeDialog);
 	const contentRef = import_react.useRef(null);
 	const composedRefs = useComposedRefs(forwardedRef, contentRef);
 	useFocusGuards();
@@ -25817,7 +25817,7 @@ var DialogContentImpl = import_react.forwardRef((props, forwardedRef) => {
 			id: context.contentId,
 			"aria-describedby": context.descriptionId,
 			"aria-labelledby": context.titleId,
-			"data-state": getState$2(context.open),
+			"data-state": getState$3(context.open),
 			...contentProps,
 			ref: composedRefs,
 			onDismiss: () => context.onOpenChange(false)
@@ -25828,7 +25828,7 @@ var DialogContentImpl = import_react.forwardRef((props, forwardedRef) => {
 	})] })] });
 });
 var TITLE_NAME = "DialogTitle";
-var DialogTitle$1 = import_react.forwardRef((props, forwardedRef) => {
+var DialogTitle = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeDialog, ...titleProps } = props;
 	const context = useDialogContext(TITLE_NAME, __scopeDialog);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Primitive$1.h2, {
@@ -25837,9 +25837,9 @@ var DialogTitle$1 = import_react.forwardRef((props, forwardedRef) => {
 		ref: forwardedRef
 	});
 });
-DialogTitle$1.displayName = TITLE_NAME;
+DialogTitle.displayName = TITLE_NAME;
 var DESCRIPTION_NAME = "DialogDescription";
-var DialogDescription$1 = import_react.forwardRef((props, forwardedRef) => {
+var DialogDescription = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeDialog, ...descriptionProps } = props;
 	const context = useDialogContext(DESCRIPTION_NAME, __scopeDialog);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Primitive$1.p, {
@@ -25848,11 +25848,11 @@ var DialogDescription$1 = import_react.forwardRef((props, forwardedRef) => {
 		ref: forwardedRef
 	});
 });
-DialogDescription$1.displayName = DESCRIPTION_NAME;
-var CLOSE_NAME = "DialogClose";
-var DialogClose$1 = import_react.forwardRef((props, forwardedRef) => {
+DialogDescription.displayName = DESCRIPTION_NAME;
+var CLOSE_NAME$1 = "DialogClose";
+var DialogClose = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeDialog, ...closeProps } = props;
-	const context = useDialogContext(CLOSE_NAME, __scopeDialog);
+	const context = useDialogContext(CLOSE_NAME$1, __scopeDialog);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Primitive$1.button, {
 		type: "button",
 		...closeProps,
@@ -25860,13 +25860,13 @@ var DialogClose$1 = import_react.forwardRef((props, forwardedRef) => {
 		onClick: composeEventHandlers(props.onClick, () => context.onOpenChange(false))
 	});
 });
-DialogClose$1.displayName = CLOSE_NAME;
-function getState$2(open) {
+DialogClose.displayName = CLOSE_NAME$1;
+function getState$3(open) {
 	return open ? "open" : "closed";
 }
 var TITLE_WARNING_NAME = "DialogTitleWarning";
 var [WarningProvider, useWarningContext] = createContext2(TITLE_WARNING_NAME, {
-	contentName: CONTENT_NAME$4,
+	contentName: CONTENT_NAME$5,
 	titleName: TITLE_NAME,
 	docsSlug: "dialog"
 });
@@ -25899,17 +25899,17 @@ var DescriptionWarning = ({ contentRef, descriptionId }) => {
 	]);
 	return null;
 };
-var Root$4 = Dialog$1;
-var Portal$2 = DialogPortal$1;
-var Overlay = DialogOverlay$1;
-var Content$1 = DialogContent$1;
-var Title = DialogTitle$1;
-var Description = DialogDescription$1;
-var Close = DialogClose$1;
+var Root$5 = Dialog;
+var Portal$3 = DialogPortal;
+var Overlay = DialogOverlay;
+var Content$1 = DialogContent;
+var Title = DialogTitle;
+var Description = DialogDescription;
+var Close = DialogClose;
 //#endregion
 //#region src/components/ui/sheet.tsx
-var Sheet = Root$4;
-var SheetPortal = Portal$2;
+var Sheet = Root$5;
+var SheetPortal = Portal$3;
 var SheetOverlay = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Overlay, {
 	"data-uid": "src/components/ui/sheet.tsx:21:3",
 	"data-prohibitions": "[editContent]",
@@ -26158,7 +26158,7 @@ var Sidebar = import_react.forwardRef(({ side = "left", variant = "sidebar", col
 Sidebar.displayName = "Sidebar";
 var SidebarTrigger = import_react.forwardRef(({ className, onClick, ...props }, ref) => {
 	const { toggleSidebar } = useSidebar();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$1, {
 		"data-uid": "src/components/ui/sidebar.tsx:268:5",
 		"data-prohibitions": "[editContent]",
 		ref,
@@ -26280,7 +26280,7 @@ var SidebarGroup = import_react.forwardRef(({ className, ...props }, ref) => {
 });
 SidebarGroup.displayName = "SidebarGroup";
 var SidebarGroupLabel = import_react.forwardRef(({ className, asChild = false, ...props }, ref) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(asChild ? Slot$3 : "div", {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(asChild ? Slot$4 : "div", {
 		"data-uid": "src/components/ui/sidebar.tsx:433:5",
 		"data-prohibitions": "[editContent]",
 		ref,
@@ -26291,7 +26291,7 @@ var SidebarGroupLabel = import_react.forwardRef(({ className, asChild = false, .
 });
 SidebarGroupLabel.displayName = "SidebarGroupLabel";
 var SidebarGroupAction = import_react.forwardRef(({ className, asChild = false, ...props }, ref) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(asChild ? Slot$3 : "button", {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(asChild ? Slot$4 : "button", {
 		"data-uid": "src/components/ui/sidebar.tsx:454:5",
 		"data-prohibitions": "[editContent]",
 		ref,
@@ -26346,7 +26346,7 @@ var sidebarMenuButtonVariants = cva("peer/menu-button flex w-full items-center g
 	}
 });
 var SidebarMenuButton = import_react.forwardRef(({ asChild = false, isActive = false, variant = "default", size = "default", tooltip, className, ...props }, ref) => {
-	const Comp = asChild ? Slot$3 : "button";
+	const Comp = asChild ? Slot$4 : "button";
 	const { isMobile, state } = useSidebar();
 	const button = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Comp, {
 		"data-uid": "src/components/ui/sidebar.tsx:552:7",
@@ -26383,7 +26383,7 @@ var SidebarMenuButton = import_react.forwardRef(({ asChild = false, isActive = f
 });
 SidebarMenuButton.displayName = "SidebarMenuButton";
 var SidebarMenuAction = import_react.forwardRef(({ className, asChild = false, showOnHover = false, ...props }, ref) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(asChild ? Slot$3 : "button", {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(asChild ? Slot$4 : "button", {
 		"data-uid": "src/components/ui/sidebar.tsx:597:5",
 		"data-prohibitions": "[editContent]",
 		ref,
@@ -26445,7 +26445,7 @@ var SidebarMenuSubItem = import_react.forwardRef(({ ...props }, ref) => /* @__PU
 }));
 SidebarMenuSubItem.displayName = "SidebarMenuSubItem";
 var SidebarMenuSubButton = import_react.forwardRef(({ asChild = false, size = "md", isActive, className, ...props }, ref) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(asChild ? Slot$3 : "a", {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(asChild ? Slot$4 : "a", {
 		"data-uid": "src/components/ui/sidebar.tsx:703:5",
 		"data-prohibitions": "[editContent]",
 		ref,
@@ -26746,7 +26746,7 @@ function focusFirst$1(candidates, preventScroll = false) {
 function wrapArray$2(array, startIndex) {
 	return array.map((_, index) => array[(startIndex + index) % array.length]);
 }
-var Root$3 = RovingFocusGroup;
+var Root$4 = RovingFocusGroup;
 var Item$1 = RovingFocusGroupItem;
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@radix-ui+react-menu@2.1.16_@types+react-dom@19.2.3_@types+react@19.2.14__@types+react@_73ff7391b7be14d4dbff03af4dbac090/node_modules/@radix-ui/react-menu/dist/index.mjs
@@ -26777,13 +26777,13 @@ var [createMenuContext, createMenuScope] = createContextScope$1(MENU_NAME, [
 	createPopperScope,
 	createRovingFocusGroupScope
 ]);
-var usePopperScope$1 = createPopperScope();
+var usePopperScope$2 = createPopperScope();
 var useRovingFocusGroupScope$1 = createRovingFocusGroupScope();
 var [MenuProvider, useMenuContext] = createMenuContext(MENU_NAME);
 var [MenuRootProvider, useMenuRootContext] = createMenuContext(MENU_NAME);
 var Menu = (props) => {
 	const { __scopeMenu, open = false, children, dir, onOpenChange, modal = true } = props;
-	const popperScope = usePopperScope$1(__scopeMenu);
+	const popperScope = usePopperScope$2(__scopeMenu);
 	const [content, setContent] = import_react.useState(null);
 	const isUsingKeyboardRef = import_react.useRef(false);
 	const handleOpenChange = useCallbackRef$1(onOpenChange);
@@ -26808,7 +26808,7 @@ var Menu = (props) => {
 			document.removeEventListener("pointermove", handlePointer, { capture: true });
 		};
 	}, []);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root2$3, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root2$4, {
 		...popperScope,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuProvider, {
 			scope: __scopeMenu,
@@ -26828,28 +26828,28 @@ var Menu = (props) => {
 	});
 };
 Menu.displayName = MENU_NAME;
-var ANCHOR_NAME = "MenuAnchor";
+var ANCHOR_NAME$1 = "MenuAnchor";
 var MenuAnchor = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeMenu, ...anchorProps } = props;
-	const popperScope = usePopperScope$1(__scopeMenu);
+	const popperScope = usePopperScope$2(__scopeMenu);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Anchor, {
 		...popperScope,
 		...anchorProps,
 		ref: forwardedRef
 	});
 });
-MenuAnchor.displayName = ANCHOR_NAME;
-var PORTAL_NAME$2 = "MenuPortal";
-var [PortalProvider, usePortalContext] = createMenuContext(PORTAL_NAME$2, { forceMount: void 0 });
+MenuAnchor.displayName = ANCHOR_NAME$1;
+var PORTAL_NAME$3 = "MenuPortal";
+var [PortalProvider$1, usePortalContext$1] = createMenuContext(PORTAL_NAME$3, { forceMount: void 0 });
 var MenuPortal = (props) => {
 	const { __scopeMenu, forceMount, children, container } = props;
-	const context = useMenuContext(PORTAL_NAME$2, __scopeMenu);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PortalProvider, {
+	const context = useMenuContext(PORTAL_NAME$3, __scopeMenu);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PortalProvider$1, {
 		scope: __scopeMenu,
 		forceMount,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Presence, {
 			present: forceMount || context.open,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$3, {
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$4, {
 				asChild: true,
 				container,
 				children
@@ -26857,14 +26857,14 @@ var MenuPortal = (props) => {
 		})
 	});
 };
-MenuPortal.displayName = PORTAL_NAME$2;
-var CONTENT_NAME$3 = "MenuContent";
-var [MenuContentProvider, useMenuContentContext] = createMenuContext(CONTENT_NAME$3);
+MenuPortal.displayName = PORTAL_NAME$3;
+var CONTENT_NAME$4 = "MenuContent";
+var [MenuContentProvider, useMenuContentContext] = createMenuContext(CONTENT_NAME$4);
 var MenuContent = import_react.forwardRef((props, forwardedRef) => {
-	const portalContext = usePortalContext(CONTENT_NAME$3, props.__scopeMenu);
+	const portalContext = usePortalContext$1(CONTENT_NAME$4, props.__scopeMenu);
 	const { forceMount = portalContext.forceMount, ...contentProps } = props;
-	const context = useMenuContext(CONTENT_NAME$3, props.__scopeMenu);
-	const rootContext = useMenuRootContext(CONTENT_NAME$3, props.__scopeMenu);
+	const context = useMenuContext(CONTENT_NAME$4, props.__scopeMenu);
+	const rootContext = useMenuRootContext(CONTENT_NAME$4, props.__scopeMenu);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Collection$1.Provider, {
 		scope: props.__scopeMenu,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Presence, {
@@ -26883,7 +26883,7 @@ var MenuContent = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 var MenuRootContentModal = import_react.forwardRef((props, forwardedRef) => {
-	const context = useMenuContext(CONTENT_NAME$3, props.__scopeMenu);
+	const context = useMenuContext(CONTENT_NAME$4, props.__scopeMenu);
 	const ref = import_react.useRef(null);
 	const composedRefs = useComposedRefs(forwardedRef, ref);
 	import_react.useEffect(() => {
@@ -26901,7 +26901,7 @@ var MenuRootContentModal = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 var MenuRootContentNonModal = import_react.forwardRef((props, forwardedRef) => {
-	const context = useMenuContext(CONTENT_NAME$3, props.__scopeMenu);
+	const context = useMenuContext(CONTENT_NAME$4, props.__scopeMenu);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuContentImpl, {
 		...props,
 		ref: forwardedRef,
@@ -26911,12 +26911,12 @@ var MenuRootContentNonModal = import_react.forwardRef((props, forwardedRef) => {
 		onDismiss: () => context.onOpenChange(false)
 	});
 });
-var Slot$1 = /* @__PURE__ */ createSlot$1("MenuContent.ScrollLock");
+var Slot$2 = /* @__PURE__ */ createSlot$1("MenuContent.ScrollLock");
 var MenuContentImpl = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeMenu, loop = false, trapFocus, onOpenAutoFocus, onCloseAutoFocus, disableOutsidePointerEvents, onEntryFocus, onEscapeKeyDown, onPointerDownOutside, onFocusOutside, onInteractOutside, onDismiss, disableOutsideScroll, ...contentProps } = props;
-	const context = useMenuContext(CONTENT_NAME$3, __scopeMenu);
-	const rootContext = useMenuRootContext(CONTENT_NAME$3, __scopeMenu);
-	const popperScope = usePopperScope$1(__scopeMenu);
+	const context = useMenuContext(CONTENT_NAME$4, __scopeMenu);
+	const rootContext = useMenuRootContext(CONTENT_NAME$4, __scopeMenu);
+	const popperScope = usePopperScope$2(__scopeMenu);
 	const rovingFocusGroupScope = useRovingFocusGroupScope$1(__scopeMenu);
 	const getItems = useCollection$1(__scopeMenu);
 	const [currentItemId, setCurrentItemId] = import_react.useState(null);
@@ -26930,7 +26930,7 @@ var MenuContentImpl = import_react.forwardRef((props, forwardedRef) => {
 	const lastPointerXRef = import_react.useRef(0);
 	const ScrollLockWrapper = disableOutsideScroll ? ReactRemoveScroll : import_react.Fragment;
 	const scrollLockWrapperProps = disableOutsideScroll ? {
-		as: Slot$1,
+		as: Slot$2,
 		allowPinchZoom: true
 	} : void 0;
 	const handleTypeaheadSearch = (key) => {
@@ -26990,7 +26990,7 @@ var MenuContentImpl = import_react.forwardRef((props, forwardedRef) => {
 					onFocusOutside,
 					onInteractOutside,
 					onDismiss,
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$3, {
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$4, {
 						asChild: true,
 						...rovingFocusGroupScope,
 						dir: rootContext.dir,
@@ -27052,7 +27052,7 @@ var MenuContentImpl = import_react.forwardRef((props, forwardedRef) => {
 		})
 	});
 });
-MenuContent.displayName = CONTENT_NAME$3;
+MenuContent.displayName = CONTENT_NAME$4;
 var GROUP_NAME$2 = "MenuGroup";
 var MenuGroup = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeMenu, ...groupProps } = props;
@@ -27239,23 +27239,23 @@ var MenuSeparator = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 MenuSeparator.displayName = SEPARATOR_NAME$2;
-var ARROW_NAME$2 = "MenuArrow";
+var ARROW_NAME$3 = "MenuArrow";
 var MenuArrow = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeMenu, ...arrowProps } = props;
-	const popperScope = usePopperScope$1(__scopeMenu);
+	const popperScope = usePopperScope$2(__scopeMenu);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Arrow, {
 		...popperScope,
 		...arrowProps,
 		ref: forwardedRef
 	});
 });
-MenuArrow.displayName = ARROW_NAME$2;
+MenuArrow.displayName = ARROW_NAME$3;
 var SUB_NAME = "MenuSub";
 var [MenuSubProvider, useMenuSubContext] = createMenuContext(SUB_NAME);
 var MenuSub = (props) => {
 	const { __scopeMenu, children, open = false, onOpenChange } = props;
 	const parentMenuContext = useMenuContext(SUB_NAME, __scopeMenu);
-	const popperScope = usePopperScope$1(__scopeMenu);
+	const popperScope = usePopperScope$2(__scopeMenu);
 	const [trigger, setTrigger] = import_react.useState(null);
 	const [content, setContent] = import_react.useState(null);
 	const handleOpenChange = useCallbackRef$1(onOpenChange);
@@ -27263,7 +27263,7 @@ var MenuSub = (props) => {
 		if (parentMenuContext.open === false) handleOpenChange(false);
 		return () => handleOpenChange(false);
 	}, [parentMenuContext.open, handleOpenChange]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root2$3, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root2$4, {
 		...popperScope,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuProvider, {
 			scope: __scopeMenu,
@@ -27389,10 +27389,10 @@ var MenuSubTrigger = import_react.forwardRef((props, forwardedRef) => {
 MenuSubTrigger.displayName = SUB_TRIGGER_NAME$1;
 var SUB_CONTENT_NAME$1 = "MenuSubContent";
 var MenuSubContent = import_react.forwardRef((props, forwardedRef) => {
-	const portalContext = usePortalContext(CONTENT_NAME$3, props.__scopeMenu);
+	const portalContext = usePortalContext$1(CONTENT_NAME$4, props.__scopeMenu);
 	const { forceMount = portalContext.forceMount, ...subContentProps } = props;
-	const context = useMenuContext(CONTENT_NAME$3, props.__scopeMenu);
-	const rootContext = useMenuRootContext(CONTENT_NAME$3, props.__scopeMenu);
+	const context = useMenuContext(CONTENT_NAME$4, props.__scopeMenu);
+	const rootContext = useMenuRootContext(CONTENT_NAME$4, props.__scopeMenu);
 	const subContext = useMenuSubContext(SUB_CONTENT_NAME$1, props.__scopeMenu);
 	const ref = import_react.useRef(null);
 	const composedRefs = useComposedRefs(forwardedRef, ref);
@@ -27493,8 +27493,8 @@ function whenMouse(handler) {
 }
 var Root3 = Menu;
 var Anchor2 = MenuAnchor;
-var Portal$1 = MenuPortal;
-var Content2$2 = MenuContent;
+var Portal$2 = MenuPortal;
+var Content2$3 = MenuContent;
 var Group$1 = MenuGroup;
 var Label$3 = MenuLabel;
 var Item2$1 = MenuItem;
@@ -27542,10 +27542,10 @@ var DropdownMenu$1 = (props) => {
 	});
 };
 DropdownMenu$1.displayName = DROPDOWN_MENU_NAME;
-var TRIGGER_NAME$3 = "DropdownMenuTrigger";
+var TRIGGER_NAME$4 = "DropdownMenuTrigger";
 var DropdownMenuTrigger$1 = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeDropdownMenu, disabled = false, ...triggerProps } = props;
-	const context = useDropdownMenuContext(TRIGGER_NAME$3, __scopeDropdownMenu);
+	const context = useDropdownMenuContext(TRIGGER_NAME$4, __scopeDropdownMenu);
 	const menuScope = useMenuScope(__scopeDropdownMenu);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Anchor2, {
 		asChild: true,
@@ -27580,24 +27580,24 @@ var DropdownMenuTrigger$1 = import_react.forwardRef((props, forwardedRef) => {
 		})
 	});
 });
-DropdownMenuTrigger$1.displayName = TRIGGER_NAME$3;
-var PORTAL_NAME$1 = "DropdownMenuPortal";
+DropdownMenuTrigger$1.displayName = TRIGGER_NAME$4;
+var PORTAL_NAME$2 = "DropdownMenuPortal";
 var DropdownMenuPortal$1 = (props) => {
 	const { __scopeDropdownMenu, ...portalProps } = props;
 	const menuScope = useMenuScope(__scopeDropdownMenu);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$1, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$2, {
 		...menuScope,
 		...portalProps
 	});
 };
-DropdownMenuPortal$1.displayName = PORTAL_NAME$1;
-var CONTENT_NAME$2 = "DropdownMenuContent";
+DropdownMenuPortal$1.displayName = PORTAL_NAME$2;
+var CONTENT_NAME$3 = "DropdownMenuContent";
 var DropdownMenuContent$1 = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeDropdownMenu, ...contentProps } = props;
-	const context = useDropdownMenuContext(CONTENT_NAME$2, __scopeDropdownMenu);
+	const context = useDropdownMenuContext(CONTENT_NAME$3, __scopeDropdownMenu);
 	const menuScope = useMenuScope(__scopeDropdownMenu);
 	const hasInteractedOutsideRef = import_react.useRef(false);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content2$2, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content2$3, {
 		id: context.contentId,
 		"aria-labelledby": context.triggerId,
 		...menuScope,
@@ -27624,7 +27624,7 @@ var DropdownMenuContent$1 = import_react.forwardRef((props, forwardedRef) => {
 		}
 	});
 });
-DropdownMenuContent$1.displayName = CONTENT_NAME$2;
+DropdownMenuContent$1.displayName = CONTENT_NAME$3;
 var GROUP_NAME$1 = "DropdownMenuGroup";
 var DropdownMenuGroup$1 = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeDropdownMenu, ...groupProps } = props;
@@ -27713,7 +27713,7 @@ var DropdownMenuSeparator$1 = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 DropdownMenuSeparator$1.displayName = SEPARATOR_NAME$1;
-var ARROW_NAME$1 = "DropdownMenuArrow";
+var ARROW_NAME$2 = "DropdownMenuArrow";
 var DropdownMenuArrow = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeDropdownMenu, ...arrowProps } = props;
 	const menuScope = useMenuScope(__scopeDropdownMenu);
@@ -27723,7 +27723,7 @@ var DropdownMenuArrow = import_react.forwardRef((props, forwardedRef) => {
 		ref: forwardedRef
 	});
 });
-DropdownMenuArrow.displayName = ARROW_NAME$1;
+DropdownMenuArrow.displayName = ARROW_NAME$2;
 var SUB_TRIGGER_NAME = "DropdownMenuSubTrigger";
 var DropdownMenuSubTrigger$1 = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeDropdownMenu, ...subTriggerProps } = props;
@@ -27754,10 +27754,10 @@ var DropdownMenuSubContent$1 = import_react.forwardRef((props, forwardedRef) => 
 	});
 });
 DropdownMenuSubContent$1.displayName = SUB_CONTENT_NAME;
-var Root2$2 = DropdownMenu$1;
-var Trigger$2 = DropdownMenuTrigger$1;
+var Root2$3 = DropdownMenu$1;
+var Trigger$3 = DropdownMenuTrigger$1;
 var Portal2 = DropdownMenuPortal$1;
-var Content2$1 = DropdownMenuContent$1;
+var Content2$2 = DropdownMenuContent$1;
 var Label2 = DropdownMenuLabel$1;
 var Item2 = DropdownMenuItem$1;
 var CheckboxItem2 = DropdownMenuCheckboxItem$1;
@@ -27768,8 +27768,8 @@ var SubTrigger2 = DropdownMenuSubTrigger$1;
 var SubContent2 = DropdownMenuSubContent$1;
 //#endregion
 //#region src/components/ui/dropdown-menu.tsx
-var DropdownMenu = Root2$2;
-var DropdownMenuTrigger = Trigger$2;
+var DropdownMenu = Root2$3;
+var DropdownMenuTrigger = Trigger$3;
 var DropdownMenuSubTrigger = import_react.forwardRef(({ className, inset, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SubTrigger2, {
 	"data-uid": "src/components/ui/dropdown-menu.tsx:26:3",
 	"data-prohibitions": "[editContent]",
@@ -27794,7 +27794,7 @@ DropdownMenuSubContent.displayName = SubContent2.displayName;
 var DropdownMenuContent = import_react.forwardRef(({ className, sideOffset = 4, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal2, {
 	"data-uid": "src/components/ui/dropdown-menu.tsx:60:3",
 	"data-prohibitions": "[editContent]",
-	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content2$1, {
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content2$2, {
 		"data-uid": "src/components/ui/dropdown-menu.tsx:61:5",
 		"data-prohibitions": "[editContent]",
 		ref,
@@ -27803,7 +27803,7 @@ var DropdownMenuContent = import_react.forwardRef(({ className, sideOffset = 4, 
 		...props
 	})
 }));
-DropdownMenuContent.displayName = Content2$1.displayName;
+DropdownMenuContent.displayName = Content2$2.displayName;
 var DropdownMenuItem = import_react.forwardRef(({ className, inset, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item2, {
 	"data-uid": "src/components/ui/dropdown-menu.tsx:80:3",
 	"data-prohibitions": "[editContent]",
@@ -28118,19 +28118,19 @@ function useImageLoadingStatus(src, { referrerPolicy, crossOrigin }) {
 	]);
 	return loadingStatus;
 }
-var Root$2 = Avatar$1;
+var Root$3 = Avatar$1;
 var Image = AvatarImage$1;
 var Fallback = AvatarFallback$1;
 //#endregion
 //#region src/components/ui/avatar.tsx
-var Avatar = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$2, {
+var Avatar = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$3, {
 	"data-uid": "src/components/ui/avatar.tsx:11:3",
 	"data-prohibitions": "[editContent]",
 	ref,
 	className: cn$1("relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full", className),
 	...props
 }));
-Avatar.displayName = Root$2.displayName;
+Avatar.displayName = Root$3.displayName;
 var AvatarImage = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Image, {
 	"data-uid": "src/components/ui/avatar.tsx:23:3",
 	"data-prohibitions": "[editContent]",
@@ -28188,7 +28188,7 @@ function AppHeader() {
 			"data-uid": "src/components/AppHeader.tsx:39:7",
 			"data-prohibitions": "[editContent]",
 			className: "flex items-center gap-4",
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$1, {
 				"data-uid": "src/components/AppHeader.tsx:40:9",
 				"data-prohibitions": "[]",
 				variant: "ghost",
@@ -28210,7 +28210,7 @@ function AppHeader() {
 					"data-uid": "src/components/AppHeader.tsx:45:11",
 					"data-prohibitions": "[editContent]",
 					asChild: true,
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$1, {
 						"data-uid": "src/components/AppHeader.tsx:46:13",
 						"data-prohibitions": "[editContent]",
 						variant: "ghost",
@@ -28385,18 +28385,18 @@ var Label$2 = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 Label$2.displayName = NAME;
-var Root$1 = Label$2;
+var Root$2 = Label$2;
 //#endregion
 //#region src/components/ui/label.tsx
 var labelVariants = cva("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70");
-var Label$1 = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$1, {
+var Label$1 = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$2, {
 	"data-uid": "src/components/ui/label.tsx:16:3",
 	"data-prohibitions": "[editContent]",
 	ref,
 	className: cn$1(labelVariants(), className),
 	...props
 }));
-Label$1.displayName = Root$1.displayName;
+Label$1.displayName = Root$2.displayName;
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@radix-ui+react-use-previous@1.1.1_@types+react@19.2.14_react@19.2.4/node_modules/@radix-ui/react-use-previous/dist/index.mjs
 function usePrevious(value) {
@@ -28451,9 +28451,9 @@ function CheckboxProvider(props) {
 		children: isFunction(internal_do_not_use_render) ? internal_do_not_use_render(context) : children
 	});
 }
-var TRIGGER_NAME$2 = "CheckboxTrigger";
+var TRIGGER_NAME$3 = "CheckboxTrigger";
 var CheckboxTrigger = import_react.forwardRef(({ __scopeCheckbox, onKeyDown, onClick, ...checkboxProps }, forwardedRef) => {
-	const { control, value, disabled, checked, required, setControl, setChecked, hasConsumerStoppedPropagationRef, isFormControl, bubbleInput } = useCheckboxContext(TRIGGER_NAME$2, __scopeCheckbox);
+	const { control, value, disabled, checked, required, setControl, setChecked, hasConsumerStoppedPropagationRef, isFormControl, bubbleInput } = useCheckboxContext(TRIGGER_NAME$3, __scopeCheckbox);
 	const composedRefs = useComposedRefs(forwardedRef, setControl);
 	const initialCheckedStateRef = import_react.useRef(checked);
 	import_react.useEffect(() => {
@@ -28469,7 +28469,7 @@ var CheckboxTrigger = import_react.forwardRef(({ __scopeCheckbox, onKeyDown, onC
 		role: "checkbox",
 		"aria-checked": isIndeterminate(checked) ? "mixed" : checked,
 		"aria-required": required,
-		"data-state": getState$1(checked),
+		"data-state": getState$2(checked),
 		"data-disabled": disabled ? "" : void 0,
 		disabled,
 		value,
@@ -28487,7 +28487,7 @@ var CheckboxTrigger = import_react.forwardRef(({ __scopeCheckbox, onKeyDown, onC
 		})
 	});
 });
-CheckboxTrigger.displayName = TRIGGER_NAME$2;
+CheckboxTrigger.displayName = TRIGGER_NAME$3;
 var Checkbox$1 = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeCheckbox, name, checked, defaultChecked, required, disabled, value, onCheckedChange, form, ...checkboxProps } = props;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CheckboxProvider, {
@@ -28515,7 +28515,7 @@ var CheckboxIndicator = import_react.forwardRef((props, forwardedRef) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Presence, {
 		present: forceMount || isIndeterminate(context.checked) || context.checked === true,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Primitive$1.span, {
-			"data-state": getState$1(context.checked),
+			"data-state": getState$2(context.checked),
 			"data-disabled": context.disabled ? "" : void 0,
 			...indicatorProps,
 			ref: forwardedRef,
@@ -28582,7 +28582,7 @@ function isFunction(value) {
 function isIndeterminate(checked) {
 	return checked === "indeterminate";
 }
-function getState$1(checked) {
+function getState$2(checked) {
 	return isIndeterminate(checked) ? "indeterminate" : checked ? "checked" : "unchecked";
 }
 //#endregion
@@ -28788,7 +28788,7 @@ function Login() {
 								children: "Lembrar-me"
 							})]
 						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$1, {
 							"data-uid": "src/pages/Login.tsx:83:13",
 							"data-prohibitions": "[]",
 							type: "submit",
@@ -28849,7 +28849,7 @@ secondsInDay * daysInYear / 12 * 3;
 * [`TZDate`](https://github.com/date-fns/tz) that accept a time zone as
 * a constructor argument.
 */
-var constructFromSymbol = Symbol.for("constructDateFrom");
+var constructFromSymbol$1 = Symbol.for("constructDateFrom");
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/constructFrom.js
 /**
@@ -28889,7 +28889,7 @@ var constructFromSymbol = Symbol.for("constructDateFrom");
 */
 function constructFrom(date, value) {
 	if (typeof date === "function") return date(value);
-	if (date && typeof date === "object" && constructFromSymbol in date) return date[constructFromSymbol](value);
+	if (date && typeof date === "object" && constructFromSymbol$1 in date) return date[constructFromSymbol$1](value);
 	if (date instanceof Date) return new date.constructor(value);
 	return new Date(value);
 }
@@ -28935,6 +28935,84 @@ function constructFrom(date, value) {
 */
 function toDate(argument, context) {
 	return constructFrom(context || argument, argument);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/addDays.js
+/**
+* The {@link addDays} function options.
+*/
+/**
+* @name addDays
+* @category Day Helpers
+* @summary Add the specified number of days to the given date.
+*
+* @description
+* Add the specified number of days to the given date.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The date to be changed
+* @param amount - The amount of days to be added.
+* @param options - An object with options
+*
+* @returns The new date with the days added
+*
+* @example
+* // Add 10 days to 1 September 2014:
+* const result = addDays(new Date(2014, 8, 1), 10)
+* //=> Thu Sep 11 2014 00:00:00
+*/
+function addDays(date, amount, options) {
+	const _date = toDate(date, options?.in);
+	if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
+	if (!amount) return _date;
+	_date.setDate(_date.getDate() + amount);
+	return _date;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/addMonths.js
+/**
+* The {@link addMonths} function options.
+*/
+/**
+* @name addMonths
+* @category Month Helpers
+* @summary Add the specified number of months to the given date.
+*
+* @description
+* Add the specified number of months to the given date.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The date to be changed
+* @param amount - The amount of months to be added.
+* @param options - The options object
+*
+* @returns The new date with the months added
+*
+* @example
+* // Add 5 months to 1 September 2014:
+* const result = addMonths(new Date(2014, 8, 1), 5)
+* //=> Sun Feb 01 2015 00:00:00
+*
+* // Add one month to 30 January 2023:
+* const result = addMonths(new Date(2023, 0, 30), 1)
+* //=> Tue Feb 28 2023 00:00:00
+*/
+function addMonths(date, amount, options) {
+	const _date = toDate(date, options?.in);
+	if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
+	if (!amount) return _date;
+	const dayOfMonth = _date.getDate();
+	const endOfDesiredMonth = constructFrom(options?.in || date, _date.getTime());
+	endOfDesiredMonth.setMonth(_date.getMonth() + amount + 1, 0);
+	if (dayOfMonth >= endOfDesiredMonth.getDate()) return endOfDesiredMonth;
+	else {
+		_date.setFullYear(endOfDesiredMonth.getFullYear(), endOfDesiredMonth.getMonth(), dayOfMonth);
+		return _date;
+	}
 }
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/_lib/defaultOptions.js
@@ -29198,6 +29276,184 @@ function startOfISOWeekYear(date, options) {
 	return startOfISOWeek(fourthOfJanuary);
 }
 //#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/addWeeks.js
+/**
+* The {@link addWeeks} function options.
+*/
+/**
+* @name addWeeks
+* @category Week Helpers
+* @summary Add the specified number of weeks to the given date.
+*
+* @description
+* Add the specified number of weeks to the given date.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The date to be changed
+* @param amount - The amount of weeks to be added.
+* @param options - An object with options
+*
+* @returns The new date with the weeks added
+*
+* @example
+* // Add 4 weeks to 1 September 2014:
+* const result = addWeeks(new Date(2014, 8, 1), 4)
+* //=> Mon Sep 29 2014 00:00:00
+*/
+function addWeeks(date, amount, options) {
+	return addDays(date, amount * 7, options);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/addYears.js
+/**
+* The {@link addYears} function options.
+*/
+/**
+* @name addYears
+* @category Year Helpers
+* @summary Add the specified number of years to the given date.
+*
+* @description
+* Add the specified number of years to the given date.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type.
+*
+* @param date - The date to be changed
+* @param amount - The amount of years to be added.
+* @param options - The options
+*
+* @returns The new date with the years added
+*
+* @example
+* // Add 5 years to 1 September 2014:
+* const result = addYears(new Date(2014, 8, 1), 5)
+* //=> Sun Sep 01 2019 00:00:00
+*/
+function addYears(date, amount, options) {
+	return addMonths(date, amount * 12, options);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/max.js
+/**
+* The {@link max} function options.
+*/
+/**
+* @name max
+* @category Common Helpers
+* @summary Return the latest of the given dates.
+*
+* @description
+* Return the latest of the given dates.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param dates - The dates to compare
+*
+* @returns The latest of the dates
+*
+* @example
+* // Which of these dates is the latest?
+* const result = max([
+*   new Date(1989, 6, 10),
+*   new Date(1987, 1, 11),
+*   new Date(1995, 6, 2),
+*   new Date(1990, 0, 1)
+* ])
+* //=> Sun Jul 02 1995 00:00:00
+*/
+function max(dates, options) {
+	let result;
+	let context = options?.in;
+	dates.forEach((date) => {
+		if (!context && typeof date === "object") context = constructFrom.bind(null, date);
+		const date_ = toDate(date, context);
+		if (!result || result < date_ || isNaN(+date_)) result = date_;
+	});
+	return constructFrom(context, result || NaN);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/min.js
+/**
+* The {@link min} function options.
+*/
+/**
+* @name min
+* @category Common Helpers
+* @summary Returns the earliest of the given dates.
+*
+* @description
+* Returns the earliest of the given dates.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param dates - The dates to compare
+*
+* @returns The earliest of the dates
+*
+* @example
+* // Which of these dates is the earliest?
+* const result = min([
+*   new Date(1989, 6, 10),
+*   new Date(1987, 1, 11),
+*   new Date(1995, 6, 2),
+*   new Date(1990, 0, 1)
+* ])
+* //=> Wed Feb 11 1987 00:00:00
+*/
+function min(dates, options) {
+	let result;
+	let context = options?.in;
+	dates.forEach((date) => {
+		if (!context && typeof date === "object") context = constructFrom.bind(null, date);
+		const date_ = toDate(date, context);
+		if (!result || result > date_ || isNaN(+date_)) result = date_;
+	});
+	return constructFrom(context, result || NaN);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/isSameDay.js
+/**
+* The {@link isSameDay} function options.
+*/
+/**
+* @name isSameDay
+* @category Day Helpers
+* @summary Are the given dates in the same day (and year and month)?
+*
+* @description
+* Are the given dates in the same day (and year and month)?
+*
+* @param laterDate - The first date to check
+* @param earlierDate - The second date to check
+* @param options - An object with options
+*
+* @returns The dates are in the same day (and year and month)
+*
+* @example
+* // Are 4 September 06:00:00 and 4 September 18:00:00 in the same day?
+* const result = isSameDay(new Date(2014, 8, 4, 6, 0), new Date(2014, 8, 4, 18, 0))
+* //=> true
+*
+* @example
+* // Are 4 September and 4 October in the same day?
+* const result = isSameDay(new Date(2014, 8, 4), new Date(2014, 9, 4))
+* //=> false
+*
+* @example
+* // Are 4 September, 2014 and 4 September, 2015 in the same day?
+* const result = isSameDay(new Date(2014, 8, 4), new Date(2015, 8, 4))
+* //=> false
+*/
+function isSameDay(laterDate, earlierDate, options) {
+	const [dateLeft_, dateRight_] = normalizeDates(options?.in, laterDate, earlierDate);
+	return +startOfDay(dateLeft_) === +startOfDay(dateRight_);
+}
+//#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/isDate.js
 /**
 * @name isDate
@@ -29271,6 +29527,210 @@ function isValid(date) {
 	return !(!isDate(date) && typeof date !== "number" || isNaN(+toDate(date)));
 }
 //#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/differenceInCalendarMonths.js
+/**
+* The {@link differenceInCalendarMonths} function options.
+*/
+/**
+* @name differenceInCalendarMonths
+* @category Month Helpers
+* @summary Get the number of calendar months between the given dates.
+*
+* @description
+* Get the number of calendar months between the given dates.
+*
+* @param laterDate - The later date
+* @param earlierDate - The earlier date
+* @param options - An object with options
+*
+* @returns The number of calendar months
+*
+* @example
+* // How many calendar months are between 31 January 2014 and 1 September 2014?
+* const result = differenceInCalendarMonths(
+*   new Date(2014, 8, 1),
+*   new Date(2014, 0, 31)
+* )
+* //=> 8
+*/
+function differenceInCalendarMonths(laterDate, earlierDate, options) {
+	const [laterDate_, earlierDate_] = normalizeDates(options?.in, laterDate, earlierDate);
+	const yearsDiff = laterDate_.getFullYear() - earlierDate_.getFullYear();
+	const monthsDiff = laterDate_.getMonth() - earlierDate_.getMonth();
+	return yearsDiff * 12 + monthsDiff;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/endOfMonth.js
+/**
+* The {@link endOfMonth} function options.
+*/
+/**
+* @name endOfMonth
+* @category Month Helpers
+* @summary Return the end of a month for the given date.
+*
+* @description
+* Return the end of a month for the given date.
+* The result will be in the local timezone.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The original date
+* @param options - An object with options
+*
+* @returns The end of a month
+*
+* @example
+* // The end of a month for 2 September 2014 11:55:00:
+* const result = endOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+* //=> Tue Sep 30 2014 23:59:59.999
+*/
+function endOfMonth(date, options) {
+	const _date = toDate(date, options?.in);
+	const month = _date.getMonth();
+	_date.setFullYear(_date.getFullYear(), month + 1, 0);
+	_date.setHours(23, 59, 59, 999);
+	return _date;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/_lib/normalizeInterval.js
+function normalizeInterval(context, interval) {
+	const [start, end] = normalizeDates(context, interval.start, interval.end);
+	return {
+		start,
+		end
+	};
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/eachMonthOfInterval.js
+/**
+* The {@link eachMonthOfInterval} function options.
+*/
+/**
+* The {@link eachMonthOfInterval} function result type. It resolves the proper data type.
+*/
+/**
+* @name eachMonthOfInterval
+* @category Interval Helpers
+* @summary Return the array of months within the specified time interval.
+*
+* @description
+* Return the array of months within the specified time interval.
+*
+* @typeParam IntervalType - Interval type.
+* @typeParam Options - Options type.
+*
+* @param interval - The interval.
+* @param options - An object with options.
+*
+* @returns The array with starts of months from the month of the interval start to the month of the interval end
+*
+* @example
+* // Each month between 6 February 2014 and 10 August 2014:
+* const result = eachMonthOfInterval({
+*   start: new Date(2014, 1, 6),
+*   end: new Date(2014, 7, 10)
+* })
+* //=> [
+* //   Sat Feb 01 2014 00:00:00,
+* //   Sat Mar 01 2014 00:00:00,
+* //   Tue Apr 01 2014 00:00:00,
+* //   Thu May 01 2014 00:00:00,
+* //   Sun Jun 01 2014 00:00:00,
+* //   Tue Jul 01 2014 00:00:00,
+* //   Fri Aug 01 2014 00:00:00
+* // ]
+*/
+function eachMonthOfInterval(interval, options) {
+	const { start, end } = normalizeInterval(options?.in, interval);
+	let reversed = +start > +end;
+	const endTime = reversed ? +start : +end;
+	const date = reversed ? end : start;
+	date.setHours(0, 0, 0, 0);
+	date.setDate(1);
+	let step = options?.step ?? 1;
+	if (!step) return [];
+	if (step < 0) {
+		step = -step;
+		reversed = !reversed;
+	}
+	const dates = [];
+	while (+date <= endTime) {
+		dates.push(constructFrom(start, date));
+		date.setMonth(date.getMonth() + step);
+	}
+	return reversed ? dates.reverse() : dates;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/startOfMonth.js
+/**
+* The {@link startOfMonth} function options.
+*/
+/**
+* @name startOfMonth
+* @category Month Helpers
+* @summary Return the start of a month for the given date.
+*
+* @description
+* Return the start of a month for the given date. The result will be in the local timezone.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments.
+* Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed,
+* or inferred from the arguments.
+*
+* @param date - The original date
+* @param options - An object with options
+*
+* @returns The start of a month
+*
+* @example
+* // The start of a month for 2 September 2014 11:55:00:
+* const result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+* //=> Mon Sep 01 2014 00:00:00
+*/
+function startOfMonth(date, options) {
+	const _date = toDate(date, options?.in);
+	_date.setDate(1);
+	_date.setHours(0, 0, 0, 0);
+	return _date;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/endOfYear.js
+/**
+* The {@link endOfYear} function options.
+*/
+/**
+* @name endOfYear
+* @category Year Helpers
+* @summary Return the end of a year for the given date.
+*
+* @description
+* Return the end of a year for the given date.
+* The result will be in the local timezone.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The original date
+* @param options - The options
+*
+* @returns The end of a year
+*
+* @example
+* // The end of a year for 2 September 2014 11:55:00:
+* const result = endOfYear(new Date(2014, 8, 2, 11, 55, 0))
+* //=> Wed Dec 31 2014 23:59:59.999
+*/
+function endOfYear(date, options) {
+	const _date = toDate(date, options?.in);
+	const year = _date.getFullYear();
+	_date.setFullYear(year + 1, 0, 0);
+	_date.setHours(23, 59, 59, 999);
+	return _date;
+}
+//#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/startOfYear.js
 /**
 * The {@link startOfYear} function options.
@@ -29302,6 +29762,143 @@ function startOfYear(date, options) {
 	date_.setFullYear(date_.getFullYear(), 0, 1);
 	date_.setHours(0, 0, 0, 0);
 	return date_;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/eachYearOfInterval.js
+/**
+* The {@link eachYearOfInterval} function options.
+*/
+/**
+* The {@link eachYearOfInterval} function result type. It resolves the proper data type.
+* It uses the first argument date object type, starting from the date argument,
+* then the start interval date, and finally the end interval date. If
+* a context function is passed, it uses the context function return type.
+*/
+/**
+* @name eachYearOfInterval
+* @category Interval Helpers
+* @summary Return the array of yearly timestamps within the specified time interval.
+*
+* @description
+* Return the array of yearly timestamps within the specified time interval.
+*
+* @typeParam IntervalType - Interval type.
+* @typeParam Options - Options type.
+*
+* @param interval - The interval.
+* @param options - An object with options.
+*
+* @returns The array with starts of yearly timestamps from the month of the interval start to the month of the interval end
+*
+* @example
+* // Each year between 6 February 2014 and 10 August 2017:
+* const result = eachYearOfInterval({
+*   start: new Date(2014, 1, 6),
+*   end: new Date(2017, 7, 10)
+* })
+* //=> [
+* //   Wed Jan 01 2014 00:00:00,
+* //   Thu Jan 01 2015 00:00:00,
+* //   Fri Jan 01 2016 00:00:00,
+* //   Sun Jan 01 2017 00:00:00
+* // ]
+*/
+function eachYearOfInterval(interval, options) {
+	const { start, end } = normalizeInterval(options?.in, interval);
+	let reversed = +start > +end;
+	const endTime = reversed ? +start : +end;
+	const date = reversed ? end : start;
+	date.setHours(0, 0, 0, 0);
+	date.setMonth(0, 1);
+	let step = options?.step ?? 1;
+	if (!step) return [];
+	if (step < 0) {
+		step = -step;
+		reversed = !reversed;
+	}
+	const dates = [];
+	while (+date <= endTime) {
+		dates.push(constructFrom(start, date));
+		date.setFullYear(date.getFullYear() + step);
+	}
+	return reversed ? dates.reverse() : dates;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/endOfWeek.js
+/**
+* The {@link endOfWeek} function options.
+*/
+/**
+* @name endOfWeek
+* @category Week Helpers
+* @summary Return the end of a week for the given date.
+*
+* @description
+* Return the end of a week for the given date.
+* The result will be in the local timezone.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The original date
+* @param options - An object with options
+*
+* @returns The end of a week
+*
+* @example
+* // The end of a week for 2 September 2014 11:55:00:
+* const result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0))
+* //=> Sat Sep 06 2014 23:59:59.999
+*
+* @example
+* // If the week starts on Monday, the end of the week for 2 September 2014 11:55:00:
+* const result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
+* //=> Sun Sep 07 2014 23:59:59.999
+*/
+function endOfWeek(date, options) {
+	const defaultOptions = getDefaultOptions();
+	const weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions.weekStartsOn ?? defaultOptions.locale?.options?.weekStartsOn ?? 0;
+	const _date = toDate(date, options?.in);
+	const day = _date.getDay();
+	const diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
+	_date.setDate(_date.getDate() + diff);
+	_date.setHours(23, 59, 59, 999);
+	return _date;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/endOfISOWeek.js
+/**
+* The {@link endOfISOWeek} function options.
+*/
+/**
+* @name endOfISOWeek
+* @category ISO Week Helpers
+* @summary Return the end of an ISO week for the given date.
+*
+* @description
+* Return the end of an ISO week for the given date.
+* The result will be in the local timezone.
+*
+* ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The original date
+* @param options - An object with options
+*
+* @returns The end of an ISO week
+*
+* @example
+* // The end of an ISO week for 2 September 2014 11:55:00:
+* const result = endOfISOWeek(new Date(2014, 8, 2, 11, 55, 0))
+* //=> Sun Sep 07 2014 23:59:59.999
+*/
+function endOfISOWeek(date, options) {
+	return endOfWeek(date, {
+		...options,
+		weekStartsOn: 1
+	});
 }
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/locale/en-US/_lib/formatDistance.js
@@ -29740,7 +30337,7 @@ function buildMatchPatternFn(args) {
 * @author Sasha Koss [@kossnocorp](https://github.com/kossnocorp)
 * @author Lesha Koss [@leshakoss](https://github.com/leshakoss)
 */
-var enUS = {
+var enUS$1 = {
 	code: "en-US",
 	formatDistance: formatDistance$1,
 	formatLong: formatLong$1,
@@ -30902,7 +31499,7 @@ var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
 */
 function format(date, formatStr, options) {
 	const defaultOptions = getDefaultOptions();
-	const locale = options?.locale ?? defaultOptions.locale ?? enUS;
+	const locale = options?.locale ?? defaultOptions.locale ?? enUS$1;
 	const firstWeekContainsDate = options?.firstWeekContainsDate ?? options?.locale?.options?.firstWeekContainsDate ?? defaultOptions.firstWeekContainsDate ?? defaultOptions.locale?.options?.firstWeekContainsDate ?? 1;
 	const weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions.weekStartsOn ?? defaultOptions.locale?.options?.weekStartsOn ?? 0;
 	const originalDate = toDate(date, options?.in);
@@ -30952,6 +31549,268 @@ function cleanEscapedString(input) {
 	const matched = input.match(escapedStringRegExp);
 	if (!matched) return input;
 	return matched[1].replace(doubleQuoteRegExp, "'");
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/getDaysInMonth.js
+/**
+* The {@link getDaysInMonth} function options.
+*/
+/**
+* @name getDaysInMonth
+* @category Month Helpers
+* @summary Get the number of days in a month of the given date.
+*
+* @description
+* Get the number of days in a month of the given date, considering the context if provided.
+*
+* @param date - The given date
+* @param options - An object with options
+*
+* @returns The number of days in a month
+*
+* @example
+* // How many days are in February 2000?
+* const result = getDaysInMonth(new Date(2000, 1))
+* //=> 29
+*/
+function getDaysInMonth(date, options) {
+	const _date = toDate(date, options?.in);
+	const year = _date.getFullYear();
+	const monthIndex = _date.getMonth();
+	const lastDayOfMonth = constructFrom(_date, 0);
+	lastDayOfMonth.setFullYear(year, monthIndex + 1, 0);
+	lastDayOfMonth.setHours(0, 0, 0, 0);
+	return lastDayOfMonth.getDate();
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/getMonth.js
+/**
+* The {@link getMonth} function options.
+*/
+/**
+* @name getMonth
+* @category Month Helpers
+* @summary Get the month of the given date.
+*
+* @description
+* Get the month of the given date.
+*
+* @param date - The given date
+* @param options - An object with options
+*
+* @returns The month index (0-11)
+*
+* @example
+* // Which month is 29 February 2012?
+* const result = getMonth(new Date(2012, 1, 29))
+* //=> 1
+*/
+function getMonth(date, options) {
+	return toDate(date, options?.in).getMonth();
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/getYear.js
+/**
+* The {@link getYear} function options.
+*/
+/**
+* @name getYear
+* @category Year Helpers
+* @summary Get the year of the given date.
+*
+* @description
+* Get the year of the given date.
+*
+* @param date - The given date
+* @param options - An object with options
+*
+* @returns The year
+*
+* @example
+* // Which year is 2 July 2014?
+* const result = getYear(new Date(2014, 6, 2))
+* //=> 2014
+*/
+function getYear(date, options) {
+	return toDate(date, options?.in).getFullYear();
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/isAfter.js
+/**
+* @name isAfter
+* @category Common Helpers
+* @summary Is the first date after the second one?
+*
+* @description
+* Is the first date after the second one?
+*
+* @param date - The date that should be after the other one to return true
+* @param dateToCompare - The date to compare with
+*
+* @returns The first date is after the second date
+*
+* @example
+* // Is 10 July 1989 after 11 February 1987?
+* const result = isAfter(new Date(1989, 6, 10), new Date(1987, 1, 11))
+* //=> true
+*/
+function isAfter(date, dateToCompare) {
+	return +toDate(date) > +toDate(dateToCompare);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/isBefore.js
+/**
+* @name isBefore
+* @category Common Helpers
+* @summary Is the first date before the second one?
+*
+* @description
+* Is the first date before the second one?
+*
+* @param date - The date that should be before the other one to return true
+* @param dateToCompare - The date to compare with
+*
+* @returns The first date is before the second date
+*
+* @example
+* // Is 10 July 1989 before 11 February 1987?
+* const result = isBefore(new Date(1989, 6, 10), new Date(1987, 1, 11))
+* //=> false
+*/
+function isBefore(date, dateToCompare) {
+	return +toDate(date) < +toDate(dateToCompare);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/isSameMonth.js
+/**
+* The {@link isSameMonth} function options.
+*/
+/**
+* @name isSameMonth
+* @category Month Helpers
+* @summary Are the given dates in the same month (and year)?
+*
+* @description
+* Are the given dates in the same month (and year)?
+*
+* @param laterDate - The first date to check
+* @param earlierDate - The second date to check
+* @param options - An object with options
+*
+* @returns The dates are in the same month (and year)
+*
+* @example
+* // Are 2 September 2014 and 25 September 2014 in the same month?
+* const result = isSameMonth(new Date(2014, 8, 2), new Date(2014, 8, 25))
+* //=> true
+*
+* @example
+* // Are 2 September 2014 and 25 September 2015 in the same month?
+* const result = isSameMonth(new Date(2014, 8, 2), new Date(2015, 8, 25))
+* //=> false
+*/
+function isSameMonth(laterDate, earlierDate, options) {
+	const [laterDate_, earlierDate_] = normalizeDates(options?.in, laterDate, earlierDate);
+	return laterDate_.getFullYear() === earlierDate_.getFullYear() && laterDate_.getMonth() === earlierDate_.getMonth();
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/isSameYear.js
+/**
+* The {@link isSameYear} function options.
+*/
+/**
+* @name isSameYear
+* @category Year Helpers
+* @summary Are the given dates in the same year?
+*
+* @description
+* Are the given dates in the same year?
+*
+* @param laterDate - The first date to check
+* @param earlierDate - The second date to check
+* @param options - An object with options
+*
+* @returns The dates are in the same year
+*
+* @example
+* // Are 2 September 2014 and 25 September 2014 in the same year?
+* const result = isSameYear(new Date(2014, 8, 2), new Date(2014, 8, 25))
+* //=> true
+*/
+function isSameYear(laterDate, earlierDate, options) {
+	const [laterDate_, earlierDate_] = normalizeDates(options?.in, laterDate, earlierDate);
+	return laterDate_.getFullYear() === earlierDate_.getFullYear();
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/setMonth.js
+/**
+* The {@link setMonth} function options.
+*/
+/**
+* @name setMonth
+* @category Month Helpers
+* @summary Set the month to the given date.
+*
+* @description
+* Set the month to the given date.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The date to be changed
+* @param month - The month index to set (0-11)
+* @param options - The options
+*
+* @returns The new date with the month set
+*
+* @example
+* // Set February to 1 September 2014:
+* const result = setMonth(new Date(2014, 8, 1), 1)
+* //=> Sat Feb 01 2014 00:00:00
+*/
+function setMonth(date, month, options) {
+	const _date = toDate(date, options?.in);
+	const year = _date.getFullYear();
+	const day = _date.getDate();
+	const midMonth = constructFrom(options?.in || date, 0);
+	midMonth.setFullYear(year, month, 15);
+	midMonth.setHours(0, 0, 0, 0);
+	const daysInMonth = getDaysInMonth(midMonth);
+	_date.setMonth(month, Math.min(day, daysInMonth));
+	return _date;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/setYear.js
+/**
+* The {@link setYear} function options.
+*/
+/**
+* @name setYear
+* @category Year Helpers
+* @summary Set the year to the given date.
+*
+* @description
+* Set the year to the given date.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The date to be changed
+* @param year - The year of the new date
+* @param options - An object with options.
+*
+* @returns The new date with the year set
+*
+* @example
+* // Set year 2013 to 1 September 2014:
+* const result = setYear(new Date(2014, 8, 1), 2013)
+* //=> Sun Sep 01 2013 00:00:00
+*/
+function setYear(date, year, options) {
+	const date_ = toDate(date, options?.in);
+	if (isNaN(+date_)) return constructFrom(options?.in || date, NaN);
+	date_.setFullYear(year);
+	return date_;
 }
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/locale/pt-BR/_lib/formatDistance.js
@@ -31593,7 +32452,7 @@ function Index() {
 						"data-uid": "src/pages/Index.tsx:40:11",
 						"data-prohibitions": "[editContent]",
 						className: "hidden sm:flex items-center gap-2 bg-white px-4 py-2 rounded-md border border-slate-200 shadow-sm text-sm font-medium text-slate-600",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Calendar, {
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Calendar$1, {
 							"data-uid": "src/pages/Index.tsx:41:13",
 							"data-prohibitions": "[editContent]",
 							className: "h-4 w-4 text-slate-400"
@@ -31670,7 +32529,7 @@ function Index() {
 								className: "text-slate-500 text-sm max-w-sm",
 								children: "Acesse a fábrica de documentos para gerar propostas, relatórios e manuais rapidamente."
 							})]
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$1, {
 							"data-uid": "src/pages/Index.tsx:75:13",
 							"data-prohibitions": "[]",
 							size: "lg",
@@ -31792,77 +32651,17 @@ function Index() {
 	});
 }
 //#endregion
-//#region src/components/ui/dialog.tsx
-var Dialog = Root$4;
-var DialogPortal = Portal$2;
-var DialogOverlay = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Overlay, {
-	"data-uid": "src/components/ui/dialog.tsx:20:3",
-	"data-prohibitions": "[editContent]",
-	ref,
-	className: cn$1("fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0", className),
-	...props
-}));
-DialogOverlay.displayName = Overlay.displayName;
-var DialogContent = import_react.forwardRef(({ className, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DialogPortal, {
-	"data-uid": "src/components/ui/dialog.tsx:35:3",
-	"data-prohibitions": "[editContent]",
-	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogOverlay, {
-		"data-uid": "src/components/ui/dialog.tsx:36:5",
-		"data-prohibitions": "[editContent]"
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Content$1, {
-		"data-uid": "src/components/ui/dialog.tsx:37:5",
+//#region src/components/ui/textarea.tsx
+var Textarea = import_react.forwardRef(({ className, ...props }, ref) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", {
+		"data-uid": "src/components/ui/textarea.tsx:9:7",
 		"data-prohibitions": "[editContent]",
+		className: cn$1("flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm", className),
 		ref,
-		className: cn$1("fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg overflow-y-auto max-h-screen", className),
-		...props,
-		children: [children, /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Close, {
-			"data-uid": "src/components/ui/dialog.tsx:46:7",
-			"data-prohibitions": "[]",
-			className: "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground",
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, {
-				"data-uid": "src/components/ui/dialog.tsx:47:9",
-				"data-prohibitions": "[editContent]",
-				className: "h-4 w-4"
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				"data-uid": "src/components/ui/dialog.tsx:48:9",
-				"data-prohibitions": "[]",
-				className: "sr-only",
-				children: "Close"
-			})]
-		})]
-	})]
-}));
-DialogContent.displayName = Content$1.displayName;
-var DialogHeader = ({ className, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-	"data-uid": "src/components/ui/dialog.tsx:56:3",
-	"data-prohibitions": "[editContent]",
-	className: cn$1("flex flex-col space-y-1.5 text-center sm:text-left", className),
-	...props
+		...props
+	});
 });
-DialogHeader.displayName = "DialogHeader";
-var DialogFooter = ({ className, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-	"data-uid": "src/components/ui/dialog.tsx:61:3",
-	"data-prohibitions": "[editContent]",
-	className: cn$1("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className),
-	...props
-});
-DialogFooter.displayName = "DialogFooter";
-var DialogTitle = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Title, {
-	"data-uid": "src/components/ui/dialog.tsx:72:3",
-	"data-prohibitions": "[editContent]",
-	ref,
-	className: cn$1("text-lg font-semibold leading-none tracking-tight", className),
-	...props
-}));
-DialogTitle.displayName = Title.displayName;
-var DialogDescription = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Description, {
-	"data-uid": "src/components/ui/dialog.tsx:84:3",
-	"data-prohibitions": "[editContent]",
-	ref,
-	className: cn$1("text-sm text-muted-foreground", className),
-	...props
-}));
-DialogDescription.displayName = Description.displayName;
+Textarea.displayName = "Textarea";
 //#endregion
 //#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@radix-ui+number@1.1.1/node_modules/@radix-ui/number/dist/index.mjs
 function clamp(value, [min, max]) {
@@ -31880,12 +32679,12 @@ var SELECTION_KEYS = [" ", "Enter"];
 var SELECT_NAME = "Select";
 var [Collection, useCollection, createCollectionScope] = createCollection(SELECT_NAME);
 var [createSelectContext, createSelectScope] = createContextScope$1(SELECT_NAME, [createCollectionScope, createPopperScope]);
-var usePopperScope = createPopperScope();
+var usePopperScope$1 = createPopperScope();
 var [SelectProvider, useSelectContext] = createSelectContext(SELECT_NAME);
 var [SelectNativeOptionsProvider, useSelectNativeOptionsContext] = createSelectContext(SELECT_NAME);
-var Select$1 = (props) => {
+var Select$2 = (props) => {
 	const { __scopeSelect, children, open: openProp, defaultOpen, onOpenChange, value: valueProp, defaultValue, onValueChange, dir, name, autoComplete, disabled, required, form } = props;
-	const popperScope = usePopperScope(__scopeSelect);
+	const popperScope = usePopperScope$1(__scopeSelect);
 	const [trigger, setTrigger] = import_react.useState(null);
 	const [valueNode, setValueNode] = import_react.useState(null);
 	const [valueNodeHasChildren, setValueNodeHasChildren] = import_react.useState(false);
@@ -31906,7 +32705,7 @@ var Select$1 = (props) => {
 	const isFormControl = trigger ? form || !!trigger.closest("form") : true;
 	const [nativeOptionsSet, setNativeOptionsSet] = import_react.useState(/* @__PURE__ */ new Set());
 	const nativeSelectKey = Array.from(nativeOptionsSet).map((option) => option.props.value).join(";");
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root2$3, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root2$4, {
 		...popperScope,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SelectProvider, {
 			required,
@@ -31956,12 +32755,12 @@ var Select$1 = (props) => {
 		})
 	});
 };
-Select$1.displayName = SELECT_NAME;
-var TRIGGER_NAME$1 = "SelectTrigger";
+Select$2.displayName = SELECT_NAME;
+var TRIGGER_NAME$2 = "SelectTrigger";
 var SelectTrigger$1 = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeSelect, disabled = false, ...triggerProps } = props;
-	const popperScope = usePopperScope(__scopeSelect);
-	const context = useSelectContext(TRIGGER_NAME$1, __scopeSelect);
+	const popperScope = usePopperScope$1(__scopeSelect);
+	const context = useSelectContext(TRIGGER_NAME$2, __scopeSelect);
 	const isDisabled = context.disabled || disabled;
 	const composedRefs = useComposedRefs(forwardedRef, context.onTriggerChange);
 	const getItems = useCollection(__scopeSelect);
@@ -32023,7 +32822,7 @@ var SelectTrigger$1 = import_react.forwardRef((props, forwardedRef) => {
 		})
 	});
 });
-SelectTrigger$1.displayName = TRIGGER_NAME$1;
+SelectTrigger$1.displayName = TRIGGER_NAME$2;
 var VALUE_NAME = "SelectValue";
 var SelectValue$1 = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeSelect, className, style, children, placeholder = "", ...valueProps } = props;
@@ -32053,17 +32852,17 @@ var SelectIcon = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 SelectIcon.displayName = ICON_NAME;
-var PORTAL_NAME = "SelectPortal";
+var PORTAL_NAME$1 = "SelectPortal";
 var SelectPortal = (props) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$3, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$4, {
 		asChild: true,
 		...props
 	});
 };
-SelectPortal.displayName = PORTAL_NAME;
-var CONTENT_NAME$1 = "SelectContent";
+SelectPortal.displayName = PORTAL_NAME$1;
+var CONTENT_NAME$2 = "SelectContent";
 var SelectContent$1 = import_react.forwardRef((props, forwardedRef) => {
-	const context = useSelectContext(CONTENT_NAME$1, props.__scopeSelect);
+	const context = useSelectContext(CONTENT_NAME$2, props.__scopeSelect);
 	const [fragment, setFragment] = import_react.useState();
 	useLayoutEffect2(() => {
 		setFragment(new DocumentFragment());
@@ -32083,14 +32882,14 @@ var SelectContent$1 = import_react.forwardRef((props, forwardedRef) => {
 		ref: forwardedRef
 	});
 });
-SelectContent$1.displayName = CONTENT_NAME$1;
+SelectContent$1.displayName = CONTENT_NAME$2;
 var CONTENT_MARGIN = 10;
-var [SelectContentProvider, useSelectContentContext] = createSelectContext(CONTENT_NAME$1);
+var [SelectContentProvider, useSelectContentContext] = createSelectContext(CONTENT_NAME$2);
 var CONTENT_IMPL_NAME = "SelectContentImpl";
-var Slot = /* @__PURE__ */ createSlot$1("SelectContent.RemoveScroll");
+var Slot$1 = /* @__PURE__ */ createSlot$1("SelectContent.RemoveScroll");
 var SelectContentImpl = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeSelect, position = "item-aligned", onCloseAutoFocus, onEscapeKeyDown, onPointerDownOutside, side, sideOffset, align, alignOffset, arrowPadding, collisionBoundary, collisionPadding, sticky, hideWhenDetached, avoidCollisions, ...contentProps } = props;
-	const context = useSelectContext(CONTENT_NAME$1, __scopeSelect);
+	const context = useSelectContext(CONTENT_NAME$2, __scopeSelect);
 	const [content, setContent] = import_react.useState(null);
 	const [viewport, setViewport] = import_react.useState(null);
 	const composedRefs = useComposedRefs(forwardedRef, (node) => setContent(node));
@@ -32214,7 +33013,7 @@ var SelectContentImpl = import_react.forwardRef((props, forwardedRef) => {
 		isPositioned,
 		searchRef,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ReactRemoveScroll, {
-			as: Slot,
+			as: Slot$1,
 			allowPinchZoom: true,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FocusScope, {
 				asChild: true,
@@ -32280,8 +33079,8 @@ SelectContentImpl.displayName = CONTENT_IMPL_NAME;
 var ITEM_ALIGNED_POSITION_NAME = "SelectItemAlignedPosition";
 var SelectItemAlignedPosition = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeSelect, onPlaced, ...popperProps } = props;
-	const context = useSelectContext(CONTENT_NAME$1, __scopeSelect);
-	const contentContext = useSelectContentContext(CONTENT_NAME$1, __scopeSelect);
+	const context = useSelectContext(CONTENT_NAME$2, __scopeSelect);
+	const contentContext = useSelectContentContext(CONTENT_NAME$2, __scopeSelect);
 	const [contentWrapper, setContentWrapper] = import_react.useState(null);
 	const [content, setContent] = import_react.useState(null);
 	const composedRefs = useComposedRefs(forwardedRef, (node) => setContent(node));
@@ -32406,7 +33205,7 @@ SelectItemAlignedPosition.displayName = ITEM_ALIGNED_POSITION_NAME;
 var POPPER_POSITION_NAME = "SelectPopperPosition";
 var SelectPopperPosition = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeSelect, align = "start", collisionPadding = CONTENT_MARGIN, ...popperProps } = props;
-	const popperScope = usePopperScope(__scopeSelect);
+	const popperScope = usePopperScope$1(__scopeSelect);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content$2, {
 		...popperScope,
 		...popperProps,
@@ -32425,7 +33224,7 @@ var SelectPopperPosition = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 SelectPopperPosition.displayName = POPPER_POSITION_NAME;
-var [SelectViewportProvider, useSelectViewportContext] = createSelectContext(CONTENT_NAME$1, {});
+var [SelectViewportProvider, useSelectViewportContext] = createSelectContext(CONTENT_NAME$2, {});
 var VIEWPORT_NAME = "SelectViewport";
 var SelectViewport = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeSelect, nonce, ...viewportProps } = props;
@@ -32725,19 +33524,19 @@ var SelectSeparator$1 = import_react.forwardRef((props, forwardedRef) => {
 	});
 });
 SelectSeparator$1.displayName = SEPARATOR_NAME;
-var ARROW_NAME = "SelectArrow";
+var ARROW_NAME$1 = "SelectArrow";
 var SelectArrow = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeSelect, ...arrowProps } = props;
-	const popperScope = usePopperScope(__scopeSelect);
-	const context = useSelectContext(ARROW_NAME, __scopeSelect);
-	const contentContext = useSelectContentContext(ARROW_NAME, __scopeSelect);
+	const popperScope = usePopperScope$1(__scopeSelect);
+	const context = useSelectContext(ARROW_NAME$1, __scopeSelect);
+	const contentContext = useSelectContentContext(ARROW_NAME$1, __scopeSelect);
 	return context.open && contentContext.position === "popper" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Arrow, {
 		...popperScope,
 		...arrowProps,
 		ref: forwardedRef
 	}) : null;
 });
-SelectArrow.displayName = ARROW_NAME;
+SelectArrow.displayName = ARROW_NAME$1;
 var BUBBLE_INPUT_NAME$1 = "SelectBubbleInput";
 var SelectBubbleInput = import_react.forwardRef(({ __scopeSelect, value, ...props }, forwardedRef) => {
 	const ref = import_react.useRef(null);
@@ -32805,12 +33604,12 @@ function findNextItem(items, search, currentItem) {
 function wrapArray(array, startIndex) {
 	return array.map((_, index) => array[(startIndex + index) % array.length]);
 }
-var Root2$1 = Select$1;
-var Trigger$1 = SelectTrigger$1;
+var Root2$2 = Select$2;
+var Trigger$2 = SelectTrigger$1;
 var Value = SelectValue$1;
 var Icon = SelectIcon;
-var Portal = SelectPortal;
-var Content2 = SelectContent$1;
+var Portal$1 = SelectPortal;
+var Content2$1 = SelectContent$1;
 var Viewport = SelectViewport;
 var Label = SelectLabel$1;
 var Item = SelectItem$1;
@@ -32821,9 +33620,9 @@ var ScrollDownButton = SelectScrollDownButton$1;
 var Separator = SelectSeparator$1;
 //#endregion
 //#region src/components/ui/select.tsx
-var Select = Root2$1;
+var Select$1 = Root2$2;
 var SelectValue = Value;
-var SelectTrigger = import_react.forwardRef(({ className, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Trigger$1, {
+var SelectTrigger = import_react.forwardRef(({ className, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Trigger$2, {
 	"data-uid": "src/components/ui/select.tsx:18:3",
 	"data-prohibitions": "[editContent]",
 	ref,
@@ -32840,7 +33639,7 @@ var SelectTrigger = import_react.forwardRef(({ className, children, ...props }, 
 		})
 	})]
 }));
-SelectTrigger.displayName = Trigger$1.displayName;
+SelectTrigger.displayName = Trigger$2.displayName;
 var SelectScrollUpButton = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScrollUpButton, {
 	"data-uid": "src/components/ui/select.tsx:38:3",
 	"data-prohibitions": "[editContent]",
@@ -32867,10 +33666,10 @@ var SelectScrollDownButton = import_react.forwardRef(({ className, ...props }, r
 	})
 }));
 SelectScrollDownButton.displayName = ScrollDownButton.displayName;
-var SelectContent = import_react.forwardRef(({ className, children, position = "popper", ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal, {
+var SelectContent = import_react.forwardRef(({ className, children, position = "popper", ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$1, {
 	"data-uid": "src/components/ui/select.tsx:66:3",
 	"data-prohibitions": "[editContent]",
-	children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Content2, {
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Content2$1, {
 		"data-uid": "src/components/ui/select.tsx:67:5",
 		"data-prohibitions": "[editContent]",
 		ref,
@@ -32895,7 +33694,7 @@ var SelectContent = import_react.forwardRef(({ className, children, position = "
 		]
 	})
 }));
-SelectContent.displayName = Content2.displayName;
+SelectContent.displayName = Content2$1.displayName;
 var SelectLabel = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label, {
 	"data-uid": "src/components/ui/select.tsx:98:3",
 	"data-prohibitions": "[editContent]",
@@ -32939,237 +33738,4130 @@ var SelectSeparator = import_react.forwardRef(({ className, ...props }, ref) => 
 }));
 SelectSeparator.displayName = Separator.displayName;
 //#endregion
-//#region src/components/documents/DocumentForm.tsx
-function DocumentForm({ onSuccess }) {
-	const [step, setStep] = (0, import_react.useState)(1);
-	const handleNext = () => setStep(2);
-	const handleGenerate = () => {
-		setStep(3);
-		setTimeout(() => {
-			toast.success("Documento gerado com sucesso!");
-			onSuccess();
-		}, 1500);
-	};
-	if (step === 3) return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		"data-uid": "src/components/documents/DocumentForm.tsx:29:7",
-		"data-prohibitions": "[]",
-		className: "flex flex-col items-center justify-center py-10 space-y-4 animate-in zoom-in-95",
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				"data-uid": "src/components/documents/DocumentForm.tsx:30:9",
-				"data-prohibitions": "[]",
-				className: "h-16 w-16 bg-green-100 rounded-full flex items-center justify-center",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, {
-					"data-uid": "src/components/documents/DocumentForm.tsx:31:11",
-					"data-prohibitions": "[editContent]",
-					className: "h-8 w-8 text-green-600"
-				})
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-				"data-uid": "src/components/documents/DocumentForm.tsx:33:9",
-				"data-prohibitions": "[]",
-				className: "text-xl font-semibold",
-				children: "Tudo Pronto!"
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-				"data-uid": "src/components/documents/DocumentForm.tsx:34:9",
-				"data-prohibitions": "[]",
-				className: "text-muted-foreground text-center",
-				children: "Seu documento foi gerado e está pronto para download."
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-				"data-uid": "src/components/documents/DocumentForm.tsx:37:9",
-				"data-prohibitions": "[]",
-				onClick: onSuccess,
-				className: "mt-4",
-				children: "Fechar"
-			})
-		]
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@radix-ui+react-popover@1.1.15_@types+react-dom@19.2.3_@types+react@19.2.14__@types+rea_8b5332f8e883134e9d9ab2856fc4395d/node_modules/@radix-ui/react-popover/dist/index.mjs
+var POPOVER_NAME = "Popover";
+var [createPopoverContext, createPopoverScope] = createContextScope$1(POPOVER_NAME, [createPopperScope]);
+var usePopperScope = createPopperScope();
+var [PopoverProvider, usePopoverContext] = createPopoverContext(POPOVER_NAME);
+var Popover$1 = (props) => {
+	const { __scopePopover, children, open: openProp, defaultOpen, onOpenChange, modal = false } = props;
+	const popperScope = usePopperScope(__scopePopover);
+	const triggerRef = import_react.useRef(null);
+	const [hasCustomAnchor, setHasCustomAnchor] = import_react.useState(false);
+	const [open, setOpen] = useControllableState({
+		prop: openProp,
+		defaultProp: defaultOpen ?? false,
+		onChange: onOpenChange,
+		caller: POPOVER_NAME
 	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		"data-uid": "src/components/documents/DocumentForm.tsx:45:5",
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root2$4, {
+		...popperScope,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverProvider, {
+			scope: __scopePopover,
+			contentId: useId(),
+			triggerRef,
+			open,
+			onOpenChange: setOpen,
+			onOpenToggle: import_react.useCallback(() => setOpen((prevOpen) => !prevOpen), [setOpen]),
+			hasCustomAnchor,
+			onCustomAnchorAdd: import_react.useCallback(() => setHasCustomAnchor(true), []),
+			onCustomAnchorRemove: import_react.useCallback(() => setHasCustomAnchor(false), []),
+			modal,
+			children
+		})
+	});
+};
+Popover$1.displayName = POPOVER_NAME;
+var ANCHOR_NAME = "PopoverAnchor";
+var PopoverAnchor = import_react.forwardRef((props, forwardedRef) => {
+	const { __scopePopover, ...anchorProps } = props;
+	const context = usePopoverContext(ANCHOR_NAME, __scopePopover);
+	const popperScope = usePopperScope(__scopePopover);
+	const { onCustomAnchorAdd, onCustomAnchorRemove } = context;
+	import_react.useEffect(() => {
+		onCustomAnchorAdd();
+		return () => onCustomAnchorRemove();
+	}, [onCustomAnchorAdd, onCustomAnchorRemove]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Anchor, {
+		...popperScope,
+		...anchorProps,
+		ref: forwardedRef
+	});
+});
+PopoverAnchor.displayName = ANCHOR_NAME;
+var TRIGGER_NAME$1 = "PopoverTrigger";
+var PopoverTrigger$1 = import_react.forwardRef((props, forwardedRef) => {
+	const { __scopePopover, ...triggerProps } = props;
+	const context = usePopoverContext(TRIGGER_NAME$1, __scopePopover);
+	const popperScope = usePopperScope(__scopePopover);
+	const composedTriggerRef = useComposedRefs(forwardedRef, context.triggerRef);
+	const trigger = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Primitive$1.button, {
+		type: "button",
+		"aria-haspopup": "dialog",
+		"aria-expanded": context.open,
+		"aria-controls": context.contentId,
+		"data-state": getState$1(context.open),
+		...triggerProps,
+		ref: composedTriggerRef,
+		onClick: composeEventHandlers(props.onClick, context.onOpenToggle)
+	});
+	return context.hasCustomAnchor ? trigger : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Anchor, {
+		asChild: true,
+		...popperScope,
+		children: trigger
+	});
+});
+PopoverTrigger$1.displayName = TRIGGER_NAME$1;
+var PORTAL_NAME = "PopoverPortal";
+var [PortalProvider, usePortalContext] = createPopoverContext(PORTAL_NAME, { forceMount: void 0 });
+var PopoverPortal = (props) => {
+	const { __scopePopover, forceMount, children, container } = props;
+	const context = usePopoverContext(PORTAL_NAME, __scopePopover);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PortalProvider, {
+		scope: __scopePopover,
+		forceMount,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Presence, {
+			present: forceMount || context.open,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$4, {
+				asChild: true,
+				container,
+				children
+			})
+		})
+	});
+};
+PopoverPortal.displayName = PORTAL_NAME;
+var CONTENT_NAME$1 = "PopoverContent";
+var PopoverContent$1 = import_react.forwardRef((props, forwardedRef) => {
+	const portalContext = usePortalContext(CONTENT_NAME$1, props.__scopePopover);
+	const { forceMount = portalContext.forceMount, ...contentProps } = props;
+	const context = usePopoverContext(CONTENT_NAME$1, props.__scopePopover);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Presence, {
+		present: forceMount || context.open,
+		children: context.modal ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverContentModal, {
+			...contentProps,
+			ref: forwardedRef
+		}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverContentNonModal, {
+			...contentProps,
+			ref: forwardedRef
+		})
+	});
+});
+PopoverContent$1.displayName = CONTENT_NAME$1;
+var Slot = /* @__PURE__ */ createSlot$1("PopoverContent.RemoveScroll");
+var PopoverContentModal = import_react.forwardRef((props, forwardedRef) => {
+	const context = usePopoverContext(CONTENT_NAME$1, props.__scopePopover);
+	const contentRef = import_react.useRef(null);
+	const composedRefs = useComposedRefs(forwardedRef, contentRef);
+	const isRightClickOutsideRef = import_react.useRef(false);
+	import_react.useEffect(() => {
+		const content = contentRef.current;
+		if (content) return hideOthers(content);
+	}, []);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ReactRemoveScroll, {
+		as: Slot,
+		allowPinchZoom: true,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverContentImpl, {
+			...props,
+			ref: composedRefs,
+			trapFocus: context.open,
+			disableOutsidePointerEvents: true,
+			onCloseAutoFocus: composeEventHandlers(props.onCloseAutoFocus, (event) => {
+				event.preventDefault();
+				if (!isRightClickOutsideRef.current) context.triggerRef.current?.focus();
+			}),
+			onPointerDownOutside: composeEventHandlers(props.onPointerDownOutside, (event) => {
+				const originalEvent = event.detail.originalEvent;
+				const ctrlLeftClick = originalEvent.button === 0 && originalEvent.ctrlKey === true;
+				isRightClickOutsideRef.current = originalEvent.button === 2 || ctrlLeftClick;
+			}, { checkForDefaultPrevented: false }),
+			onFocusOutside: composeEventHandlers(props.onFocusOutside, (event) => event.preventDefault(), { checkForDefaultPrevented: false })
+		})
+	});
+});
+var PopoverContentNonModal = import_react.forwardRef((props, forwardedRef) => {
+	const context = usePopoverContext(CONTENT_NAME$1, props.__scopePopover);
+	const hasInteractedOutsideRef = import_react.useRef(false);
+	const hasPointerDownOutsideRef = import_react.useRef(false);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverContentImpl, {
+		...props,
+		ref: forwardedRef,
+		trapFocus: false,
+		disableOutsidePointerEvents: false,
+		onCloseAutoFocus: (event) => {
+			props.onCloseAutoFocus?.(event);
+			if (!event.defaultPrevented) {
+				if (!hasInteractedOutsideRef.current) context.triggerRef.current?.focus();
+				event.preventDefault();
+			}
+			hasInteractedOutsideRef.current = false;
+			hasPointerDownOutsideRef.current = false;
+		},
+		onInteractOutside: (event) => {
+			props.onInteractOutside?.(event);
+			if (!event.defaultPrevented) {
+				hasInteractedOutsideRef.current = true;
+				if (event.detail.originalEvent.type === "pointerdown") hasPointerDownOutsideRef.current = true;
+			}
+			const target = event.target;
+			if (context.triggerRef.current?.contains(target)) event.preventDefault();
+			if (event.detail.originalEvent.type === "focusin" && hasPointerDownOutsideRef.current) event.preventDefault();
+		}
+	});
+});
+var PopoverContentImpl = import_react.forwardRef((props, forwardedRef) => {
+	const { __scopePopover, trapFocus, onOpenAutoFocus, onCloseAutoFocus, disableOutsidePointerEvents, onEscapeKeyDown, onPointerDownOutside, onFocusOutside, onInteractOutside, ...contentProps } = props;
+	const context = usePopoverContext(CONTENT_NAME$1, __scopePopover);
+	const popperScope = usePopperScope(__scopePopover);
+	useFocusGuards();
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FocusScope, {
+		asChild: true,
+		loop: true,
+		trapped: trapFocus,
+		onMountAutoFocus: onOpenAutoFocus,
+		onUnmountAutoFocus: onCloseAutoFocus,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DismissableLayer, {
+			asChild: true,
+			disableOutsidePointerEvents,
+			onInteractOutside,
+			onEscapeKeyDown,
+			onPointerDownOutside,
+			onFocusOutside,
+			onDismiss: () => context.onOpenChange(false),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content$2, {
+				"data-state": getState$1(context.open),
+				role: "dialog",
+				id: context.contentId,
+				...popperScope,
+				...contentProps,
+				ref: forwardedRef,
+				style: {
+					...contentProps.style,
+					"--radix-popover-content-transform-origin": "var(--radix-popper-transform-origin)",
+					"--radix-popover-content-available-width": "var(--radix-popper-available-width)",
+					"--radix-popover-content-available-height": "var(--radix-popper-available-height)",
+					"--radix-popover-trigger-width": "var(--radix-popper-anchor-width)",
+					"--radix-popover-trigger-height": "var(--radix-popper-anchor-height)"
+				}
+			})
+		})
+	});
+});
+var CLOSE_NAME = "PopoverClose";
+var PopoverClose = import_react.forwardRef((props, forwardedRef) => {
+	const { __scopePopover, ...closeProps } = props;
+	const context = usePopoverContext(CLOSE_NAME, __scopePopover);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Primitive$1.button, {
+		type: "button",
+		...closeProps,
+		ref: forwardedRef,
+		onClick: composeEventHandlers(props.onClick, () => context.onOpenChange(false))
+	});
+});
+PopoverClose.displayName = CLOSE_NAME;
+var ARROW_NAME = "PopoverArrow";
+var PopoverArrow = import_react.forwardRef((props, forwardedRef) => {
+	const { __scopePopover, ...arrowProps } = props;
+	const popperScope = usePopperScope(__scopePopover);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Arrow, {
+		...popperScope,
+		...arrowProps,
+		ref: forwardedRef
+	});
+});
+PopoverArrow.displayName = ARROW_NAME;
+function getState$1(open) {
+	return open ? "open" : "closed";
+}
+var Root2$1 = Popover$1;
+var Trigger$1 = PopoverTrigger$1;
+var Portal = PopoverPortal;
+var Content2 = PopoverContent$1;
+//#endregion
+//#region src/components/ui/popover.tsx
+var Popover = Root2$1;
+var PopoverTrigger = Trigger$1;
+var PopoverContent = import_react.forwardRef(({ className, align = "center", sideOffset = 4, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal, {
+	"data-uid": "src/components/ui/popover.tsx:15:3",
+	"data-prohibitions": "[editContent]",
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content2, {
+		"data-uid": "src/components/ui/popover.tsx:16:5",
 		"data-prohibitions": "[editContent]",
-		className: "space-y-6",
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			"data-uid": "src/components/documents/DocumentForm.tsx:46:7",
-			"data-prohibitions": "[editContent]",
-			className: "flex items-center space-x-2 text-sm text-muted-foreground mb-6",
-			children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-					"data-uid": "src/components/documents/DocumentForm.tsx:47:9",
+		ref,
+		align,
+		sideOffset,
+		className: cn$1("z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-popover-content-transform-origin]", className),
+		...props
+	})
+}));
+PopoverContent.displayName = Content2.displayName;
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@date-fns+tz@1.4.1/node_modules/@date-fns/tz/tzName/index.js
+/**
+* Time zone name format.
+*/
+/**
+* The function returns the time zone name for the given date in the specified
+* time zone.
+*
+* It uses the `Intl.DateTimeFormat` API and by default outputs the time zone
+* name in a long format, e.g. "Pacific Standard Time" or
+* "Singapore Standard Time".
+*
+* It is possible to specify the format as the third argument using one of the following options
+*
+* - "short": e.g. "EDT" or "GMT+8".
+* - "long": e.g. "Eastern Daylight Time".
+* - "shortGeneric": e.g. "ET" or "Singapore Time".
+* - "longGeneric": e.g. "Eastern Time" or "Singapore Standard Time".
+*
+* These options correspond to TR35 tokens `z..zzz`, `zzzz`, `v`, and `vvvv` respectively: https://www.unicode.org/reports/tr35/tr35-dates.html#dfst-zone
+*
+* @param timeZone - Time zone name (IANA or UTC offset)
+* @param date - Date object to get the time zone name for
+* @param format - Optional format of the time zone name. Defaults to "long". Can be "short", "long", "shortGeneric", or "longGeneric".
+*
+* @returns Time zone name (e.g. "Singapore Standard Time")
+*/
+function tzName(timeZone, date, format = "long") {
+	return new Intl.DateTimeFormat("en-US", {
+		hour: "numeric",
+		timeZone,
+		timeZoneName: format
+	}).format(date).split(/\s/g).slice(2).join(" ");
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@date-fns+tz@1.4.1/node_modules/@date-fns/tz/tzOffset/index.js
+var offsetFormatCache = {};
+var offsetCache = {};
+/**
+* The function extracts UTC offset in minutes from the given date in specified
+* time zone.
+*
+* Unlike `Date.prototype.getTimezoneOffset`, this function returns the value
+* mirrored to the sign of the offset in the time zone. For Asia/Singapore
+* (UTC+8), `tzOffset` returns 480, while `getTimezoneOffset` returns -480.
+*
+* @param timeZone - Time zone name (IANA or UTC offset)
+* @param date - Date to check the offset for
+*
+* @returns UTC offset in minutes
+*/
+function tzOffset(timeZone, date) {
+	try {
+		const offsetStr = (offsetFormatCache[timeZone] ||= new Intl.DateTimeFormat("en-US", {
+			timeZone,
+			timeZoneName: "longOffset"
+		}).format)(date).split("GMT")[1];
+		if (offsetStr in offsetCache) return offsetCache[offsetStr];
+		return calcOffset(offsetStr, offsetStr.split(":"));
+	} catch {
+		if (timeZone in offsetCache) return offsetCache[timeZone];
+		const captures = timeZone?.match(offsetRe);
+		if (captures) return calcOffset(timeZone, captures.slice(1));
+		return NaN;
+	}
+}
+var offsetRe = /([+-]\d\d):?(\d\d)?/;
+function calcOffset(cacheStr, values) {
+	const hours = +(values[0] || 0);
+	const minutes = +(values[1] || 0);
+	const seconds = +(values[2] || 0) / 60;
+	return offsetCache[cacheStr] = hours * 60 + minutes > 0 ? hours * 60 + minutes + seconds : hours * 60 - minutes - seconds;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@date-fns+tz@1.4.1/node_modules/@date-fns/tz/date/mini.js
+var TZDateMini = class TZDateMini extends Date {
+	constructor(...args) {
+		super();
+		if (args.length > 1 && typeof args[args.length - 1] === "string") this.timeZone = args.pop();
+		this.internal = /* @__PURE__ */ new Date();
+		if (isNaN(tzOffset(this.timeZone, this))) this.setTime(NaN);
+		else if (!args.length) this.setTime(Date.now());
+		else if (typeof args[0] === "number" && (args.length === 1 || args.length === 2 && typeof args[1] !== "number")) this.setTime(args[0]);
+		else if (typeof args[0] === "string") this.setTime(+new Date(args[0]));
+		else if (args[0] instanceof Date) this.setTime(+args[0]);
+		else {
+			this.setTime(+new Date(...args));
+			adjustToSystemTZ(this, NaN);
+			syncToInternal(this);
+		}
+	}
+	static tz(tz, ...args) {
+		return args.length ? new TZDateMini(...args, tz) : new TZDateMini(Date.now(), tz);
+	}
+	withTimeZone(timeZone) {
+		return new TZDateMini(+this, timeZone);
+	}
+	getTimezoneOffset() {
+		const offset = -tzOffset(this.timeZone, this);
+		return offset > 0 ? Math.floor(offset) : Math.ceil(offset);
+	}
+	setTime(time) {
+		Date.prototype.setTime.apply(this, arguments);
+		syncToInternal(this);
+		return +this;
+	}
+	[Symbol.for("constructDateFrom")](date) {
+		return new TZDateMini(+new Date(date), this.timeZone);
+	}
+};
+var re = /^(get|set)(?!UTC)/;
+Object.getOwnPropertyNames(Date.prototype).forEach((method) => {
+	if (!re.test(method)) return;
+	const utcMethod = method.replace(re, "$1UTC");
+	if (!TZDateMini.prototype[utcMethod]) return;
+	if (method.startsWith("get")) TZDateMini.prototype[method] = function() {
+		return this.internal[utcMethod]();
+	};
+	else {
+		TZDateMini.prototype[method] = function() {
+			Date.prototype[utcMethod].apply(this.internal, arguments);
+			syncFromInternal(this);
+			return +this;
+		};
+		TZDateMini.prototype[utcMethod] = function() {
+			Date.prototype[utcMethod].apply(this, arguments);
+			syncToInternal(this);
+			return +this;
+		};
+	}
+});
+/**
+* Function syncs time to internal date, applying the time zone offset.
+*
+* @param {Date} date - Date to sync
+*/
+function syncToInternal(date) {
+	date.internal.setTime(+date);
+	date.internal.setUTCSeconds(date.internal.getUTCSeconds() - Math.round(-tzOffset(date.timeZone, date) * 60));
+}
+/**
+* Function syncs the internal date UTC values to the date. It allows to get
+* accurate timestamp value.
+*
+* @param {Date} date - The date to sync
+*/
+function syncFromInternal(date) {
+	Date.prototype.setFullYear.call(date, date.internal.getUTCFullYear(), date.internal.getUTCMonth(), date.internal.getUTCDate());
+	Date.prototype.setHours.call(date, date.internal.getUTCHours(), date.internal.getUTCMinutes(), date.internal.getUTCSeconds(), date.internal.getUTCMilliseconds());
+	adjustToSystemTZ(date);
+}
+/**
+* Function adjusts the date to the system time zone. It uses the time zone
+* differences to calculate the offset and adjust the date.
+*
+* @param {Date} date - Date to adjust
+*/
+function adjustToSystemTZ(date) {
+	const baseOffset = tzOffset(date.timeZone, date);
+	const offset = baseOffset > 0 ? Math.floor(baseOffset) : Math.ceil(baseOffset);
+	const prevHour = /* @__PURE__ */ new Date(+date);
+	prevHour.setUTCHours(prevHour.getUTCHours() - 1);
+	const systemOffset = -(/* @__PURE__ */ new Date(+date)).getTimezoneOffset();
+	const systemDSTChange = systemOffset - -(/* @__PURE__ */ new Date(+prevHour)).getTimezoneOffset();
+	const dstShift = Date.prototype.getHours.apply(date) !== date.internal.getUTCHours();
+	if (systemDSTChange && dstShift) date.internal.setUTCMinutes(date.internal.getUTCMinutes() + systemDSTChange);
+	const offsetDiff = systemOffset - offset;
+	if (offsetDiff) Date.prototype.setUTCMinutes.call(date, Date.prototype.getUTCMinutes.call(date) + offsetDiff);
+	const systemDate = /* @__PURE__ */ new Date(+date);
+	systemDate.setUTCSeconds(0);
+	const systemSecondsOffset = systemOffset > 0 ? systemDate.getSeconds() : (systemDate.getSeconds() - 60) % 60;
+	const secondsOffset = Math.round(-(tzOffset(date.timeZone, date) * 60)) % 60;
+	if (secondsOffset || systemSecondsOffset) {
+		date.internal.setUTCSeconds(date.internal.getUTCSeconds() + secondsOffset);
+		Date.prototype.setUTCSeconds.call(date, Date.prototype.getUTCSeconds.call(date) + secondsOffset + systemSecondsOffset);
+	}
+	const postBaseOffset = tzOffset(date.timeZone, date);
+	const postOffset = postBaseOffset > 0 ? Math.floor(postBaseOffset) : Math.ceil(postBaseOffset);
+	const postOffsetDiff = -(/* @__PURE__ */ new Date(+date)).getTimezoneOffset() - postOffset;
+	const offsetChanged = postOffset !== offset;
+	const postDiff = postOffsetDiff - offsetDiff;
+	if (offsetChanged && postDiff) {
+		Date.prototype.setUTCMinutes.call(date, Date.prototype.getUTCMinutes.call(date) + postDiff);
+		const newBaseOffset = tzOffset(date.timeZone, date);
+		const offsetChange = postOffset - (newBaseOffset > 0 ? Math.floor(newBaseOffset) : Math.ceil(newBaseOffset));
+		if (offsetChange) {
+			date.internal.setUTCMinutes(date.internal.getUTCMinutes() + offsetChange);
+			Date.prototype.setUTCMinutes.call(date, Date.prototype.getUTCMinutes.call(date) + offsetChange);
+		}
+	}
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/@date-fns+tz@1.4.1/node_modules/@date-fns/tz/date/index.js
+var TZDate = class TZDate extends TZDateMini {
+	static tz(tz, ...args) {
+		return args.length ? new TZDate(...args, tz) : new TZDate(Date.now(), tz);
+	}
+	toISOString() {
+		const [sign, hours, minutes] = this.tzComponents();
+		const tz = `${sign}${hours}:${minutes}`;
+		return this.internal.toISOString().slice(0, -1) + tz;
+	}
+	toString() {
+		return `${this.toDateString()} ${this.toTimeString()}`;
+	}
+	toDateString() {
+		const [day, date, month, year] = this.internal.toUTCString().split(" ");
+		return `${day?.slice(0, -1)} ${month} ${date} ${year}`;
+	}
+	toTimeString() {
+		const time = this.internal.toUTCString().split(" ")[4];
+		const [sign, hours, minutes] = this.tzComponents();
+		return `${time} GMT${sign}${hours}${minutes} (${tzName(this.timeZone, this)})`;
+	}
+	toLocaleString(locales, options) {
+		return Date.prototype.toLocaleString.call(this, locales, {
+			...options,
+			timeZone: options?.timeZone || this.timeZone
+		});
+	}
+	toLocaleDateString(locales, options) {
+		return Date.prototype.toLocaleDateString.call(this, locales, {
+			...options,
+			timeZone: options?.timeZone || this.timeZone
+		});
+	}
+	toLocaleTimeString(locales, options) {
+		return Date.prototype.toLocaleTimeString.call(this, locales, {
+			...options,
+			timeZone: options?.timeZone || this.timeZone
+		});
+	}
+	tzComponents() {
+		const offset = this.getTimezoneOffset();
+		return [
+			offset > 0 ? "-" : "+",
+			String(Math.floor(Math.abs(offset) / 60)).padStart(2, "0"),
+			String(Math.abs(offset) % 60).padStart(2, "0")
+		];
+	}
+	withTimeZone(timeZone) {
+		return new TZDate(+this, timeZone);
+	}
+	[Symbol.for("constructDateFrom")](date) {
+		return new TZDate(+new Date(date), this.timeZone);
+	}
+};
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getBroadcastWeeksInMonth.js
+var FIVE_WEEKS = 5;
+var FOUR_WEEKS = 4;
+/**
+* Returns the number of weeks to display in the broadcast calendar for a given
+* month.
+*
+* The broadcast calendar may have either 4 or 5 weeks in a month, depending on
+* the start and end dates of the broadcast weeks.
+*
+* @since 9.4.0
+* @param month The month for which to calculate the number of weeks.
+* @param dateLib The date library to use for date manipulation.
+* @returns The number of weeks in the broadcast calendar (4 or 5).
+*/
+function getBroadcastWeeksInMonth(month, dateLib) {
+	const firstDayOfMonth = dateLib.startOfMonth(month);
+	const firstDayOfWeek = firstDayOfMonth.getDay() > 0 ? firstDayOfMonth.getDay() : 7;
+	const broadcastStartDate = dateLib.addDays(month, -firstDayOfWeek + 1);
+	const lastDateOfLastWeek = dateLib.addDays(broadcastStartDate, FIVE_WEEKS * 7 - 1);
+	return dateLib.getMonth(month) === dateLib.getMonth(lastDateOfLastWeek) ? FIVE_WEEKS : FOUR_WEEKS;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/startOfBroadcastWeek.js
+/**
+* Returns the start date of the week in the broadcast calendar.
+*
+* The broadcast week starts on Monday. If the first day of the month is not a
+* Monday, this function calculates the previous Monday as the start of the
+* broadcast week.
+*
+* @since 9.4.0
+* @param date The date for which to calculate the start of the broadcast week.
+* @param dateLib The date library to use for date manipulation.
+* @returns The start date of the broadcast week.
+*/
+function startOfBroadcastWeek(date, dateLib) {
+	const firstOfMonth = dateLib.startOfMonth(date);
+	const dayOfWeek = firstOfMonth.getDay();
+	if (dayOfWeek === 1) return firstOfMonth;
+	else if (dayOfWeek === 0) return dateLib.addDays(firstOfMonth, -6);
+	else return dateLib.addDays(firstOfMonth, -1 * (dayOfWeek - 1));
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/endOfBroadcastWeek.js
+/**
+* Returns the end date of the week in the broadcast calendar.
+*
+* The broadcast week ends on the last day of the last broadcast week for the
+* given date.
+*
+* @since 9.4.0
+* @param date The date for which to calculate the end of the broadcast week.
+* @param dateLib The date library to use for date manipulation.
+* @returns The end date of the broadcast week.
+*/
+function endOfBroadcastWeek(date, dateLib) {
+	const startDate = startOfBroadcastWeek(date, dateLib);
+	const numberOfWeeks = getBroadcastWeeksInMonth(date, dateLib);
+	return dateLib.addDays(startDate, numberOfWeeks * 7 - 1);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/locale/en-US.js
+/** English (United States) locale extended with DayPicker-specific translations. */
+var enUS = {
+	...enUS$1,
+	labels: {
+		labelDayButton: (date, modifiers, options, dateLib) => {
+			let formatDate;
+			if (dateLib && typeof dateLib.format === "function") formatDate = dateLib.format.bind(dateLib);
+			else formatDate = (d, pattern) => format(d, pattern, {
+				locale: enUS$1,
+				...options
+			});
+			let label = formatDate(date, "PPPP");
+			if (modifiers.today) label = `Today, ${label}`;
+			if (modifiers.selected) label = `${label}, selected`;
+			return label;
+		},
+		labelMonthDropdown: "Choose the Month",
+		labelNext: "Go to the Next Month",
+		labelPrevious: "Go to the Previous Month",
+		labelWeekNumber: (weekNumber) => `Week ${weekNumber}`,
+		labelYearDropdown: "Choose the Year",
+		labelGrid: (date, options, dateLib) => {
+			let formatDate;
+			if (dateLib && typeof dateLib.format === "function") formatDate = dateLib.format.bind(dateLib);
+			else formatDate = (d, pattern) => format(d, pattern, {
+				locale: enUS$1,
+				...options
+			});
+			return formatDate(date, "LLLL yyyy");
+		},
+		labelGridcell: (date, modifiers, options, dateLib) => {
+			let formatDate;
+			if (dateLib && typeof dateLib.format === "function") formatDate = dateLib.format.bind(dateLib);
+			else formatDate = (d, pattern) => format(d, pattern, {
+				locale: enUS$1,
+				...options
+			});
+			let label = formatDate(date, "PPPP");
+			if (modifiers?.today) label = `Today, ${label}`;
+			return label;
+		},
+		labelNav: "Navigation bar",
+		labelWeekNumberHeader: "Week Number",
+		labelWeekday: (date, options, dateLib) => {
+			let formatDate;
+			if (dateLib && typeof dateLib.format === "function") formatDate = dateLib.format.bind(dateLib);
+			else formatDate = (d, pattern) => format(d, pattern, {
+				locale: enUS$1,
+				...options
+			});
+			return formatDate(date, "cccc");
+		}
+	}
+};
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/classes/DateLib.js
+/**
+* A wrapper class around [date-fns](http://date-fns.org) that provides utility
+* methods for date manipulation and formatting.
+*
+* @since 9.2.0
+* @example
+*   const dateLib = new DateLib({ locale: es });
+*   const newDate = dateLib.addDays(new Date(), 5);
+*/
+var DateLib = class DateLib {
+	/**
+	* Creates an instance of `DateLib`.
+	*
+	* @param options Configuration options for the date library.
+	* @param overrides Custom overrides for the date library functions.
+	*/
+	constructor(options, overrides) {
+		/**
+		* Reference to the built-in Date constructor.
+		*
+		* @deprecated Use `newDate()` or `today()`.
+		*/
+		this.Date = Date;
+		/**
+		* Creates a new `Date` object representing today's date.
+		*
+		* @since 9.5.0
+		* @returns A `Date` object for today's date.
+		*/
+		this.today = () => {
+			if (this.overrides?.today) return this.overrides.today();
+			if (this.options.timeZone) return TZDate.tz(this.options.timeZone);
+			return new this.Date();
+		};
+		/**
+		* Creates a new `Date` object with the specified year, month, and day.
+		*
+		* @since 9.5.0
+		* @param year The year.
+		* @param monthIndex The month (0-11).
+		* @param date The day of the month.
+		* @returns A new `Date` object.
+		*/
+		this.newDate = (year, monthIndex, date) => {
+			if (this.overrides?.newDate) return this.overrides.newDate(year, monthIndex, date);
+			if (this.options.timeZone) return new TZDate(year, monthIndex, date, this.options.timeZone);
+			return new Date(year, monthIndex, date);
+		};
+		/**
+		* Adds the specified number of days to the given date.
+		*
+		* @param date The date to add days to.
+		* @param amount The number of days to add.
+		* @returns The new date with the days added.
+		*/
+		this.addDays = (date, amount) => {
+			return this.overrides?.addDays ? this.overrides.addDays(date, amount) : addDays(date, amount);
+		};
+		/**
+		* Adds the specified number of months to the given date.
+		*
+		* @param date The date to add months to.
+		* @param amount The number of months to add.
+		* @returns The new date with the months added.
+		*/
+		this.addMonths = (date, amount) => {
+			return this.overrides?.addMonths ? this.overrides.addMonths(date, amount) : addMonths(date, amount);
+		};
+		/**
+		* Adds the specified number of weeks to the given date.
+		*
+		* @param date The date to add weeks to.
+		* @param amount The number of weeks to add.
+		* @returns The new date with the weeks added.
+		*/
+		this.addWeeks = (date, amount) => {
+			return this.overrides?.addWeeks ? this.overrides.addWeeks(date, amount) : addWeeks(date, amount);
+		};
+		/**
+		* Adds the specified number of years to the given date.
+		*
+		* @param date The date to add years to.
+		* @param amount The number of years to add.
+		* @returns The new date with the years added.
+		*/
+		this.addYears = (date, amount) => {
+			return this.overrides?.addYears ? this.overrides.addYears(date, amount) : addYears(date, amount);
+		};
+		/**
+		* Returns the number of calendar days between the given dates.
+		*
+		* @param dateLeft The later date.
+		* @param dateRight The earlier date.
+		* @returns The number of calendar days between the dates.
+		*/
+		this.differenceInCalendarDays = (dateLeft, dateRight) => {
+			return this.overrides?.differenceInCalendarDays ? this.overrides.differenceInCalendarDays(dateLeft, dateRight) : differenceInCalendarDays(dateLeft, dateRight);
+		};
+		/**
+		* Returns the number of calendar months between the given dates.
+		*
+		* @param dateLeft The later date.
+		* @param dateRight The earlier date.
+		* @returns The number of calendar months between the dates.
+		*/
+		this.differenceInCalendarMonths = (dateLeft, dateRight) => {
+			return this.overrides?.differenceInCalendarMonths ? this.overrides.differenceInCalendarMonths(dateLeft, dateRight) : differenceInCalendarMonths(dateLeft, dateRight);
+		};
+		/**
+		* Returns the months between the given dates.
+		*
+		* @param interval The interval to get the months for.
+		*/
+		this.eachMonthOfInterval = (interval) => {
+			return this.overrides?.eachMonthOfInterval ? this.overrides.eachMonthOfInterval(interval) : eachMonthOfInterval(interval);
+		};
+		/**
+		* Returns the years between the given dates.
+		*
+		* @since 9.11.1
+		* @param interval The interval to get the years for.
+		* @returns The array of years in the interval.
+		*/
+		this.eachYearOfInterval = (interval) => {
+			const years = this.overrides?.eachYearOfInterval ? this.overrides.eachYearOfInterval(interval) : eachYearOfInterval(interval);
+			const uniqueYears = new Set(years.map((d) => this.getYear(d)));
+			if (uniqueYears.size === years.length) return years;
+			const yearsArray = [];
+			uniqueYears.forEach((y) => {
+				yearsArray.push(new Date(y, 0, 1));
+			});
+			return yearsArray;
+		};
+		/**
+		* Returns the end of the broadcast week for the given date.
+		*
+		* @param date The original date.
+		* @returns The end of the broadcast week.
+		*/
+		this.endOfBroadcastWeek = (date) => {
+			return this.overrides?.endOfBroadcastWeek ? this.overrides.endOfBroadcastWeek(date) : endOfBroadcastWeek(date, this);
+		};
+		/**
+		* Returns the end of the ISO week for the given date.
+		*
+		* @param date The original date.
+		* @returns The end of the ISO week.
+		*/
+		this.endOfISOWeek = (date) => {
+			return this.overrides?.endOfISOWeek ? this.overrides.endOfISOWeek(date) : endOfISOWeek(date);
+		};
+		/**
+		* Returns the end of the month for the given date.
+		*
+		* @param date The original date.
+		* @returns The end of the month.
+		*/
+		this.endOfMonth = (date) => {
+			return this.overrides?.endOfMonth ? this.overrides.endOfMonth(date) : endOfMonth(date);
+		};
+		/**
+		* Returns the end of the week for the given date.
+		*
+		* @param date The original date.
+		* @returns The end of the week.
+		*/
+		this.endOfWeek = (date, options) => {
+			return this.overrides?.endOfWeek ? this.overrides.endOfWeek(date, options) : endOfWeek(date, this.options);
+		};
+		/**
+		* Returns the end of the year for the given date.
+		*
+		* @param date The original date.
+		* @returns The end of the year.
+		*/
+		this.endOfYear = (date) => {
+			return this.overrides?.endOfYear ? this.overrides.endOfYear(date) : endOfYear(date);
+		};
+		/**
+		* Formats the given date using the specified format string.
+		*
+		* @param date The date to format.
+		* @param formatStr The format string.
+		* @returns The formatted date string.
+		*/
+		this.format = (date, formatStr, _options) => {
+			const formatted = this.overrides?.format ? this.overrides.format(date, formatStr, this.options) : format(date, formatStr, this.options);
+			if (this.options.numerals && this.options.numerals !== "latn") return this.replaceDigits(formatted);
+			return formatted;
+		};
+		/**
+		* Returns the ISO week number for the given date.
+		*
+		* @param date The date to get the ISO week number for.
+		* @returns The ISO week number.
+		*/
+		this.getISOWeek = (date) => {
+			return this.overrides?.getISOWeek ? this.overrides.getISOWeek(date) : getISOWeek(date);
+		};
+		/**
+		* Returns the month of the given date.
+		*
+		* @param date The date to get the month for.
+		* @returns The month.
+		*/
+		this.getMonth = (date, _options) => {
+			return this.overrides?.getMonth ? this.overrides.getMonth(date, this.options) : getMonth(date, this.options);
+		};
+		/**
+		* Returns the year of the given date.
+		*
+		* @param date The date to get the year for.
+		* @returns The year.
+		*/
+		this.getYear = (date, _options) => {
+			return this.overrides?.getYear ? this.overrides.getYear(date, this.options) : getYear(date, this.options);
+		};
+		/**
+		* Returns the local week number for the given date.
+		*
+		* @param date The date to get the week number for.
+		* @returns The week number.
+		*/
+		this.getWeek = (date, _options) => {
+			return this.overrides?.getWeek ? this.overrides.getWeek(date, this.options) : getWeek(date, this.options);
+		};
+		/**
+		* Checks if the first date is after the second date.
+		*
+		* @param date The date to compare.
+		* @param dateToCompare The date to compare with.
+		* @returns True if the first date is after the second date.
+		*/
+		this.isAfter = (date, dateToCompare) => {
+			return this.overrides?.isAfter ? this.overrides.isAfter(date, dateToCompare) : isAfter(date, dateToCompare);
+		};
+		/**
+		* Checks if the first date is before the second date.
+		*
+		* @param date The date to compare.
+		* @param dateToCompare The date to compare with.
+		* @returns True if the first date is before the second date.
+		*/
+		this.isBefore = (date, dateToCompare) => {
+			return this.overrides?.isBefore ? this.overrides.isBefore(date, dateToCompare) : isBefore(date, dateToCompare);
+		};
+		/**
+		* Checks if the given value is a Date object.
+		*
+		* @param value The value to check.
+		* @returns True if the value is a Date object.
+		*/
+		this.isDate = (value) => {
+			return this.overrides?.isDate ? this.overrides.isDate(value) : isDate(value);
+		};
+		/**
+		* Checks if the given dates are on the same day.
+		*
+		* @param dateLeft The first date to compare.
+		* @param dateRight The second date to compare.
+		* @returns True if the dates are on the same day.
+		*/
+		this.isSameDay = (dateLeft, dateRight) => {
+			return this.overrides?.isSameDay ? this.overrides.isSameDay(dateLeft, dateRight) : isSameDay(dateLeft, dateRight);
+		};
+		/**
+		* Checks if the given dates are in the same month.
+		*
+		* @param dateLeft The first date to compare.
+		* @param dateRight The second date to compare.
+		* @returns True if the dates are in the same month.
+		*/
+		this.isSameMonth = (dateLeft, dateRight) => {
+			return this.overrides?.isSameMonth ? this.overrides.isSameMonth(dateLeft, dateRight) : isSameMonth(dateLeft, dateRight);
+		};
+		/**
+		* Checks if the given dates are in the same year.
+		*
+		* @param dateLeft The first date to compare.
+		* @param dateRight The second date to compare.
+		* @returns True if the dates are in the same year.
+		*/
+		this.isSameYear = (dateLeft, dateRight) => {
+			return this.overrides?.isSameYear ? this.overrides.isSameYear(dateLeft, dateRight) : isSameYear(dateLeft, dateRight);
+		};
+		/**
+		* Returns the latest date in the given array of dates.
+		*
+		* @param dates The array of dates to compare.
+		* @returns The latest date.
+		*/
+		this.max = (dates) => {
+			return this.overrides?.max ? this.overrides.max(dates) : max(dates);
+		};
+		/**
+		* Returns the earliest date in the given array of dates.
+		*
+		* @param dates The array of dates to compare.
+		* @returns The earliest date.
+		*/
+		this.min = (dates) => {
+			return this.overrides?.min ? this.overrides.min(dates) : min(dates);
+		};
+		/**
+		* Sets the month of the given date.
+		*
+		* @param date The date to set the month on.
+		* @param month The month to set (0-11).
+		* @returns The new date with the month set.
+		*/
+		this.setMonth = (date, month) => {
+			return this.overrides?.setMonth ? this.overrides.setMonth(date, month) : setMonth(date, month);
+		};
+		/**
+		* Sets the year of the given date.
+		*
+		* @param date The date to set the year on.
+		* @param year The year to set.
+		* @returns The new date with the year set.
+		*/
+		this.setYear = (date, year) => {
+			return this.overrides?.setYear ? this.overrides.setYear(date, year) : setYear(date, year);
+		};
+		/**
+		* Returns the start of the broadcast week for the given date.
+		*
+		* @param date The original date.
+		* @returns The start of the broadcast week.
+		*/
+		this.startOfBroadcastWeek = (date, _dateLib) => {
+			return this.overrides?.startOfBroadcastWeek ? this.overrides.startOfBroadcastWeek(date, this) : startOfBroadcastWeek(date, this);
+		};
+		/**
+		* Returns the start of the day for the given date.
+		*
+		* @param date The original date.
+		* @returns The start of the day.
+		*/
+		this.startOfDay = (date) => {
+			return this.overrides?.startOfDay ? this.overrides.startOfDay(date) : startOfDay(date);
+		};
+		/**
+		* Returns the start of the ISO week for the given date.
+		*
+		* @param date The original date.
+		* @returns The start of the ISO week.
+		*/
+		this.startOfISOWeek = (date) => {
+			return this.overrides?.startOfISOWeek ? this.overrides.startOfISOWeek(date) : startOfISOWeek(date);
+		};
+		/**
+		* Returns the start of the month for the given date.
+		*
+		* @param date The original date.
+		* @returns The start of the month.
+		*/
+		this.startOfMonth = (date) => {
+			return this.overrides?.startOfMonth ? this.overrides.startOfMonth(date) : startOfMonth(date);
+		};
+		/**
+		* Returns the start of the week for the given date.
+		*
+		* @param date The original date.
+		* @returns The start of the week.
+		*/
+		this.startOfWeek = (date, _options) => {
+			return this.overrides?.startOfWeek ? this.overrides.startOfWeek(date, this.options) : startOfWeek(date, this.options);
+		};
+		/**
+		* Returns the start of the year for the given date.
+		*
+		* @param date The original date.
+		* @returns The start of the year.
+		*/
+		this.startOfYear = (date) => {
+			return this.overrides?.startOfYear ? this.overrides.startOfYear(date) : startOfYear(date);
+		};
+		this.options = {
+			locale: enUS,
+			...options
+		};
+		this.overrides = overrides;
+	}
+	/**
+	* Generates a mapping of Arabic digits (0-9) to the target numbering system
+	* digits.
+	*
+	* @since 9.5.0
+	* @returns A record mapping Arabic digits to the target numerals.
+	*/
+	getDigitMap() {
+		const { numerals = "latn" } = this.options;
+		const formatter = new Intl.NumberFormat("en-US", { numberingSystem: numerals });
+		const digitMap = {};
+		for (let i = 0; i < 10; i++) digitMap[i.toString()] = formatter.format(i);
+		return digitMap;
+	}
+	/**
+	* Replaces Arabic digits in a string with the target numbering system digits.
+	*
+	* @since 9.5.0
+	* @param input The string containing Arabic digits.
+	* @returns The string with digits replaced.
+	*/
+	replaceDigits(input) {
+		const digitMap = this.getDigitMap();
+		return input.replace(/\d/g, (digit) => digitMap[digit] || digit);
+	}
+	/**
+	* Formats a number using the configured numbering system.
+	*
+	* @since 9.5.0
+	* @param value The number to format.
+	* @returns The formatted number as a string.
+	*/
+	formatNumber(value) {
+		return this.replaceDigits(value.toString());
+	}
+	/**
+	* Returns the preferred ordering for month and year labels for the current
+	* locale.
+	*/
+	getMonthYearOrder() {
+		const code = this.options.locale?.code;
+		if (!code) return "month-first";
+		return DateLib.yearFirstLocales.has(code) ? "year-first" : "month-first";
+	}
+	/**
+	* Formats the month/year pair respecting locale conventions.
+	*
+	* @since 9.11.0
+	*/
+	formatMonthYear(date) {
+		const { locale, timeZone, numerals } = this.options;
+		const localeCode = locale?.code;
+		if (localeCode && DateLib.yearFirstLocales.has(localeCode)) try {
+			return new Intl.DateTimeFormat(localeCode, {
+				month: "long",
+				year: "numeric",
+				timeZone,
+				numberingSystem: numerals
+			}).format(date);
+		} catch {}
+		const pattern = this.getMonthYearOrder() === "year-first" ? "y LLLL" : "LLLL y";
+		return this.format(date, pattern);
+	}
+};
+DateLib.yearFirstLocales = new Set([
+	"eu",
+	"hu",
+	"ja",
+	"ja-Hira",
+	"ja-JP",
+	"ko",
+	"ko-KR",
+	"lt",
+	"lt-LT",
+	"lv",
+	"lv-LV",
+	"mn",
+	"mn-MN",
+	"zh",
+	"zh-CN",
+	"zh-HK",
+	"zh-TW"
+]);
+/**
+* The default date library with English locale.
+*
+* @since 9.2.0
+*/
+var defaultDateLib = new DateLib();
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/classes/CalendarDay.js
+/**
+* Represents a day displayed in the calendar.
+*
+* In DayPicker, a `CalendarDay` is a wrapper around a `Date` object that
+* provides additional information about the day, such as whether it belongs to
+* the displayed month.
+*/
+var CalendarDay = class {
+	constructor(date, displayMonth, dateLib = defaultDateLib) {
+		this.date = date;
+		this.displayMonth = displayMonth;
+		this.outside = Boolean(displayMonth && !dateLib.isSameMonth(date, displayMonth));
+		this.dateLib = dateLib;
+		this.isoDate = dateLib.format(date, "yyyy-MM-dd");
+		this.displayMonthId = dateLib.format(displayMonth, "yyyy-MM");
+		this.dateMonthId = dateLib.format(date, "yyyy-MM");
+	}
+	/**
+	* Checks if this day is equal to another `CalendarDay`, considering both the
+	* date and the displayed month.
+	*
+	* @param day The `CalendarDay` to compare with.
+	* @returns `true` if the days are equal, otherwise `false`.
+	*/
+	isEqualTo(day) {
+		return this.dateLib.isSameDay(day.date, this.date) && this.dateLib.isSameMonth(day.displayMonth, this.displayMonth);
+	}
+};
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/classes/CalendarMonth.js
+/**
+* Represents a month in a calendar year.
+*
+* A `CalendarMonth` contains the weeks within the month and the date of the
+* month.
+*/
+var CalendarMonth = class {
+	constructor(month, weeks) {
+		this.date = month;
+		this.weeks = weeks;
+	}
+};
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/classes/CalendarWeek.js
+/**
+* Represents a week in a calendar month.
+*
+* A `CalendarWeek` contains the days within the week and the week number.
+*/
+var CalendarWeek = class {
+	constructor(weekNumber, days) {
+		this.days = days;
+		this.weekNumber = weekNumber;
+	}
+};
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Button.js
+/**
+* Render the button elements in the calendar.
+*
+* @private
+* @deprecated Use `PreviousMonthButton` or `@link NextMonthButton` instead.
+*/
+function Button(props) {
+	return import_react.createElement("button", { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/CaptionLabel.js
+/**
+* Render the label in the month caption.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function CaptionLabel(props) {
+	return import_react.createElement("span", { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Chevron.js
+/**
+* Render the chevron icon used in the navigation buttons and dropdowns.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Chevron(props) {
+	const { size = 24, orientation = "left", className } = props;
+	return import_react.createElement("svg", {
+		className,
+		width: size,
+		height: size,
+		viewBox: "0 0 24 24"
+	}, orientation === "up" && import_react.createElement("polygon", { points: "6.77 17 12.5 11.43 18.24 17 20 15.28 12.5 8 5 15.28" }), orientation === "down" && import_react.createElement("polygon", { points: "6.77 8 12.5 13.57 18.24 8 20 9.72 12.5 17 5 9.72" }), orientation === "left" && import_react.createElement("polygon", { points: "16 18.112 9.81111111 12 16 5.87733333 14.0888889 4 6 12 14.0888889 20" }), orientation === "right" && import_react.createElement("polygon", { points: "8 18.112 14.18888889 12 8 5.87733333 9.91111111 4 18 12 9.91111111 20" }));
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Day.js
+/**
+* Render a grid cell for a specific day in the calendar.
+*
+* Handles interaction and focus for the day. If you only need to change the
+* content of the day cell, consider swapping the `DayButton` component
+* instead.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Day(props) {
+	const { day, modifiers, ...tdProps } = props;
+	return import_react.createElement("td", { ...tdProps });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/DayButton.js
+/**
+* Render a button for a specific day in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function DayButton(props) {
+	const { day, modifiers, ...buttonProps } = props;
+	const ref = import_react.useRef(null);
+	import_react.useEffect(() => {
+		if (modifiers.focused) ref.current?.focus();
+	}, [modifiers.focused]);
+	return import_react.createElement("button", {
+		ref,
+		...buttonProps
+	});
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/UI.js
+/**
+* Enum representing the UI elements composing DayPicker. These elements are
+* mapped to {@link CustomComponents}, {@link ClassNames}, and {@link Styles}.
+*
+* Some elements are extended by flags and modifiers.
+*/
+var UI;
+(function(UI) {
+	/** The root component displaying the months and the navigation bar. */
+	UI["Root"] = "root";
+	/** The Chevron SVG element used by navigation buttons and dropdowns. */
+	UI["Chevron"] = "chevron";
+	/**
+	* The grid cell with the day's date. Extended by {@link DayFlag} and
+	* {@link SelectionState}.
+	*/
+	UI["Day"] = "day";
+	/** The button containing the formatted day's date, inside the grid cell. */
+	UI["DayButton"] = "day_button";
+	/** The caption label of the month (when not showing the dropdown navigation). */
+	UI["CaptionLabel"] = "caption_label";
+	/** The container of the dropdown navigation (when enabled). */
+	UI["Dropdowns"] = "dropdowns";
+	/** The dropdown element to select for years and months. */
+	UI["Dropdown"] = "dropdown";
+	/** The container element of the dropdown. */
+	UI["DropdownRoot"] = "dropdown_root";
+	/** The root element of the footer. */
+	UI["Footer"] = "footer";
+	/** The month grid. */
+	UI["MonthGrid"] = "month_grid";
+	/** Contains the dropdown navigation or the caption label. */
+	UI["MonthCaption"] = "month_caption";
+	/** The dropdown with the months. */
+	UI["MonthsDropdown"] = "months_dropdown";
+	/** Wrapper of the month grid. */
+	UI["Month"] = "month";
+	/** The container of the displayed months. */
+	UI["Months"] = "months";
+	/** The navigation bar with the previous and next buttons. */
+	UI["Nav"] = "nav";
+	/**
+	* The next month button in the navigation. *
+	*
+	* @since 9.1.0
+	*/
+	UI["NextMonthButton"] = "button_next";
+	/**
+	* The previous month button in the navigation.
+	*
+	* @since 9.1.0
+	*/
+	UI["PreviousMonthButton"] = "button_previous";
+	/** The row containing the week. */
+	UI["Week"] = "week";
+	/** The group of row weeks in a month (`tbody`). */
+	UI["Weeks"] = "weeks";
+	/** The column header with the weekday. */
+	UI["Weekday"] = "weekday";
+	/** The row grouping the weekdays in the column headers. */
+	UI["Weekdays"] = "weekdays";
+	/** The cell containing the week number. */
+	UI["WeekNumber"] = "week_number";
+	/** The cell header of the week numbers column. */
+	UI["WeekNumberHeader"] = "week_number_header";
+	/** The dropdown with the years. */
+	UI["YearsDropdown"] = "years_dropdown";
+})(UI || (UI = {}));
+/** Enum representing flags for the {@link UI | UI.Day} element. */
+var DayFlag;
+(function(DayFlag) {
+	/** The day is disabled. */
+	DayFlag["disabled"] = "disabled";
+	/** The day is hidden. */
+	DayFlag["hidden"] = "hidden";
+	/** The day is outside the current month. */
+	DayFlag["outside"] = "outside";
+	/** The day is focused. */
+	DayFlag["focused"] = "focused";
+	/** The day is today. */
+	DayFlag["today"] = "today";
+})(DayFlag || (DayFlag = {}));
+/**
+* Enum representing selection states that can be applied to the
+* {@link UI | UI.Day} element in selection mode.
+*/
+var SelectionState;
+(function(SelectionState) {
+	/** The day is at the end of a selected range. */
+	SelectionState["range_end"] = "range_end";
+	/** The day is at the middle of a selected range. */
+	SelectionState["range_middle"] = "range_middle";
+	/** The day is at the start of a selected range. */
+	SelectionState["range_start"] = "range_start";
+	/** The day is selected. */
+	SelectionState["selected"] = "selected";
+})(SelectionState || (SelectionState = {}));
+/**
+* Enum representing different animation states for transitioning between
+* months.
+*/
+var Animation;
+(function(Animation) {
+	/** The entering weeks when they appear before the exiting month. */
+	Animation["weeks_before_enter"] = "weeks_before_enter";
+	/** The exiting weeks when they disappear before the entering month. */
+	Animation["weeks_before_exit"] = "weeks_before_exit";
+	/** The entering weeks when they appear after the exiting month. */
+	Animation["weeks_after_enter"] = "weeks_after_enter";
+	/** The exiting weeks when they disappear after the entering month. */
+	Animation["weeks_after_exit"] = "weeks_after_exit";
+	/** The entering caption when it appears after the exiting month. */
+	Animation["caption_after_enter"] = "caption_after_enter";
+	/** The exiting caption when it disappears after the entering month. */
+	Animation["caption_after_exit"] = "caption_after_exit";
+	/** The entering caption when it appears before the exiting month. */
+	Animation["caption_before_enter"] = "caption_before_enter";
+	/** The exiting caption when it disappears before the entering month. */
+	Animation["caption_before_exit"] = "caption_before_exit";
+})(Animation || (Animation = {}));
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Dropdown.js
+/**
+* Render a dropdown component for navigation in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Dropdown(props) {
+	const { options, className, components, classNames, ...selectProps } = props;
+	const cssClassSelect = [classNames[UI.Dropdown], className].join(" ");
+	const selectedOption = options?.find(({ value }) => value === selectProps.value);
+	return import_react.createElement("span", {
+		"data-disabled": selectProps.disabled,
+		className: classNames[UI.DropdownRoot]
+	}, import_react.createElement(components.Select, {
+		className: cssClassSelect,
+		...selectProps
+	}, options?.map(({ value, label, disabled }) => import_react.createElement(components.Option, {
+		key: value,
+		value,
+		disabled
+	}, label))), import_react.createElement("span", {
+		className: classNames[UI.CaptionLabel],
+		"aria-hidden": true
+	}, selectedOption?.label, import_react.createElement(components.Chevron, {
+		orientation: "down",
+		size: 18,
+		className: classNames[UI.Chevron]
+	})));
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/DropdownNav.js
+/**
+* Render the navigation dropdowns for the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function DropdownNav(props) {
+	return import_react.createElement("div", { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Footer.js
+/**
+* Render the footer of the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Footer(props) {
+	return import_react.createElement("div", { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Month.js
+/**
+* Render the grid with the weekday header row and the weeks for a specific
+* month.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Month(props) {
+	const { calendarMonth, displayIndex, ...divProps } = props;
+	return import_react.createElement("div", { ...divProps }, props.children);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/MonthCaption.js
+/**
+* Render the caption for a month in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function MonthCaption(props) {
+	const { calendarMonth, displayIndex, ...divProps } = props;
+	return import_react.createElement("div", { ...divProps });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/MonthGrid.js
+/**
+* Render the grid of days for a specific month.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function MonthGrid(props) {
+	return import_react.createElement("table", { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Months.js
+/**
+* Render a container wrapping the month grids.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Months(props) {
+	return import_react.createElement("div", { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/useDayPicker.js
+/** @ignore */
+var dayPickerContext = (0, import_react.createContext)(void 0);
+/**
+* Provides access to the DayPicker context, which includes properties and
+* methods to interact with the DayPicker component. This hook must be used
+* within a custom component.
+*
+* @template T - Use this type to refine the returned context type with a
+*   specific selection mode.
+* @returns The context to work with DayPicker.
+* @throws {Error} If the hook is used outside of a DayPicker provider.
+* @group Hooks
+* @see https://daypicker.dev/guides/custom-components
+*/
+function useDayPicker() {
+	const context = (0, import_react.useContext)(dayPickerContext);
+	if (context === void 0) throw new Error("useDayPicker() must be used within a custom component.");
+	return context;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
+/**
+* Render a dropdown to navigate between months in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function MonthsDropdown(props) {
+	const { components } = useDayPicker();
+	return import_react.createElement(components.Dropdown, { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Nav.js
+/**
+* Render the navigation toolbar with buttons to navigate between months.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Nav(props) {
+	const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
+	const { components, classNames, labels: { labelPrevious, labelNext } } = useDayPicker();
+	const handleNextClick = (0, import_react.useCallback)((e) => {
+		if (nextMonth) onNextClick?.(e);
+	}, [nextMonth, onNextClick]);
+	const handlePreviousClick = (0, import_react.useCallback)((e) => {
+		if (previousMonth) onPreviousClick?.(e);
+	}, [previousMonth, onPreviousClick]);
+	return import_react.createElement("nav", { ...navProps }, import_react.createElement(components.PreviousMonthButton, {
+		type: "button",
+		className: classNames[UI.PreviousMonthButton],
+		tabIndex: previousMonth ? void 0 : -1,
+		"aria-disabled": previousMonth ? void 0 : true,
+		"aria-label": labelPrevious(previousMonth),
+		onClick: handlePreviousClick
+	}, import_react.createElement(components.Chevron, {
+		disabled: previousMonth ? void 0 : true,
+		className: classNames[UI.Chevron],
+		orientation: "left"
+	})), import_react.createElement(components.NextMonthButton, {
+		type: "button",
+		className: classNames[UI.NextMonthButton],
+		tabIndex: nextMonth ? void 0 : -1,
+		"aria-disabled": nextMonth ? void 0 : true,
+		"aria-label": labelNext(nextMonth),
+		onClick: handleNextClick
+	}, import_react.createElement(components.Chevron, {
+		disabled: nextMonth ? void 0 : true,
+		orientation: "right",
+		className: classNames[UI.Chevron]
+	})));
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/NextMonthButton.js
+/**
+* Render the button to navigate to the next month in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function NextMonthButton(props) {
+	const { components } = useDayPicker();
+	return import_react.createElement(components.Button, { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Option.js
+/**
+* Render an `option` element.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Option(props) {
+	return import_react.createElement("option", { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/PreviousMonthButton.js
+/**
+* Render the button to navigate to the previous month in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function PreviousMonthButton(props) {
+	const { components } = useDayPicker();
+	return import_react.createElement(components.Button, { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Root.js
+/**
+* Render the root element of the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Root$1(props) {
+	const { rootRef, ...rest } = props;
+	return import_react.createElement("div", {
+		...rest,
+		ref: rootRef
+	});
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Select.js
+/**
+* Render a `select` element.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Select(props) {
+	return import_react.createElement("select", { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Week.js
+/**
+* Render a table row representing a week in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Week(props) {
+	const { week, ...trProps } = props;
+	return import_react.createElement("tr", { ...trProps });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Weekday.js
+/**
+* Render a table header cell with the name of a weekday (e.g., "Mo", "Tu").
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Weekday(props) {
+	return import_react.createElement("th", { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Weekdays.js
+/**
+* Render the table row containing the weekday names.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Weekdays(props) {
+	return import_react.createElement("thead", { "aria-hidden": true }, import_react.createElement("tr", { ...props }));
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/WeekNumber.js
+/**
+* Render a table cell displaying the number of the week.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function WeekNumber(props) {
+	const { week, ...thProps } = props;
+	return import_react.createElement("th", { ...thProps });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/WeekNumberHeader.js
+/**
+* Render the header cell for the week numbers column.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function WeekNumberHeader(props) {
+	return import_react.createElement("th", { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/Weeks.js
+/**
+* Render the container for the weeks in the month grid.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Weeks(props) {
+	return import_react.createElement("tbody", { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/YearsDropdown.js
+/**
+* Render a dropdown to navigate between years in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function YearsDropdown(props) {
+	const { components } = useDayPicker();
+	return import_react.createElement(components.Dropdown, { ...props });
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/components/custom-components.js
+var custom_components_exports = /* @__PURE__ */ __exportAll({
+	Button: () => Button,
+	CaptionLabel: () => CaptionLabel,
+	Chevron: () => Chevron,
+	Day: () => Day,
+	DayButton: () => DayButton,
+	Dropdown: () => Dropdown,
+	DropdownNav: () => DropdownNav,
+	Footer: () => Footer,
+	Month: () => Month,
+	MonthCaption: () => MonthCaption,
+	MonthGrid: () => MonthGrid,
+	Months: () => Months,
+	MonthsDropdown: () => MonthsDropdown,
+	Nav: () => Nav,
+	NextMonthButton: () => NextMonthButton,
+	Option: () => Option,
+	PreviousMonthButton: () => PreviousMonthButton,
+	Root: () => Root$1,
+	Select: () => Select,
+	Week: () => Week,
+	WeekNumber: () => WeekNumber,
+	WeekNumberHeader: () => WeekNumberHeader,
+	Weekday: () => Weekday,
+	Weekdays: () => Weekdays,
+	Weeks: () => Weeks,
+	YearsDropdown: () => YearsDropdown
+});
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/utils/rangeIncludesDate.js
+/**
+* Checks if a given date is within a specified date range.
+*
+* @since 9.0.0
+* @param range - The date range to check against.
+* @param date - The date to check.
+* @param excludeEnds - If `true`, the range's start and end dates are excluded.
+* @param dateLib - The date utility library instance.
+* @returns `true` if the date is within the range, otherwise `false`.
+* @group Utilities
+*/
+function rangeIncludesDate(range, date, excludeEnds = false, dateLib = defaultDateLib) {
+	let { from, to } = range;
+	const { differenceInCalendarDays, isSameDay } = dateLib;
+	if (from && to) {
+		if (differenceInCalendarDays(to, from) < 0) [from, to] = [to, from];
+		return differenceInCalendarDays(date, from) >= (excludeEnds ? 1 : 0) && differenceInCalendarDays(to, date) >= (excludeEnds ? 1 : 0);
+	}
+	if (!excludeEnds && to) return isSameDay(to, date);
+	if (!excludeEnds && from) return isSameDay(from, date);
+	return false;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/utils/typeguards.js
+/**
+* Checks if the given value is of type {@link DateInterval}.
+*
+* @param matcher - The value to check.
+* @returns `true` if the value is a {@link DateInterval}, otherwise `false`.
+* @group Utilities
+*/
+function isDateInterval(matcher) {
+	return Boolean(matcher && typeof matcher === "object" && "before" in matcher && "after" in matcher);
+}
+/**
+* Checks if the given value is of type {@link DateRange}.
+*
+* @param value - The value to check.
+* @returns `true` if the value is a {@link DateRange}, otherwise `false`.
+* @group Utilities
+*/
+function isDateRange(value) {
+	return Boolean(value && typeof value === "object" && "from" in value);
+}
+/**
+* Checks if the given value is of type {@link DateAfter}.
+*
+* @param value - The value to check.
+* @returns `true` if the value is a {@link DateAfter}, otherwise `false`.
+* @group Utilities
+*/
+function isDateAfterType(value) {
+	return Boolean(value && typeof value === "object" && "after" in value);
+}
+/**
+* Checks if the given value is of type {@link DateBefore}.
+*
+* @param value - The value to check.
+* @returns `true` if the value is a {@link DateBefore}, otherwise `false`.
+* @group Utilities
+*/
+function isDateBeforeType(value) {
+	return Boolean(value && typeof value === "object" && "before" in value);
+}
+/**
+* Checks if the given value is of type {@link DayOfWeek}.
+*
+* @param value - The value to check.
+* @returns `true` if the value is a {@link DayOfWeek}, otherwise `false`.
+* @group Utilities
+*/
+function isDayOfWeekType(value) {
+	return Boolean(value && typeof value === "object" && "dayOfWeek" in value);
+}
+/**
+* Checks if the given value is an array of valid dates.
+*
+* @private
+* @param value - The value to check.
+* @param dateLib - The date utility library instance.
+* @returns `true` if the value is an array of valid dates, otherwise `false`.
+*/
+function isDatesArray(value, dateLib) {
+	return Array.isArray(value) && value.every(dateLib.isDate);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/utils/dateMatchModifiers.js
+/**
+* Checks if a given date matches at least one of the specified {@link Matcher}.
+*
+* @param date - The date to check.
+* @param matchers - The matchers to check against.
+* @param dateLib - The date utility library instance.
+* @returns `true` if the date matches any of the matchers, otherwise `false`.
+* @group Utilities
+*/
+function dateMatchModifiers(date, matchers, dateLib = defaultDateLib) {
+	const matchersArr = !Array.isArray(matchers) ? [matchers] : matchers;
+	const { isSameDay, differenceInCalendarDays, isAfter } = dateLib;
+	return matchersArr.some((matcher) => {
+		if (typeof matcher === "boolean") return matcher;
+		if (dateLib.isDate(matcher)) return isSameDay(date, matcher);
+		if (isDatesArray(matcher, dateLib)) return matcher.some((matcherDate) => isSameDay(date, matcherDate));
+		if (isDateRange(matcher)) return rangeIncludesDate(matcher, date, false, dateLib);
+		if (isDayOfWeekType(matcher)) {
+			if (!Array.isArray(matcher.dayOfWeek)) return matcher.dayOfWeek === date.getDay();
+			return matcher.dayOfWeek.includes(date.getDay());
+		}
+		if (isDateInterval(matcher)) {
+			const diffBefore = differenceInCalendarDays(matcher.before, date);
+			const diffAfter = differenceInCalendarDays(matcher.after, date);
+			const isDayBefore = diffBefore > 0;
+			const isDayAfter = diffAfter < 0;
+			if (isAfter(matcher.before, matcher.after)) return isDayAfter && isDayBefore;
+			else return isDayBefore || isDayAfter;
+		}
+		if (isDateAfterType(matcher)) return differenceInCalendarDays(date, matcher.after) > 0;
+		if (isDateBeforeType(matcher)) return differenceInCalendarDays(matcher.before, date) > 0;
+		if (typeof matcher === "function") return matcher(date);
+		return false;
+	});
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/createGetModifiers.js
+/**
+* Creates a function to retrieve the modifiers for a given day.
+*
+* This function calculates both internal and custom modifiers for each day
+* based on the provided calendar days and DayPicker props.
+*
+* @private
+* @param days The array of `CalendarDay` objects to process.
+* @param props The DayPicker props, including modifiers and configuration
+*   options.
+* @param dateLib The date library to use for date manipulation.
+* @returns A function that retrieves the modifiers for a given `CalendarDay`.
+*/
+function createGetModifiers(days, props, navStart, navEnd, dateLib) {
+	const { disabled, hidden, modifiers, showOutsideDays, broadcastCalendar, today = dateLib.today() } = props;
+	const { isSameDay, isSameMonth, startOfMonth, isBefore, endOfMonth, isAfter } = dateLib;
+	const computedNavStart = navStart && startOfMonth(navStart);
+	const computedNavEnd = navEnd && endOfMonth(navEnd);
+	const internalModifiersMap = {
+		[DayFlag.focused]: [],
+		[DayFlag.outside]: [],
+		[DayFlag.disabled]: [],
+		[DayFlag.hidden]: [],
+		[DayFlag.today]: []
+	};
+	const customModifiersMap = {};
+	for (const day of days) {
+		const { date, displayMonth } = day;
+		const isOutside = Boolean(displayMonth && !isSameMonth(date, displayMonth));
+		const isBeforeNavStart = Boolean(computedNavStart && isBefore(date, computedNavStart));
+		const isAfterNavEnd = Boolean(computedNavEnd && isAfter(date, computedNavEnd));
+		const isDisabled = Boolean(disabled && dateMatchModifiers(date, disabled, dateLib));
+		const isHidden = Boolean(hidden && dateMatchModifiers(date, hidden, dateLib)) || isBeforeNavStart || isAfterNavEnd || !broadcastCalendar && !showOutsideDays && isOutside || broadcastCalendar && showOutsideDays === false && isOutside;
+		const isToday = isSameDay(date, today);
+		if (isOutside) internalModifiersMap.outside.push(day);
+		if (isDisabled) internalModifiersMap.disabled.push(day);
+		if (isHidden) internalModifiersMap.hidden.push(day);
+		if (isToday) internalModifiersMap.today.push(day);
+		if (modifiers) Object.keys(modifiers).forEach((name) => {
+			const modifierValue = modifiers?.[name];
+			if (!(modifierValue ? dateMatchModifiers(date, modifierValue, dateLib) : false)) return;
+			if (customModifiersMap[name]) customModifiersMap[name].push(day);
+			else customModifiersMap[name] = [day];
+		});
+	}
+	return (day) => {
+		const dayFlags = {
+			[DayFlag.focused]: false,
+			[DayFlag.disabled]: false,
+			[DayFlag.hidden]: false,
+			[DayFlag.outside]: false,
+			[DayFlag.today]: false
+		};
+		const customModifiers = {};
+		for (const name in internalModifiersMap) dayFlags[name] = internalModifiersMap[name].some((d) => d === day);
+		for (const name in customModifiersMap) customModifiers[name] = customModifiersMap[name].some((d) => d === day);
+		return {
+			...dayFlags,
+			...customModifiers
+		};
+	};
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getClassNamesForModifiers.js
+/**
+* Returns the class names for a day based on its modifiers.
+*
+* This function combines the base class name for the day with any class names
+* associated with active modifiers.
+*
+* @param modifiers The modifiers applied to the day.
+* @param classNames The base class names for the calendar elements.
+* @param modifiersClassNames The class names associated with specific
+*   modifiers.
+* @returns An array of class names for the day.
+*/
+function getClassNamesForModifiers(modifiers, classNames, modifiersClassNames = {}) {
+	return Object.entries(modifiers).filter(([, active]) => active === true).reduce((previousValue, [key]) => {
+		if (modifiersClassNames[key]) previousValue.push(modifiersClassNames[key]);
+		else if (classNames[DayFlag[key]]) previousValue.push(classNames[DayFlag[key]]);
+		else if (classNames[SelectionState[key]]) previousValue.push(classNames[SelectionState[key]]);
+		return previousValue;
+	}, [classNames[UI.Day]]);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getComponents.js
+/**
+* Merges custom components from the props with the default components.
+*
+* This function ensures that any custom components provided in the props
+* override the default components.
+*
+* @param customComponents The custom components provided in the DayPicker
+*   props.
+* @returns An object containing the merged components.
+*/
+function getComponents(customComponents) {
+	return {
+		...custom_components_exports,
+		...customComponents
+	};
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getDataAttributes.js
+/**
+* Extracts `data-` attributes from the DayPicker props.
+*
+* This function collects all `data-` attributes from the props and adds
+* additional attributes based on the DayPicker configuration.
+*
+* @param props The DayPicker props.
+* @returns An object containing the `data-` attributes.
+*/
+function getDataAttributes(props) {
+	const dataAttributes = {
+		"data-mode": props.mode ?? void 0,
+		"data-required": "required" in props ? props.required : void 0,
+		"data-multiple-months": props.numberOfMonths && props.numberOfMonths > 1 || void 0,
+		"data-week-numbers": props.showWeekNumber || void 0,
+		"data-broadcast-calendar": props.broadcastCalendar || void 0,
+		"data-nav-layout": props.navLayout || void 0
+	};
+	Object.entries(props).forEach(([key, val]) => {
+		if (key.startsWith("data-")) dataAttributes[key] = val;
+	});
+	return dataAttributes;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getDefaultClassNames.js
+/**
+* Returns the default class names for the UI elements.
+*
+* This function generates a mapping of default class names for various UI
+* elements, day flags, selection states, and animations.
+*
+* @returns An object containing the default class names.
+* @group Utilities
+*/
+function getDefaultClassNames() {
+	const classNames = {};
+	for (const key in UI) classNames[UI[key]] = `rdp-${UI[key]}`;
+	for (const key in DayFlag) classNames[DayFlag[key]] = `rdp-${DayFlag[key]}`;
+	for (const key in SelectionState) classNames[SelectionState[key]] = `rdp-${SelectionState[key]}`;
+	for (const key in Animation) classNames[Animation[key]] = `rdp-${Animation[key]}`;
+	return classNames;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/formatters/formatCaption.js
+/**
+* Formats the caption of the month.
+*
+* @defaultValue Locale-specific month/year order (e.g., "November 2022").
+* @param month The date representing the month.
+* @param options Configuration options for the date library.
+* @param dateLib The date library to use for formatting. If not provided, a new
+*   instance is created.
+* @returns The formatted caption as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatCaption(month, options, dateLib) {
+	return (dateLib ?? new DateLib(options)).formatMonthYear(month);
+}
+/**
+* @private
+* @deprecated Use {@link formatCaption} instead.
+* @group Formatters
+*/
+var formatMonthCaption = formatCaption;
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/formatters/formatDay.js
+/**
+* Formats the day date shown in the day cell.
+*
+* @defaultValue `d` (e.g., "1").
+* @param date The date to format.
+* @param options Configuration options for the date library.
+* @param dateLib The date library to use for formatting. If not provided, a new
+*   instance is created.
+* @returns The formatted day as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatDay(date, options, dateLib) {
+	return (dateLib ?? new DateLib(options)).format(date, "d");
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/formatters/formatMonthDropdown.js
+/**
+* Formats the month for the dropdown option label.
+*
+* @defaultValue The localized full month name.
+* @param month The date representing the month.
+* @param dateLib The date library to use for formatting. Defaults to
+*   `defaultDateLib`.
+* @returns The formatted month name as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatMonthDropdown(month, dateLib = defaultDateLib) {
+	return dateLib.format(month, "LLLL");
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/formatters/formatWeekdayName.js
+/**
+* Formats the name of a weekday to be displayed in the weekdays header.
+*
+* @defaultValue `cccccc` (e.g., "Mo" for Monday).
+* @param weekday The date representing the weekday.
+* @param options Configuration options for the date library.
+* @param dateLib The date library to use for formatting. If not provided, a new
+*   instance is created.
+* @returns The formatted weekday name as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatWeekdayName(weekday, options, dateLib) {
+	return (dateLib ?? new DateLib(options)).format(weekday, "cccccc");
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/formatters/formatWeekNumber.js
+/**
+* Formats the week number.
+*
+* @defaultValue The week number as a string, with a leading zero for single-digit numbers.
+* @param weekNumber The week number to format.
+* @param dateLib The date library to use for formatting. Defaults to
+*   `defaultDateLib`.
+* @returns The formatted week number as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatWeekNumber(weekNumber, dateLib = defaultDateLib) {
+	if (weekNumber < 10) return dateLib.formatNumber(`0${weekNumber.toLocaleString()}`);
+	return dateLib.formatNumber(`${weekNumber.toLocaleString()}`);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/formatters/formatWeekNumberHeader.js
+/**
+* Formats the header for the week number column.
+*
+* @defaultValue An empty string `""`.
+* @returns The formatted week number header as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatWeekNumberHeader() {
+	return ``;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/formatters/formatYearDropdown.js
+/**
+* Formats the year for the dropdown option label.
+*
+* @param year The year to format.
+* @param dateLib The date library to use for formatting. Defaults to
+*   `defaultDateLib`.
+* @returns The formatted year as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatYearDropdown(year, dateLib = defaultDateLib) {
+	return dateLib.format(year, "yyyy");
+}
+/**
+* @private
+* @deprecated Use `formatYearDropdown` instead.
+* @group Formatters
+*/
+var formatYearCaption = formatYearDropdown;
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/formatters/index.js
+var formatters_exports = /* @__PURE__ */ __exportAll({
+	formatCaption: () => formatCaption,
+	formatDay: () => formatDay,
+	formatMonthCaption: () => formatMonthCaption,
+	formatMonthDropdown: () => formatMonthDropdown,
+	formatWeekNumber: () => formatWeekNumber,
+	formatWeekNumberHeader: () => formatWeekNumberHeader,
+	formatWeekdayName: () => formatWeekdayName,
+	formatYearCaption: () => formatYearCaption,
+	formatYearDropdown: () => formatYearDropdown
+});
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getFormatters.js
+/**
+* Merges custom formatters from the props with the default formatters.
+*
+* @param customFormatters The custom formatters provided in the DayPicker
+*   props.
+* @returns The merged formatters object.
+*/
+function getFormatters(customFormatters) {
+	if (customFormatters?.formatMonthCaption && !customFormatters.formatCaption) customFormatters.formatCaption = customFormatters.formatMonthCaption;
+	if (customFormatters?.formatYearCaption && !customFormatters.formatYearDropdown) customFormatters.formatYearDropdown = customFormatters.formatYearCaption;
+	return {
+		...formatters_exports,
+		...customFormatters
+	};
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/labels/labelDayButton.js
+/**
+* Generates the ARIA label for a day button.
+*
+* Use the `modifiers` argument to provide additional context for the label,
+* such as indicating if the day is "today" or "selected."
+*
+* @defaultValue The formatted date.
+* @param date - The date to format.
+* @param modifiers - The modifiers providing context for the day.
+* @param options - Optional configuration for the date formatting library.
+* @param dateLib - An optional instance of the date formatting library.
+* @returns The ARIA label for the day button.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelDayButton(date, modifiers, options, dateLib) {
+	let label = (dateLib ?? new DateLib(options)).format(date, "PPPP");
+	if (modifiers.today) label = `Today, ${label}`;
+	if (modifiers.selected) label = `${label}, selected`;
+	return label;
+}
+/**
+* @ignore
+* @deprecated Use `labelDayButton` instead.
+*/
+var labelDay = labelDayButton;
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/labels/labelGrid.js
+/**
+* Generates the ARIA label for the month grid, which is announced when entering
+* the grid.
+*
+* @defaultValue Locale-specific month/year order (e.g., "November 2022").
+* @param date - The date representing the month.
+* @param options - Optional configuration for the date formatting library.
+* @param dateLib - An optional instance of the date formatting library.
+* @returns The ARIA label for the month grid.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelGrid(date, options, dateLib) {
+	return (dateLib ?? new DateLib(options)).formatMonthYear(date);
+}
+/**
+* @ignore
+* @deprecated Use {@link labelGrid} instead.
+*/
+var labelCaption = labelGrid;
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/labels/labelGridcell.js
+/**
+* Generates the label for a day grid cell when the calendar is not interactive.
+*
+* @param date - The date to format.
+* @param modifiers - Optional modifiers providing context for the day.
+* @param options - Optional configuration for the date formatting library.
+* @param dateLib - An optional instance of the date formatting library.
+* @returns The label for the day grid cell.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelGridcell(date, modifiers, options, dateLib) {
+	let label = (dateLib ?? new DateLib(options)).format(date, "PPPP");
+	if (modifiers?.today) label = `Today, ${label}`;
+	return label;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/labels/labelMonthDropdown.js
+/**
+* Generates the ARIA label for the months dropdown.
+*
+* @defaultValue `"Choose the Month"`
+* @param options - Optional configuration for the date formatting library.
+* @returns The ARIA label for the months dropdown.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelMonthDropdown(_options) {
+	return "Choose the Month";
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/labels/labelNav.js
+/**
+* Generates the ARIA label for the navigation toolbar.
+*
+* @defaultValue `""`
+* @returns The ARIA label for the navigation toolbar.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelNav() {
+	return "";
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/labels/labelNext.js
+var defaultLabel = "Go to the Next Month";
+/**
+* Generates the ARIA label for the "next month" button.
+*
+* @defaultValue `"Go to the Next Month"`
+* @param month - The date representing the next month, or `undefined` if there
+*   is no next month.
+* @returns The ARIA label for the "next month" button.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelNext(_month, _options) {
+	return defaultLabel;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/labels/labelPrevious.js
+/**
+* Generates the ARIA label for the "previous month" button.
+*
+* @defaultValue `"Go to the Previous Month"`
+* @param month - The date representing the previous month, or `undefined` if
+*   there is no previous month.
+* @returns The ARIA label for the "previous month" button.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelPrevious(_month) {
+	return "Go to the Previous Month";
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/labels/labelWeekday.js
+/**
+* Generates the ARIA label for a weekday column header.
+*
+* @defaultValue `"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"`
+* @param date - The date representing the weekday.
+* @param options - Optional configuration for the date formatting library.
+* @param dateLib - An optional instance of the date formatting library.
+* @returns The ARIA label for the weekday column header.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelWeekday(date, options, dateLib) {
+	return (dateLib ?? new DateLib(options)).format(date, "cccc");
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/labels/labelWeekNumber.js
+/**
+* Generates the ARIA label for the week number cell (the first cell in a row).
+*
+* @defaultValue `Week ${weekNumber}`
+* @param weekNumber - The number of the week.
+* @param options - Optional configuration for the date formatting library.
+* @returns The ARIA label for the week number cell.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelWeekNumber(weekNumber, _options) {
+	return `Week ${weekNumber}`;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/labels/labelWeekNumberHeader.js
+/**
+* Generates the ARIA label for the week number header element.
+*
+* @defaultValue `"Week Number"`
+* @param options - Optional configuration for the date formatting library.
+* @returns The ARIA label for the week number header.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelWeekNumberHeader(_options) {
+	return "Week Number";
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/labels/labelYearDropdown.js
+/**
+* Generates the ARIA label for the years dropdown.
+*
+* @defaultValue `"Choose the Year"`
+* @param options - Optional configuration for the date formatting library.
+* @returns The ARIA label for the years dropdown.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelYearDropdown(_options) {
+	return "Choose the Year";
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/labels/index.js
+var labels_exports = /* @__PURE__ */ __exportAll({
+	labelCaption: () => labelCaption,
+	labelDay: () => labelDay,
+	labelDayButton: () => labelDayButton,
+	labelGrid: () => labelGrid,
+	labelGridcell: () => labelGridcell,
+	labelMonthDropdown: () => labelMonthDropdown,
+	labelNav: () => labelNav,
+	labelNext: () => labelNext,
+	labelPrevious: () => labelPrevious,
+	labelWeekNumber: () => labelWeekNumber,
+	labelWeekNumberHeader: () => labelWeekNumberHeader,
+	labelWeekday: () => labelWeekday,
+	labelYearDropdown: () => labelYearDropdown
+});
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getLabels.js
+var resolveLabel = (defaultLabel, customLabel, localeLabel) => {
+	if (customLabel) return customLabel;
+	if (localeLabel) return typeof localeLabel === "function" ? localeLabel : (..._args) => localeLabel;
+	return defaultLabel;
+};
+/**
+* Merges custom labels from the props with the default labels.
+*
+* When available, uses the locale-provided translation for `labelNext`.
+*
+* @param customLabels The custom labels provided in the DayPicker props.
+* @param options Options from the date library, used to resolve locale
+*   translations.
+* @returns The merged labels object with locale-aware defaults.
+*/
+function getLabels(customLabels, options) {
+	const localeLabels = options.locale?.labels ?? {};
+	return {
+		...labels_exports,
+		...customLabels ?? {},
+		labelDayButton: resolveLabel(labelDayButton, customLabels?.labelDayButton, localeLabels.labelDayButton),
+		labelMonthDropdown: resolveLabel(labelMonthDropdown, customLabels?.labelMonthDropdown, localeLabels.labelMonthDropdown),
+		labelNext: resolveLabel(labelNext, customLabels?.labelNext, localeLabels.labelNext),
+		labelPrevious: resolveLabel(labelPrevious, customLabels?.labelPrevious, localeLabels.labelPrevious),
+		labelWeekNumber: resolveLabel(labelWeekNumber, customLabels?.labelWeekNumber, localeLabels.labelWeekNumber),
+		labelYearDropdown: resolveLabel(labelYearDropdown, customLabels?.labelYearDropdown, localeLabels.labelYearDropdown),
+		labelGrid: resolveLabel(labelGrid, customLabels?.labelGrid, localeLabels.labelGrid),
+		labelGridcell: resolveLabel(labelGridcell, customLabels?.labelGridcell, localeLabels.labelGridcell),
+		labelNav: resolveLabel(labelNav, customLabels?.labelNav, localeLabels.labelNav),
+		labelWeekNumberHeader: resolveLabel(labelWeekNumberHeader, customLabels?.labelWeekNumberHeader, localeLabels.labelWeekNumberHeader),
+		labelWeekday: resolveLabel(labelWeekday, customLabels?.labelWeekday, localeLabels.labelWeekday)
+	};
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getMonthOptions.js
+/**
+* Returns the months to show in the dropdown.
+*
+* This function generates a list of months for the current year, formatted
+* using the provided formatter, and determines whether each month should be
+* disabled based on the navigation range.
+*
+* @param displayMonth The currently displayed month.
+* @param navStart The start date for navigation.
+* @param navEnd The end date for navigation.
+* @param formatters The formatters to use for formatting the month labels.
+* @param dateLib The date library to use for date manipulation.
+* @returns An array of dropdown options representing the months, or `undefined`
+*   if no months are available.
+*/
+function getMonthOptions(displayMonth, navStart, navEnd, formatters, dateLib) {
+	const { startOfMonth, startOfYear, endOfYear, eachMonthOfInterval, getMonth } = dateLib;
+	return eachMonthOfInterval({
+		start: startOfYear(displayMonth),
+		end: endOfYear(displayMonth)
+	}).map((month) => {
+		const label = formatters.formatMonthDropdown(month, dateLib);
+		return {
+			value: getMonth(month),
+			label,
+			disabled: navStart && month < startOfMonth(navStart) || navEnd && month > startOfMonth(navEnd) || false
+		};
+	});
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getStyleForModifiers.js
+/**
+* Returns the computed style for a day based on its modifiers.
+*
+* This function merges the base styles for the day with any styles associated
+* with active modifiers.
+*
+* @param dayModifiers The modifiers applied to the day.
+* @param styles The base styles for the calendar elements.
+* @param modifiersStyles The styles associated with specific modifiers.
+* @returns The computed style for the day.
+*/
+function getStyleForModifiers(dayModifiers, styles = {}, modifiersStyles = {}) {
+	let style = { ...styles?.[UI.Day] };
+	Object.entries(dayModifiers).filter(([, active]) => active === true).forEach(([modifier]) => {
+		style = {
+			...style,
+			...modifiersStyles?.[modifier]
+		};
+	});
+	return style;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getWeekdays.js
+/**
+* Generates a series of 7 days, starting from the beginning of the week, to use
+* for formatting weekday names (e.g., Monday, Tuesday, etc.).
+*
+* @param dateLib The date library to use for date manipulation.
+* @param ISOWeek Whether to use ISO week numbering (weeks start on Monday).
+* @param broadcastCalendar Whether to use the broadcast calendar (weeks start
+*   on Monday, but may include adjustments for broadcast-specific rules).
+* @returns An array of 7 dates representing the weekdays.
+*/
+function getWeekdays(dateLib, ISOWeek, broadcastCalendar, today) {
+	const referenceToday = today ?? dateLib.today();
+	const start = broadcastCalendar ? dateLib.startOfBroadcastWeek(referenceToday, dateLib) : ISOWeek ? dateLib.startOfISOWeek(referenceToday) : dateLib.startOfWeek(referenceToday);
+	const days = [];
+	for (let i = 0; i < 7; i++) {
+		const day = dateLib.addDays(start, i);
+		days.push(day);
+	}
+	return days;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getYearOptions.js
+/**
+* Returns the years to display in the dropdown.
+*
+* This function generates a list of years between the navigation start and end
+* dates, formatted using the provided formatter.
+*
+* @param navStart The start date for navigation.
+* @param navEnd The end date for navigation.
+* @param formatters The formatters to use for formatting the year labels.
+* @param dateLib The date library to use for date manipulation.
+* @param reverse If true, reverses the order of the years (descending).
+* @returns An array of dropdown options representing the years, or `undefined`
+*   if `navStart` or `navEnd` is not provided.
+*/
+function getYearOptions(navStart, navEnd, formatters, dateLib, reverse = false) {
+	if (!navStart) return void 0;
+	if (!navEnd) return void 0;
+	const { startOfYear, endOfYear, eachYearOfInterval, getYear } = dateLib;
+	const years = eachYearOfInterval({
+		start: startOfYear(navStart),
+		end: endOfYear(navEnd)
+	});
+	if (reverse) years.reverse();
+	return years.map((year) => {
+		const label = formatters.formatYearDropdown(year, dateLib);
+		return {
+			value: getYear(year),
+			label,
+			disabled: false
+		};
+	});
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/noonDateLib.js
+/**
+* Creates `dateLib` overrides that keep all calendar math at noon in the target
+* time zone. This avoids second-level offset changes (e.g., historical zones
+* with +03:41:12) from pushing dates backward across midnight.
+*/
+function createNoonOverrides(timeZone, options = {}) {
+	const { weekStartsOn, locale } = options;
+	const fallbackWeekStartsOn = weekStartsOn ?? locale?.options?.weekStartsOn ?? 0;
+	const toNoonTZDate = (date) => {
+		const normalizedDate = typeof date === "number" || typeof date === "string" ? new Date(date) : date;
+		return new TZDate(normalizedDate.getFullYear(), normalizedDate.getMonth(), normalizedDate.getDate(), 12, 0, 0, timeZone);
+	};
+	const toCalendarDate = (date) => {
+		const zoned = toNoonTZDate(date);
+		return new Date(zoned.getFullYear(), zoned.getMonth(), zoned.getDate(), 0, 0, 0, 0);
+	};
+	return {
+		today: () => {
+			return toNoonTZDate(TZDate.tz(timeZone));
+		},
+		newDate: (year, monthIndex, date) => {
+			return new TZDate(year, monthIndex, date, 12, 0, 0, timeZone);
+		},
+		startOfDay: (date) => {
+			return toNoonTZDate(date);
+		},
+		startOfWeek: (date, options) => {
+			const base = toNoonTZDate(date);
+			const weekStartsOnValue = options?.weekStartsOn ?? fallbackWeekStartsOn;
+			const diff = (base.getDay() - weekStartsOnValue + 7) % 7;
+			base.setDate(base.getDate() - diff);
+			return base;
+		},
+		startOfISOWeek: (date) => {
+			const base = toNoonTZDate(date);
+			const diff = (base.getDay() - 1 + 7) % 7;
+			base.setDate(base.getDate() - diff);
+			return base;
+		},
+		startOfMonth: (date) => {
+			const base = toNoonTZDate(date);
+			base.setDate(1);
+			return base;
+		},
+		startOfYear: (date) => {
+			const base = toNoonTZDate(date);
+			base.setMonth(0, 1);
+			return base;
+		},
+		endOfWeek: (date, options) => {
+			const base = toNoonTZDate(date);
+			const diff = (((options?.weekStartsOn ?? fallbackWeekStartsOn) + 6) % 7 - base.getDay() + 7) % 7;
+			base.setDate(base.getDate() + diff);
+			return base;
+		},
+		endOfISOWeek: (date) => {
+			const base = toNoonTZDate(date);
+			const diff = (7 - base.getDay()) % 7;
+			base.setDate(base.getDate() + diff);
+			return base;
+		},
+		endOfMonth: (date) => {
+			const base = toNoonTZDate(date);
+			base.setMonth(base.getMonth() + 1, 0);
+			return base;
+		},
+		endOfYear: (date) => {
+			const base = toNoonTZDate(date);
+			base.setMonth(11, 31);
+			return base;
+		},
+		eachMonthOfInterval: (interval) => {
+			const start = toNoonTZDate(interval.start);
+			const end = toNoonTZDate(interval.end);
+			const result = [];
+			const cursor = new TZDate(start.getFullYear(), start.getMonth(), 1, 12, 0, 0, timeZone);
+			const endKey = end.getFullYear() * 12 + end.getMonth();
+			while (cursor.getFullYear() * 12 + cursor.getMonth() <= endKey) {
+				result.push(new TZDate(cursor, timeZone));
+				cursor.setMonth(cursor.getMonth() + 1, 1);
+			}
+			return result;
+		},
+		addDays: (date, amount) => {
+			const base = toNoonTZDate(date);
+			base.setDate(base.getDate() + amount);
+			return base;
+		},
+		addWeeks: (date, amount) => {
+			const base = toNoonTZDate(date);
+			base.setDate(base.getDate() + amount * 7);
+			return base;
+		},
+		addMonths: (date, amount) => {
+			const base = toNoonTZDate(date);
+			base.setMonth(base.getMonth() + amount);
+			return base;
+		},
+		addYears: (date, amount) => {
+			const base = toNoonTZDate(date);
+			base.setFullYear(base.getFullYear() + amount);
+			return base;
+		},
+		eachYearOfInterval: (interval) => {
+			const start = toNoonTZDate(interval.start);
+			const end = toNoonTZDate(interval.end);
+			const years = [];
+			const cursor = new TZDate(start.getFullYear(), 0, 1, 12, 0, 0, timeZone);
+			while (cursor.getFullYear() <= end.getFullYear()) {
+				years.push(new TZDate(cursor, timeZone));
+				cursor.setFullYear(cursor.getFullYear() + 1, 0, 1);
+			}
+			return years;
+		},
+		getWeek: (date, options) => {
+			return getWeek(toCalendarDate(date), {
+				weekStartsOn: options?.weekStartsOn ?? fallbackWeekStartsOn,
+				firstWeekContainsDate: options?.firstWeekContainsDate ?? locale?.options?.firstWeekContainsDate ?? 1
+			});
+		},
+		getISOWeek: (date) => {
+			return getISOWeek(toCalendarDate(date));
+		},
+		differenceInCalendarDays: (dateLeft, dateRight) => {
+			return differenceInCalendarDays(toCalendarDate(dateLeft), toCalendarDate(dateRight));
+		},
+		differenceInCalendarMonths: (dateLeft, dateRight) => {
+			return differenceInCalendarMonths(toCalendarDate(dateLeft), toCalendarDate(dateRight));
+		}
+	};
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/useAnimation.js
+var asHtmlElement = (element) => {
+	if (element instanceof HTMLElement) return element;
+	return null;
+};
+var queryMonthEls = (element) => [...element.querySelectorAll("[data-animated-month]") ?? []];
+var queryMonthEl = (element) => asHtmlElement(element.querySelector("[data-animated-month]"));
+var queryCaptionEl = (element) => asHtmlElement(element.querySelector("[data-animated-caption]"));
+var queryWeeksEl = (element) => asHtmlElement(element.querySelector("[data-animated-weeks]"));
+var queryNavEl = (element) => asHtmlElement(element.querySelector("[data-animated-nav]"));
+var queryWeekdaysEl = (element) => asHtmlElement(element.querySelector("[data-animated-weekdays]"));
+/**
+* Handles animations for transitioning between months in the DayPicker
+* component.
+*
+* @private
+* @param rootElRef - A reference to the root element of the DayPicker
+*   component.
+* @param enabled - Whether animations are enabled.
+* @param options - Configuration options for the animation, including class
+*   names, months, focused day, and the date utility library.
+*/
+function useAnimation(rootElRef, enabled, { classNames, months, focused, dateLib }) {
+	const previousRootElSnapshotRef = (0, import_react.useRef)(null);
+	const previousMonthsRef = (0, import_react.useRef)(months);
+	const animatingRef = (0, import_react.useRef)(false);
+	(0, import_react.useLayoutEffect)(() => {
+		const previousMonths = previousMonthsRef.current;
+		previousMonthsRef.current = months;
+		if (!enabled || !rootElRef.current || !(rootElRef.current instanceof HTMLElement) || months.length === 0 || previousMonths.length === 0 || months.length !== previousMonths.length) return;
+		const isSameMonth = dateLib.isSameMonth(months[0].date, previousMonths[0].date);
+		const isAfterPreviousMonth = dateLib.isAfter(months[0].date, previousMonths[0].date);
+		const captionAnimationClass = isAfterPreviousMonth ? classNames[Animation.caption_after_enter] : classNames[Animation.caption_before_enter];
+		const weeksAnimationClass = isAfterPreviousMonth ? classNames[Animation.weeks_after_enter] : classNames[Animation.weeks_before_enter];
+		const previousRootElSnapshot = previousRootElSnapshotRef.current;
+		const rootElSnapshot = rootElRef.current.cloneNode(true);
+		if (rootElSnapshot instanceof HTMLElement) {
+			queryMonthEls(rootElSnapshot).forEach((currentMonthElSnapshot) => {
+				if (!(currentMonthElSnapshot instanceof HTMLElement)) return;
+				const previousMonthElSnapshot = queryMonthEl(currentMonthElSnapshot);
+				if (previousMonthElSnapshot && currentMonthElSnapshot.contains(previousMonthElSnapshot)) currentMonthElSnapshot.removeChild(previousMonthElSnapshot);
+				const captionEl = queryCaptionEl(currentMonthElSnapshot);
+				if (captionEl) captionEl.classList.remove(captionAnimationClass);
+				const weeksEl = queryWeeksEl(currentMonthElSnapshot);
+				if (weeksEl) weeksEl.classList.remove(weeksAnimationClass);
+			});
+			previousRootElSnapshotRef.current = rootElSnapshot;
+		} else previousRootElSnapshotRef.current = null;
+		if (animatingRef.current || isSameMonth || focused) return;
+		const previousMonthEls = previousRootElSnapshot instanceof HTMLElement ? queryMonthEls(previousRootElSnapshot) : [];
+		const currentMonthEls = queryMonthEls(rootElRef.current);
+		if (currentMonthEls?.every((el) => el instanceof HTMLElement) && previousMonthEls && previousMonthEls.every((el) => el instanceof HTMLElement)) {
+			animatingRef.current = true;
+			const cleanUpFunctions = [];
+			rootElRef.current.style.isolation = "isolate";
+			const navEl = queryNavEl(rootElRef.current);
+			if (navEl) navEl.style.zIndex = "1";
+			currentMonthEls.forEach((currentMonthEl, index) => {
+				const previousMonthEl = previousMonthEls[index];
+				if (!previousMonthEl) return;
+				currentMonthEl.style.position = "relative";
+				currentMonthEl.style.overflow = "hidden";
+				const captionEl = queryCaptionEl(currentMonthEl);
+				if (captionEl) captionEl.classList.add(captionAnimationClass);
+				const weeksEl = queryWeeksEl(currentMonthEl);
+				if (weeksEl) weeksEl.classList.add(weeksAnimationClass);
+				const cleanUp = () => {
+					animatingRef.current = false;
+					if (rootElRef.current) rootElRef.current.style.isolation = "";
+					if (navEl) navEl.style.zIndex = "";
+					if (captionEl) captionEl.classList.remove(captionAnimationClass);
+					if (weeksEl) weeksEl.classList.remove(weeksAnimationClass);
+					currentMonthEl.style.position = "";
+					currentMonthEl.style.overflow = "";
+					if (currentMonthEl.contains(previousMonthEl)) currentMonthEl.removeChild(previousMonthEl);
+				};
+				cleanUpFunctions.push(cleanUp);
+				previousMonthEl.style.pointerEvents = "none";
+				previousMonthEl.style.position = "absolute";
+				previousMonthEl.style.overflow = "hidden";
+				previousMonthEl.setAttribute("aria-hidden", "true");
+				const previousWeekdaysEl = queryWeekdaysEl(previousMonthEl);
+				if (previousWeekdaysEl) previousWeekdaysEl.style.opacity = "0";
+				const previousCaptionEl = queryCaptionEl(previousMonthEl);
+				if (previousCaptionEl) {
+					previousCaptionEl.classList.add(isAfterPreviousMonth ? classNames[Animation.caption_before_exit] : classNames[Animation.caption_after_exit]);
+					previousCaptionEl.addEventListener("animationend", cleanUp);
+				}
+				const previousWeeksEl = queryWeeksEl(previousMonthEl);
+				if (previousWeeksEl) previousWeeksEl.classList.add(isAfterPreviousMonth ? classNames[Animation.weeks_before_exit] : classNames[Animation.weeks_after_exit]);
+				currentMonthEl.insertBefore(previousMonthEl, currentMonthEl.firstChild);
+			});
+		}
+	});
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getDates.js
+/**
+* Returns all the dates to display in the calendar.
+*
+* This function calculates the range of dates to display based on the provided
+* display months, constraints, and calendar configuration.
+*
+* @param displayMonths The months to display in the calendar.
+* @param maxDate The maximum date to include in the range.
+* @param props The DayPicker props, including calendar configuration options.
+* @param dateLib The date library to use for date manipulation.
+* @returns An array of dates to display in the calendar.
+*/
+function getDates(displayMonths, maxDate, props, dateLib) {
+	const firstMonth = displayMonths[0];
+	const lastMonth = displayMonths[displayMonths.length - 1];
+	const { ISOWeek, fixedWeeks, broadcastCalendar } = props ?? {};
+	const { addDays, differenceInCalendarDays, differenceInCalendarMonths, endOfBroadcastWeek, endOfISOWeek, endOfMonth, endOfWeek, isAfter, startOfBroadcastWeek, startOfISOWeek, startOfWeek } = dateLib;
+	const startWeekFirstDate = broadcastCalendar ? startOfBroadcastWeek(firstMonth, dateLib) : ISOWeek ? startOfISOWeek(firstMonth) : startOfWeek(firstMonth);
+	const displayMonthsWeekEnd = broadcastCalendar ? endOfBroadcastWeek(lastMonth) : ISOWeek ? endOfISOWeek(endOfMonth(lastMonth)) : endOfWeek(endOfMonth(lastMonth));
+	const constraintWeekEnd = maxDate && (broadcastCalendar ? endOfBroadcastWeek(maxDate) : ISOWeek ? endOfISOWeek(maxDate) : endOfWeek(maxDate));
+	const nOfDays = differenceInCalendarDays(constraintWeekEnd && isAfter(displayMonthsWeekEnd, constraintWeekEnd) ? constraintWeekEnd : displayMonthsWeekEnd, startWeekFirstDate);
+	const nOfMonths = differenceInCalendarMonths(lastMonth, firstMonth) + 1;
+	const dates = [];
+	for (let i = 0; i <= nOfDays; i++) {
+		const date = addDays(startWeekFirstDate, i);
+		dates.push(date);
+	}
+	const extraDates = (broadcastCalendar ? 35 : 42) * nOfMonths;
+	if (fixedWeeks && dates.length < extraDates) {
+		const daysToAdd = extraDates - dates.length;
+		for (let i = 0; i < daysToAdd; i++) {
+			const date = addDays(dates[dates.length - 1], 1);
+			dates.push(date);
+		}
+	}
+	return dates;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getDays.js
+/**
+* Returns all the days belonging to the calendar by merging the days in the
+* weeks for each month.
+*
+* @param calendarMonths The array of calendar months.
+* @returns An array of `CalendarDay` objects representing all the days in the
+*   calendar.
+*/
+function getDays(calendarMonths) {
+	const initialDays = [];
+	return calendarMonths.reduce((days, month) => {
+		const weekDays = month.weeks.reduce((weekDays, week) => {
+			return weekDays.concat(week.days.slice());
+		}, initialDays.slice());
+		return days.concat(weekDays.slice());
+	}, initialDays.slice());
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getDisplayMonths.js
+/**
+* Returns the months to display in the calendar.
+*
+* @param firstDisplayedMonth The first month currently displayed in the
+*   calendar.
+* @param calendarEndMonth The latest month the user can navigate to.
+* @param props The DayPicker props, including `numberOfMonths`.
+* @param dateLib The date library to use for date manipulation.
+* @returns An array of dates representing the months to display.
+*/
+function getDisplayMonths(firstDisplayedMonth, calendarEndMonth, props, dateLib) {
+	const { numberOfMonths = 1 } = props;
+	const months = [];
+	for (let i = 0; i < numberOfMonths; i++) {
+		const month = dateLib.addMonths(firstDisplayedMonth, i);
+		if (calendarEndMonth && month > calendarEndMonth) break;
+		months.push(month);
+	}
+	return months;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getInitialMonth.js
+/**
+* Determines the initial month to display in the calendar based on the provided
+* props.
+*
+* This function calculates the starting month, considering constraints such as
+* `startMonth`, `endMonth`, and the number of months to display.
+*
+* @param props The DayPicker props, including navigation and date constraints.
+* @param dateLib The date library to use for date manipulation.
+* @returns The initial month to display.
+*/
+function getInitialMonth(props, navStart, navEnd, dateLib) {
+	const { month, defaultMonth, today = dateLib.today(), numberOfMonths = 1 } = props;
+	let initialMonth = month || defaultMonth || today;
+	const { differenceInCalendarMonths, addMonths, startOfMonth } = dateLib;
+	if (navEnd && differenceInCalendarMonths(navEnd, initialMonth) < numberOfMonths - 1) initialMonth = addMonths(navEnd, -1 * (numberOfMonths - 1));
+	if (navStart && differenceInCalendarMonths(initialMonth, navStart) < 0) initialMonth = navStart;
+	return startOfMonth(initialMonth);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getMonths.js
+/**
+* Returns the months to display in the calendar.
+*
+* This function generates `CalendarMonth` objects for each month to be
+* displayed, including their weeks and days, based on the provided display
+* months and dates.
+*
+* @param displayMonths The months (as dates) to display in the calendar.
+* @param dates The dates to display in the calendar.
+* @param props Options from the DayPicker props context.
+* @param dateLib The date library to use for date manipulation.
+* @returns An array of `CalendarMonth` objects representing the months to
+*   display.
+*/
+function getMonths(displayMonths, dates, props, dateLib) {
+	const { addDays, endOfBroadcastWeek, endOfISOWeek, endOfMonth, endOfWeek, getISOWeek, getWeek, startOfBroadcastWeek, startOfISOWeek, startOfWeek } = dateLib;
+	const dayPickerMonths = displayMonths.reduce((months, month) => {
+		const firstDateOfFirstWeek = props.broadcastCalendar ? startOfBroadcastWeek(month, dateLib) : props.ISOWeek ? startOfISOWeek(month) : startOfWeek(month);
+		const lastDateOfLastWeek = props.broadcastCalendar ? endOfBroadcastWeek(month) : props.ISOWeek ? endOfISOWeek(endOfMonth(month)) : endOfWeek(endOfMonth(month));
+		/** The dates to display in the month. */
+		const monthDates = dates.filter((date) => {
+			return date >= firstDateOfFirstWeek && date <= lastDateOfLastWeek;
+		});
+		const nrOfDaysWithFixedWeeks = props.broadcastCalendar ? 35 : 42;
+		if (props.fixedWeeks && monthDates.length < nrOfDaysWithFixedWeeks) {
+			const extraDates = dates.filter((date) => {
+				const daysToAdd = nrOfDaysWithFixedWeeks - monthDates.length;
+				return date > lastDateOfLastWeek && date <= addDays(lastDateOfLastWeek, daysToAdd);
+			});
+			monthDates.push(...extraDates);
+		}
+		const dayPickerMonth = new CalendarMonth(month, monthDates.reduce((weeks, date) => {
+			const weekNumber = props.ISOWeek ? getISOWeek(date) : getWeek(date);
+			const week = weeks.find((week) => week.weekNumber === weekNumber);
+			const day = new CalendarDay(date, month, dateLib);
+			if (!week) weeks.push(new CalendarWeek(weekNumber, [day]));
+			else week.days.push(day);
+			return weeks;
+		}, []));
+		months.push(dayPickerMonth);
+		return months;
+	}, []);
+	if (!props.reverseMonths) return dayPickerMonths;
+	else return dayPickerMonths.reverse();
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getNavMonth.js
+/**
+* Returns the start and end months for calendar navigation.
+*
+* @param props The DayPicker props, including navigation and layout options.
+* @param dateLib The date library to use for date manipulation.
+* @returns A tuple containing the start and end months for navigation.
+*/
+function getNavMonths(props, dateLib) {
+	let { startMonth, endMonth } = props;
+	const { startOfYear, startOfDay, startOfMonth, endOfMonth, addYears, endOfYear, newDate, today } = dateLib;
+	const { fromYear, toYear, fromMonth, toMonth } = props;
+	if (!startMonth && fromMonth) startMonth = fromMonth;
+	if (!startMonth && fromYear) startMonth = dateLib.newDate(fromYear, 0, 1);
+	if (!endMonth && toMonth) endMonth = toMonth;
+	if (!endMonth && toYear) endMonth = newDate(toYear, 11, 31);
+	const hasYearDropdown = props.captionLayout === "dropdown" || props.captionLayout === "dropdown-years";
+	if (startMonth) startMonth = startOfMonth(startMonth);
+	else if (fromYear) startMonth = newDate(fromYear, 0, 1);
+	else if (!startMonth && hasYearDropdown) startMonth = startOfYear(addYears(props.today ?? today(), -100));
+	if (endMonth) endMonth = endOfMonth(endMonth);
+	else if (toYear) endMonth = newDate(toYear, 11, 31);
+	else if (!endMonth && hasYearDropdown) endMonth = endOfYear(props.today ?? today());
+	return [startMonth ? startOfDay(startMonth) : startMonth, endMonth ? startOfDay(endMonth) : endMonth];
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getNextMonth.js
+/**
+* Returns the next month the user can navigate to, based on the given options.
+*
+* The next month is not always the next calendar month:
+*
+* - If it is after the `calendarEndMonth`, it returns `undefined`.
+* - If paged navigation is enabled, it skips forward by the number of displayed
+*   months.
+*
+* @param firstDisplayedMonth The first month currently displayed in the
+*   calendar.
+* @param calendarEndMonth The latest month the user can navigate to.
+* @param options Navigation options, including `numberOfMonths` and
+*   `pagedNavigation`.
+* @param dateLib The date library to use for date manipulation.
+* @returns The next month, or `undefined` if navigation is not possible.
+*/
+function getNextMonth(firstDisplayedMonth, calendarEndMonth, options, dateLib) {
+	if (options.disableNavigation) return;
+	const { pagedNavigation, numberOfMonths = 1 } = options;
+	const { startOfMonth, addMonths, differenceInCalendarMonths } = dateLib;
+	const offset = pagedNavigation ? numberOfMonths : 1;
+	const month = startOfMonth(firstDisplayedMonth);
+	if (!calendarEndMonth) return addMonths(month, offset);
+	if (differenceInCalendarMonths(calendarEndMonth, firstDisplayedMonth) < numberOfMonths) return;
+	return addMonths(month, offset);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getPreviousMonth.js
+/**
+* Returns the previous month the user can navigate to, based on the given
+* options.
+*
+* The previous month is not always the previous calendar month:
+*
+* - If it is before the `calendarStartMonth`, it returns `undefined`.
+* - If paged navigation is enabled, it skips back by the number of displayed
+*   months.
+*
+* @param firstDisplayedMonth The first month currently displayed in the
+*   calendar.
+* @param calendarStartMonth The earliest month the user can navigate to.
+* @param options Navigation options, including `numberOfMonths` and
+*   `pagedNavigation`.
+* @param dateLib The date library to use for date manipulation.
+* @returns The previous month, or `undefined` if navigation is not possible.
+*/
+function getPreviousMonth(firstDisplayedMonth, calendarStartMonth, options, dateLib) {
+	if (options.disableNavigation) return;
+	const { pagedNavigation, numberOfMonths } = options;
+	const { startOfMonth, addMonths, differenceInCalendarMonths } = dateLib;
+	const offset = pagedNavigation ? numberOfMonths ?? 1 : 1;
+	const month = startOfMonth(firstDisplayedMonth);
+	if (!calendarStartMonth) return addMonths(month, -offset);
+	if (differenceInCalendarMonths(month, calendarStartMonth) <= 0) return;
+	return addMonths(month, -offset);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getWeeks.js
+/**
+* Returns an array of calendar weeks from an array of calendar months.
+*
+* @param months The array of calendar months.
+* @returns An array of calendar weeks.
+*/
+function getWeeks(months) {
+	return months.reduce((weeks, month) => {
+		return weeks.concat(month.weeks.slice());
+	}, [].slice());
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/useControlledValue.js
+/**
+* A custom hook for managing both controlled and uncontrolled component states.
+*
+* This hook allows a component to support both controlled and uncontrolled
+* states by determining whether the `controlledValue` is provided. If it is
+* undefined, the hook falls back to using the internal state.
+*
+* @example
+*   // Uncontrolled usage
+*   const [value, setValue] = useControlledValue(0, undefined);
+*
+*   // Controlled usage
+*   const [value, setValue] = useControlledValue(0, props.value);
+*
+* @template T - The type of the value.
+* @param defaultValue The initial value for the uncontrolled state.
+* @param controlledValue The value for the controlled state. If undefined, the
+*   component will use the uncontrolled state.
+* @returns A tuple where the first element is the current value (either
+*   controlled or uncontrolled) and the second element is a setter function to
+*   update the value.
+*/
+function useControlledValue(defaultValue, controlledValue) {
+	const [uncontrolledValue, setValue] = (0, import_react.useState)(defaultValue);
+	return [controlledValue === void 0 ? uncontrolledValue : controlledValue, setValue];
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/useCalendar.js
+/**
+* Provides the calendar object to work with the calendar in custom components.
+*
+* @private
+* @param props - The DayPicker props related to calendar configuration.
+* @param dateLib - The date utility library instance.
+* @returns The calendar object containing displayed days, weeks, months, and
+*   navigation methods.
+*/
+function useCalendar(props, dateLib) {
+	const [navStart, navEnd] = getNavMonths(props, dateLib);
+	const { startOfMonth, endOfMonth } = dateLib;
+	const initialMonth = getInitialMonth(props, navStart, navEnd, dateLib);
+	const [firstMonth, setFirstMonth] = useControlledValue(initialMonth, props.month ? initialMonth : void 0);
+	(0, import_react.useEffect)(() => {
+		setFirstMonth(getInitialMonth(props, navStart, navEnd, dateLib));
+	}, [props.timeZone]);
+	/** The months displayed in the calendar. */
+	const { months, weeks, days, previousMonth, nextMonth } = (0, import_react.useMemo)(() => {
+		const displayMonths = getDisplayMonths(firstMonth, navEnd, { numberOfMonths: props.numberOfMonths }, dateLib);
+		const months = getMonths(displayMonths, getDates(displayMonths, props.endMonth ? endOfMonth(props.endMonth) : void 0, {
+			ISOWeek: props.ISOWeek,
+			fixedWeeks: props.fixedWeeks,
+			broadcastCalendar: props.broadcastCalendar
+		}, dateLib), {
+			broadcastCalendar: props.broadcastCalendar,
+			fixedWeeks: props.fixedWeeks,
+			ISOWeek: props.ISOWeek,
+			reverseMonths: props.reverseMonths
+		}, dateLib);
+		return {
+			months,
+			weeks: getWeeks(months),
+			days: getDays(months),
+			previousMonth: getPreviousMonth(firstMonth, navStart, props, dateLib),
+			nextMonth: getNextMonth(firstMonth, navEnd, props, dateLib)
+		};
+	}, [
+		dateLib,
+		firstMonth.getTime(),
+		navEnd?.getTime(),
+		navStart?.getTime(),
+		props.disableNavigation,
+		props.broadcastCalendar,
+		props.endMonth?.getTime(),
+		props.fixedWeeks,
+		props.ISOWeek,
+		props.numberOfMonths,
+		props.pagedNavigation,
+		props.reverseMonths
+	]);
+	const { disableNavigation, onMonthChange } = props;
+	const isDayInCalendar = (day) => weeks.some((week) => week.days.some((d) => d.isEqualTo(day)));
+	const goToMonth = (date) => {
+		if (disableNavigation) return;
+		let newMonth = startOfMonth(date);
+		if (navStart && newMonth < startOfMonth(navStart)) newMonth = startOfMonth(navStart);
+		if (navEnd && newMonth > startOfMonth(navEnd)) newMonth = startOfMonth(navEnd);
+		setFirstMonth(newMonth);
+		onMonthChange?.(newMonth);
+	};
+	const goToDay = (day) => {
+		if (isDayInCalendar(day)) return;
+		goToMonth(day.date);
+	};
+	return {
+		months,
+		weeks,
+		days,
+		navStart,
+		navEnd,
+		previousMonth,
+		nextMonth,
+		goToMonth,
+		goToDay
+	};
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/calculateFocusTarget.js
+var FocusTargetPriority;
+(function(FocusTargetPriority) {
+	FocusTargetPriority[FocusTargetPriority["Today"] = 0] = "Today";
+	FocusTargetPriority[FocusTargetPriority["Selected"] = 1] = "Selected";
+	FocusTargetPriority[FocusTargetPriority["LastFocused"] = 2] = "LastFocused";
+	FocusTargetPriority[FocusTargetPriority["FocusedModifier"] = 3] = "FocusedModifier";
+})(FocusTargetPriority || (FocusTargetPriority = {}));
+/**
+* Determines if a day is focusable based on its modifiers.
+*
+* A day is considered focusable if it is not disabled, hidden, or outside the
+* displayed month.
+*
+* @param modifiers The modifiers applied to the day.
+* @returns `true` if the day is focusable, otherwise `false`.
+*/
+function isFocusableDay(modifiers) {
+	return !modifiers[DayFlag.disabled] && !modifiers[DayFlag.hidden] && !modifiers[DayFlag.outside];
+}
+/**
+* Calculates the focus target day based on priority.
+*
+* This function determines the day that should receive focus in the calendar,
+* prioritizing days with specific modifiers (e.g., "focused", "today") or
+* selection states.
+*
+* @param days The array of `CalendarDay` objects to evaluate.
+* @param getModifiers A function to retrieve the modifiers for a given day.
+* @param isSelected A function to determine if a day is selected.
+* @param lastFocused The last focused day, if any.
+* @returns The `CalendarDay` that should receive focus, or `undefined` if no
+*   focusable day is found.
+*/
+function calculateFocusTarget(days, getModifiers, isSelected, lastFocused) {
+	let focusTarget;
+	let foundFocusTargetPriority = -1;
+	for (const day of days) {
+		const modifiers = getModifiers(day);
+		if (isFocusableDay(modifiers)) {
+			if (modifiers[DayFlag.focused] && foundFocusTargetPriority < FocusTargetPriority.FocusedModifier) {
+				focusTarget = day;
+				foundFocusTargetPriority = FocusTargetPriority.FocusedModifier;
+			} else if (lastFocused?.isEqualTo(day) && foundFocusTargetPriority < FocusTargetPriority.LastFocused) {
+				focusTarget = day;
+				foundFocusTargetPriority = FocusTargetPriority.LastFocused;
+			} else if (isSelected(day.date) && foundFocusTargetPriority < FocusTargetPriority.Selected) {
+				focusTarget = day;
+				foundFocusTargetPriority = FocusTargetPriority.Selected;
+			} else if (modifiers[DayFlag.today] && foundFocusTargetPriority < FocusTargetPriority.Today) {
+				focusTarget = day;
+				foundFocusTargetPriority = FocusTargetPriority.Today;
+			}
+		}
+	}
+	if (!focusTarget) focusTarget = days.find((day) => isFocusableDay(getModifiers(day)));
+	return focusTarget;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getFocusableDate.js
+/**
+* Calculates the next date that should be focused in the calendar.
+*
+* This function determines the next focusable date based on the movement
+* direction, constraints, and calendar configuration.
+*
+* @param moveBy The unit of movement (e.g., "day", "week").
+* @param moveDir The direction of movement ("before" or "after").
+* @param refDate The reference date from which to calculate the next focusable
+*   date.
+* @param navStart The earliest date the user can navigate to.
+* @param navEnd The latest date the user can navigate to.
+* @param props The DayPicker props, including calendar configuration options.
+* @param dateLib The date library to use for date manipulation.
+* @returns The next focusable date.
+*/
+function getFocusableDate(moveBy, moveDir, refDate, navStart, navEnd, props, dateLib) {
+	const { ISOWeek, broadcastCalendar } = props;
+	const { addDays, addMonths, addWeeks, addYears, endOfBroadcastWeek, endOfISOWeek, endOfWeek, max, min, startOfBroadcastWeek, startOfISOWeek, startOfWeek } = dateLib;
+	let focusableDate = {
+		day: addDays,
+		week: addWeeks,
+		month: addMonths,
+		year: addYears,
+		startOfWeek: (date) => broadcastCalendar ? startOfBroadcastWeek(date, dateLib) : ISOWeek ? startOfISOWeek(date) : startOfWeek(date),
+		endOfWeek: (date) => broadcastCalendar ? endOfBroadcastWeek(date) : ISOWeek ? endOfISOWeek(date) : endOfWeek(date)
+	}[moveBy](refDate, moveDir === "after" ? 1 : -1);
+	if (moveDir === "before" && navStart) focusableDate = max([navStart, focusableDate]);
+	else if (moveDir === "after" && navEnd) focusableDate = min([navEnd, focusableDate]);
+	return focusableDate;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/helpers/getNextFocus.js
+/**
+* Determines the next focusable day in the calendar.
+*
+* This function recursively calculates the next focusable day based on the
+* movement direction and modifiers applied to the days.
+*
+* @param moveBy The unit of movement (e.g., "day", "week").
+* @param moveDir The direction of movement ("before" or "after").
+* @param refDay The currently focused day.
+* @param calendarStartMonth The earliest month the user can navigate to.
+* @param calendarEndMonth The latest month the user can navigate to.
+* @param props The DayPicker props, including modifiers and configuration
+*   options.
+* @param dateLib The date library to use for date manipulation.
+* @param attempt The current recursion attempt (used to limit recursion depth).
+* @returns The next focusable day, or `undefined` if no focusable day is found.
+*/
+function getNextFocus(moveBy, moveDir, refDay, calendarStartMonth, calendarEndMonth, props, dateLib, attempt = 0) {
+	if (attempt > 365) return;
+	const focusableDate = getFocusableDate(moveBy, moveDir, refDay.date, calendarStartMonth, calendarEndMonth, props, dateLib);
+	const isDisabled = Boolean(props.disabled && dateMatchModifiers(focusableDate, props.disabled, dateLib));
+	const isHidden = Boolean(props.hidden && dateMatchModifiers(focusableDate, props.hidden, dateLib));
+	const focusDay = new CalendarDay(focusableDate, focusableDate, dateLib);
+	if (!isDisabled && !isHidden) return focusDay;
+	return getNextFocus(moveBy, moveDir, focusDay, calendarStartMonth, calendarEndMonth, props, dateLib, attempt + 1);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/useFocus.js
+/**
+* Manages focus behavior for the DayPicker component, including setting,
+* moving, and blurring focus on calendar days.
+*
+* @template T - The type of DayPicker props.
+* @param props - The DayPicker props.
+* @param calendar - The calendar object containing the displayed days and
+*   months.
+* @param getModifiers - A function to retrieve modifiers for a given day.
+* @param isSelected - A function to check if a date is selected.
+* @param dateLib - The date utility library instance.
+* @returns An object containing focus-related methods and the currently focused
+*   day.
+*/
+function useFocus(props, calendar, getModifiers, isSelected, dateLib) {
+	const { autoFocus } = props;
+	const [lastFocused, setLastFocused] = (0, import_react.useState)();
+	const focusTarget = calculateFocusTarget(calendar.days, getModifiers, isSelected || (() => false), lastFocused);
+	const [focusedDay, setFocused] = (0, import_react.useState)(autoFocus ? focusTarget : void 0);
+	const blur = () => {
+		setLastFocused(focusedDay);
+		setFocused(void 0);
+	};
+	const moveFocus = (moveBy, moveDir) => {
+		if (!focusedDay) return;
+		const nextFocus = getNextFocus(moveBy, moveDir, focusedDay, calendar.navStart, calendar.navEnd, props, dateLib);
+		if (!nextFocus) return;
+		if (props.disableNavigation) {
+			if (!calendar.days.some((day) => day.isEqualTo(nextFocus))) return;
+		}
+		calendar.goToDay(nextFocus);
+		setFocused(nextFocus);
+	};
+	const isFocusTarget = (day) => {
+		return Boolean(focusTarget?.isEqualTo(day));
+	};
+	return {
+		isFocusTarget,
+		setFocused,
+		focused: focusedDay,
+		blur,
+		moveFocus
+	};
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/selection/useMulti.js
+/**
+* Hook to manage multiple-date selection in the DayPicker component.
+*
+* @template T - The type of DayPicker props.
+* @param props - The DayPicker props.
+* @param dateLib - The date utility library instance.
+* @returns An object containing the selected dates, a function to select dates,
+*   and a function to check if a date is selected.
+*/
+function useMulti(props, dateLib) {
+	const { selected: initiallySelected, required, onSelect } = props;
+	const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
+	const selected = !onSelect ? internallySelected : initiallySelected;
+	const { isSameDay } = dateLib;
+	const isSelected = (date) => {
+		return selected?.some((d) => isSameDay(d, date)) ?? false;
+	};
+	const { min, max } = props;
+	const select = (triggerDate, modifiers, e) => {
+		let newDates = [...selected ?? []];
+		if (isSelected(triggerDate)) {
+			if (selected?.length === min) return;
+			if (required && selected?.length === 1) return;
+			newDates = selected?.filter((d) => !isSameDay(d, triggerDate));
+		} else if (selected?.length === max) newDates = [triggerDate];
+		else newDates = [...newDates, triggerDate];
+		if (!onSelect) setSelected(newDates);
+		onSelect?.(newDates, triggerDate, modifiers, e);
+		return newDates;
+	};
+	return {
+		selected,
+		select,
+		isSelected
+	};
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/utils/addToRange.js
+/**
+* Adds a date to an existing range, considering constraints like minimum and
+* maximum range size.
+*
+* @param date - The date to add to the range.
+* @param initialRange - The initial range to which the date will be added.
+* @param min - The minimum number of days in the range.
+* @param max - The maximum number of days in the range.
+* @param required - Whether the range must always include at least one date.
+* @param dateLib - The date utility library instance.
+* @returns The updated date range, or `undefined` if the range is cleared.
+* @group Utilities
+*/
+function addToRange(date, initialRange, min = 0, max = 0, required = false, dateLib = defaultDateLib) {
+	const { from, to } = initialRange || {};
+	const { isSameDay, isAfter, isBefore } = dateLib;
+	let range;
+	if (!from && !to) range = {
+		from: date,
+		to: min > 0 ? void 0 : date
+	};
+	else if (from && !to) if (isSameDay(from, date)) if (min === 0) range = {
+		from,
+		to: date
+	};
+	else if (required) range = {
+		from,
+		to: void 0
+	};
+	else range = void 0;
+	else if (isBefore(date, from)) range = {
+		from: date,
+		to: from
+	};
+	else range = {
+		from,
+		to: date
+	};
+	else if (from && to) if (isSameDay(from, date) && isSameDay(to, date)) if (required) range = {
+		from,
+		to
+	};
+	else range = void 0;
+	else if (isSameDay(from, date)) range = {
+		from,
+		to: min > 0 ? void 0 : date
+	};
+	else if (isSameDay(to, date)) range = {
+		from: date,
+		to: min > 0 ? void 0 : date
+	};
+	else if (isBefore(date, from)) range = {
+		from: date,
+		to
+	};
+	else if (isAfter(date, from)) range = {
+		from,
+		to: date
+	};
+	else if (isAfter(date, to)) range = {
+		from,
+		to: date
+	};
+	else throw new Error("Invalid range");
+	if (range?.from && range?.to) {
+		const diff = dateLib.differenceInCalendarDays(range.to, range.from);
+		if (max > 0 && diff > max) range = {
+			from: date,
+			to: void 0
+		};
+		else if (min > 1 && diff < min) range = {
+			from: date,
+			to: void 0
+		};
+	}
+	return range;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/utils/rangeContainsDayOfWeek.js
+/**
+* Checks if a date range contains one or more specified days of the week.
+*
+* @since 9.2.2
+* @param range - The date range to check.
+* @param dayOfWeek - The day(s) of the week to check for (`0-6`, where `0` is
+*   Sunday).
+* @param dateLib - The date utility library instance.
+* @returns `true` if the range contains the specified day(s) of the week,
+*   otherwise `false`.
+* @group Utilities
+*/
+function rangeContainsDayOfWeek(range, dayOfWeek, dateLib = defaultDateLib) {
+	const dayOfWeekArr = !Array.isArray(dayOfWeek) ? [dayOfWeek] : dayOfWeek;
+	let date = range.from;
+	const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
+	const totalDaysLimit = Math.min(totalDays, 6);
+	for (let i = 0; i <= totalDaysLimit; i++) {
+		if (dayOfWeekArr.includes(date.getDay())) return true;
+		date = dateLib.addDays(date, 1);
+	}
+	return false;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/utils/rangeOverlaps.js
+/**
+* Determines if two date ranges overlap.
+*
+* @since 9.2.2
+* @param rangeLeft - The first date range.
+* @param rangeRight - The second date range.
+* @param dateLib - The date utility library instance.
+* @returns `true` if the ranges overlap, otherwise `false`.
+* @group Utilities
+*/
+function rangeOverlaps(rangeLeft, rangeRight, dateLib = defaultDateLib) {
+	return rangeIncludesDate(rangeLeft, rangeRight.from, false, dateLib) || rangeIncludesDate(rangeLeft, rangeRight.to, false, dateLib) || rangeIncludesDate(rangeRight, rangeLeft.from, false, dateLib) || rangeIncludesDate(rangeRight, rangeLeft.to, false, dateLib);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/utils/rangeContainsModifiers.js
+/**
+* Checks if a date range contains dates that match the given modifiers.
+*
+* @since 9.2.2
+* @param range - The date range to check.
+* @param modifiers - The modifiers to match against.
+* @param dateLib - The date utility library instance.
+* @returns `true` if the range contains matching dates, otherwise `false`.
+* @group Utilities
+*/
+function rangeContainsModifiers(range, modifiers, dateLib = defaultDateLib) {
+	const matchers = Array.isArray(modifiers) ? modifiers : [modifiers];
+	if (matchers.filter((matcher) => typeof matcher !== "function").some((matcher) => {
+		if (typeof matcher === "boolean") return matcher;
+		if (dateLib.isDate(matcher)) return rangeIncludesDate(range, matcher, false, dateLib);
+		if (isDatesArray(matcher, dateLib)) return matcher.some((date) => rangeIncludesDate(range, date, false, dateLib));
+		if (isDateRange(matcher)) {
+			if (matcher.from && matcher.to) return rangeOverlaps(range, {
+				from: matcher.from,
+				to: matcher.to
+			}, dateLib);
+			return false;
+		}
+		if (isDayOfWeekType(matcher)) return rangeContainsDayOfWeek(range, matcher.dayOfWeek, dateLib);
+		if (isDateInterval(matcher)) {
+			if (dateLib.isAfter(matcher.before, matcher.after)) return rangeOverlaps(range, {
+				from: dateLib.addDays(matcher.after, 1),
+				to: dateLib.addDays(matcher.before, -1)
+			}, dateLib);
+			return dateMatchModifiers(range.from, matcher, dateLib) || dateMatchModifiers(range.to, matcher, dateLib);
+		}
+		if (isDateAfterType(matcher) || isDateBeforeType(matcher)) return dateMatchModifiers(range.from, matcher, dateLib) || dateMatchModifiers(range.to, matcher, dateLib);
+		return false;
+	})) return true;
+	const functionMatchers = matchers.filter((matcher) => typeof matcher === "function");
+	if (functionMatchers.length) {
+		let date = range.from;
+		const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
+		for (let i = 0; i <= totalDays; i++) {
+			if (functionMatchers.some((matcher) => matcher(date))) return true;
+			date = dateLib.addDays(date, 1);
+		}
+	}
+	return false;
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/selection/useRange.js
+/**
+* Hook to manage range selection in the DayPicker component.
+*
+* @template T - The type of DayPicker props.
+* @param props - The DayPicker props.
+* @param dateLib - The date utility library instance.
+* @returns An object containing the selected range, a function to select a
+*   range, and a function to check if a date is within the range.
+*/
+function useRange(props, dateLib) {
+	const { disabled, excludeDisabled, resetOnSelect, selected: initiallySelected, required, onSelect } = props;
+	const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
+	const selected = !onSelect ? internallySelected : initiallySelected;
+	const isSelected = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
+	const select = (triggerDate, modifiers, e) => {
+		const { min, max } = props;
+		let newRange;
+		if (triggerDate) {
+			const selectedFrom = selected?.from;
+			const selectedTo = selected?.to;
+			const hasFullRange = !!selectedFrom && !!selectedTo;
+			const isClickingSingleDayRange = !!selectedFrom && !!selectedTo && dateLib.isSameDay(selectedFrom, selectedTo) && dateLib.isSameDay(triggerDate, selectedFrom);
+			if (resetOnSelect && (hasFullRange || !selected?.from)) if (!required && isClickingSingleDayRange) newRange = void 0;
+			else newRange = {
+				from: triggerDate,
+				to: void 0
+			};
+			else newRange = addToRange(triggerDate, selected, min, max, required, dateLib);
+		}
+		if (excludeDisabled && disabled && newRange?.from && newRange.to) {
+			if (rangeContainsModifiers({
+				from: newRange.from,
+				to: newRange.to
+			}, disabled, dateLib)) {
+				newRange.from = triggerDate;
+				newRange.to = void 0;
+			}
+		}
+		if (!onSelect) setSelected(newRange);
+		onSelect?.(newRange, triggerDate, modifiers, e);
+		return newRange;
+	};
+	return {
+		selected,
+		select,
+		isSelected
+	};
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/selection/useSingle.js
+/**
+* Hook to manage single-date selection in the DayPicker component.
+*
+* @template T - The type of DayPicker props.
+* @param props - The DayPicker props.
+* @param dateLib - The date utility library instance.
+* @returns An object containing the selected date, a function to select a date,
+*   and a function to check if a date is selected.
+*/
+function useSingle(props, dateLib) {
+	const { selected: initiallySelected, required, onSelect } = props;
+	const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
+	const selected = !onSelect ? internallySelected : initiallySelected;
+	const { isSameDay } = dateLib;
+	const isSelected = (compareDate) => {
+		return selected ? isSameDay(selected, compareDate) : false;
+	};
+	const select = (triggerDate, modifiers, e) => {
+		let newDate = triggerDate;
+		if (!required && selected && selected && isSameDay(triggerDate, selected)) newDate = void 0;
+		if (!onSelect) setSelected(newDate);
+		if (required) onSelect?.(newDate, triggerDate, modifiers, e);
+		else onSelect?.(newDate, triggerDate, modifiers, e);
+		return newDate;
+	};
+	return {
+		selected,
+		select,
+		isSelected
+	};
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/useSelection.js
+/**
+* Determines the appropriate selection hook to use based on the selection mode
+* and returns the corresponding selection object.
+*
+* @template T - The type of DayPicker props.
+* @param props - The DayPicker props.
+* @param dateLib - The date utility library instance.
+* @returns The selection object for the specified mode, or `undefined` if no
+*   mode is set.
+*/
+function useSelection(props, dateLib) {
+	const single = useSingle(props, dateLib);
+	const multi = useMulti(props, dateLib);
+	const range = useRange(props, dateLib);
+	switch (props.mode) {
+		case "single": return single;
+		case "multiple": return multi;
+		case "range": return range;
+		default: return;
+	}
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/utils/toTimeZone.js
+/**
+* Convert a {@link Date} or {@link TZDate} instance to the given time zone.
+* Reuses the same instance when it is already a {@link TZDate} using the target
+* time zone to avoid extra allocations.
+*/
+function toTimeZone(date, timeZone) {
+	if (date instanceof TZDate && date.timeZone === timeZone) return date;
+	return new TZDate(date, timeZone);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/utils/convertMatchersToTimeZone.js
+function toZoneNoon(date, timeZone, noonSafe) {
+	if (!noonSafe) return toTimeZone(date, timeZone);
+	const zoned = toTimeZone(date, timeZone);
+	const noonZoned = new TZDate(zoned.getFullYear(), zoned.getMonth(), zoned.getDate(), 12, 0, 0, timeZone);
+	return new Date(noonZoned.getTime());
+}
+function convertMatcher(matcher, timeZone, noonSafe) {
+	if (typeof matcher === "boolean" || typeof matcher === "function") return matcher;
+	if (matcher instanceof Date) return toZoneNoon(matcher, timeZone, noonSafe);
+	if (Array.isArray(matcher)) return matcher.map((value) => value instanceof Date ? toZoneNoon(value, timeZone, noonSafe) : value);
+	if (isDateRange(matcher)) return {
+		...matcher,
+		from: matcher.from ? toTimeZone(matcher.from, timeZone) : matcher.from,
+		to: matcher.to ? toTimeZone(matcher.to, timeZone) : matcher.to
+	};
+	if (isDateInterval(matcher)) return {
+		before: toZoneNoon(matcher.before, timeZone, noonSafe),
+		after: toZoneNoon(matcher.after, timeZone, noonSafe)
+	};
+	if (isDateAfterType(matcher)) return { after: toZoneNoon(matcher.after, timeZone, noonSafe) };
+	if (isDateBeforeType(matcher)) return { before: toZoneNoon(matcher.before, timeZone, noonSafe) };
+	return matcher;
+}
+/**
+* Convert any {@link Matcher} or array of matchers to the specified time zone.
+*
+* @param matchers - The matcher or matchers to convert.
+* @param timeZone - The target IANA time zone.
+* @returns The converted matcher(s).
+* @group Utilities
+*/
+function convertMatchersToTimeZone(matchers, timeZone, noonSafe) {
+	if (!matchers) return matchers;
+	if (Array.isArray(matchers)) return matchers.map((matcher) => convertMatcher(matcher, timeZone, noonSafe));
+	return convertMatcher(matchers, timeZone, noonSafe);
+}
+//#endregion
+//#region ../../cache/modules/web-consultoria-11660/node_modules/.pnpm/react-day-picker@9.14.0_react@19.2.4/node_modules/react-day-picker/dist/esm/DayPicker.js
+/**
+* Renders the DayPicker calendar component.
+*
+* @param initialProps - The props for the DayPicker component.
+* @returns The rendered DayPicker component.
+* @group DayPicker
+* @see https://daypicker.dev
+*/
+function DayPicker(initialProps) {
+	let props = initialProps;
+	const timeZone = props.timeZone;
+	if (timeZone) {
+		props = {
+			...initialProps,
+			timeZone
+		};
+		if (props.today) props.today = toTimeZone(props.today, timeZone);
+		if (props.month) props.month = toTimeZone(props.month, timeZone);
+		if (props.defaultMonth) props.defaultMonth = toTimeZone(props.defaultMonth, timeZone);
+		if (props.startMonth) props.startMonth = toTimeZone(props.startMonth, timeZone);
+		if (props.endMonth) props.endMonth = toTimeZone(props.endMonth, timeZone);
+		if (props.mode === "single" && props.selected) props.selected = toTimeZone(props.selected, timeZone);
+		else if (props.mode === "multiple" && props.selected) props.selected = props.selected?.map((date) => toTimeZone(date, timeZone));
+		else if (props.mode === "range" && props.selected) props.selected = {
+			from: props.selected.from ? toTimeZone(props.selected.from, timeZone) : props.selected.from,
+			to: props.selected.to ? toTimeZone(props.selected.to, timeZone) : props.selected.to
+		};
+		if (props.disabled !== void 0) props.disabled = convertMatchersToTimeZone(props.disabled, timeZone);
+		if (props.hidden !== void 0) props.hidden = convertMatchersToTimeZone(props.hidden, timeZone);
+		if (props.modifiers) {
+			const nextModifiers = {};
+			Object.keys(props.modifiers).forEach((key) => {
+				nextModifiers[key] = convertMatchersToTimeZone(props.modifiers?.[key], timeZone);
+			});
+			props.modifiers = nextModifiers;
+		}
+	}
+	const { components, formatters, labels, dateLib, locale, classNames } = (0, import_react.useMemo)(() => {
+		const locale = {
+			...enUS,
+			...props.locale
+		};
+		const weekStartsOn = props.broadcastCalendar ? 1 : props.weekStartsOn;
+		const noonOverrides = props.noonSafe && props.timeZone ? createNoonOverrides(props.timeZone, {
+			weekStartsOn,
+			locale
+		}) : void 0;
+		const overrides = props.dateLib && noonOverrides ? {
+			...noonOverrides,
+			...props.dateLib
+		} : props.dateLib ?? noonOverrides;
+		const dateLib = new DateLib({
+			locale,
+			weekStartsOn,
+			firstWeekContainsDate: props.firstWeekContainsDate,
+			useAdditionalWeekYearTokens: props.useAdditionalWeekYearTokens,
+			useAdditionalDayOfYearTokens: props.useAdditionalDayOfYearTokens,
+			timeZone: props.timeZone,
+			numerals: props.numerals
+		}, overrides);
+		return {
+			dateLib,
+			components: getComponents(props.components),
+			formatters: getFormatters(props.formatters),
+			labels: getLabels(props.labels, dateLib.options),
+			locale,
+			classNames: {
+				...getDefaultClassNames(),
+				...props.classNames
+			}
+		};
+	}, [
+		props.locale,
+		props.broadcastCalendar,
+		props.weekStartsOn,
+		props.firstWeekContainsDate,
+		props.useAdditionalWeekYearTokens,
+		props.useAdditionalDayOfYearTokens,
+		props.timeZone,
+		props.numerals,
+		props.dateLib,
+		props.noonSafe,
+		props.components,
+		props.formatters,
+		props.labels,
+		props.classNames
+	]);
+	if (!props.today) props = {
+		...props,
+		today: dateLib.today()
+	};
+	const { captionLayout, mode, navLayout, numberOfMonths = 1, onDayBlur, onDayClick, onDayFocus, onDayKeyDown, onDayMouseEnter, onDayMouseLeave, onNextClick, onPrevClick, showWeekNumber, styles } = props;
+	const { formatCaption, formatDay, formatMonthDropdown, formatWeekNumber, formatWeekNumberHeader, formatWeekdayName, formatYearDropdown } = formatters;
+	const calendar = useCalendar(props, dateLib);
+	const { days, months, navStart, navEnd, previousMonth, nextMonth, goToMonth } = calendar;
+	const getModifiers = createGetModifiers(days, props, navStart, navEnd, dateLib);
+	const { isSelected, select, selected: selectedValue } = useSelection(props, dateLib) ?? {};
+	const { blur, focused, isFocusTarget, moveFocus, setFocused } = useFocus(props, calendar, getModifiers, isSelected ?? (() => false), dateLib);
+	const { labelDayButton, labelGridcell, labelGrid, labelMonthDropdown, labelNav, labelPrevious, labelNext, labelWeekday, labelWeekNumber, labelWeekNumberHeader, labelYearDropdown } = labels;
+	const weekdays = (0, import_react.useMemo)(() => getWeekdays(dateLib, props.ISOWeek, props.broadcastCalendar, props.today), [
+		dateLib,
+		props.ISOWeek,
+		props.broadcastCalendar,
+		props.today
+	]);
+	const isInteractive = mode !== void 0 || onDayClick !== void 0;
+	const handlePreviousClick = (0, import_react.useCallback)(() => {
+		if (!previousMonth) return;
+		goToMonth(previousMonth);
+		onPrevClick?.(previousMonth);
+	}, [
+		previousMonth,
+		goToMonth,
+		onPrevClick
+	]);
+	const handleNextClick = (0, import_react.useCallback)(() => {
+		if (!nextMonth) return;
+		goToMonth(nextMonth);
+		onNextClick?.(nextMonth);
+	}, [
+		goToMonth,
+		nextMonth,
+		onNextClick
+	]);
+	const handleDayClick = (0, import_react.useCallback)((day, m) => (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setFocused(day);
+		if (m.disabled) return;
+		select?.(day.date, m, e);
+		onDayClick?.(day.date, m, e);
+	}, [
+		select,
+		onDayClick,
+		setFocused
+	]);
+	const handleDayFocus = (0, import_react.useCallback)((day, m) => (e) => {
+		setFocused(day);
+		onDayFocus?.(day.date, m, e);
+	}, [onDayFocus, setFocused]);
+	const handleDayBlur = (0, import_react.useCallback)((day, m) => (e) => {
+		blur();
+		onDayBlur?.(day.date, m, e);
+	}, [blur, onDayBlur]);
+	const handleDayKeyDown = (0, import_react.useCallback)((day, modifiers) => (e) => {
+		const keyMap = {
+			ArrowLeft: [e.shiftKey ? "month" : "day", props.dir === "rtl" ? "after" : "before"],
+			ArrowRight: [e.shiftKey ? "month" : "day", props.dir === "rtl" ? "before" : "after"],
+			ArrowDown: [e.shiftKey ? "year" : "week", "after"],
+			ArrowUp: [e.shiftKey ? "year" : "week", "before"],
+			PageUp: [e.shiftKey ? "year" : "month", "before"],
+			PageDown: [e.shiftKey ? "year" : "month", "after"],
+			Home: ["startOfWeek", "before"],
+			End: ["endOfWeek", "after"]
+		};
+		if (keyMap[e.key]) {
+			e.preventDefault();
+			e.stopPropagation();
+			const [moveBy, moveDir] = keyMap[e.key];
+			moveFocus(moveBy, moveDir);
+		}
+		onDayKeyDown?.(day.date, modifiers, e);
+	}, [
+		moveFocus,
+		onDayKeyDown,
+		props.dir
+	]);
+	const handleDayMouseEnter = (0, import_react.useCallback)((day, modifiers) => (e) => {
+		onDayMouseEnter?.(day.date, modifiers, e);
+	}, [onDayMouseEnter]);
+	const handleDayMouseLeave = (0, import_react.useCallback)((day, modifiers) => (e) => {
+		onDayMouseLeave?.(day.date, modifiers, e);
+	}, [onDayMouseLeave]);
+	const handleMonthChange = (0, import_react.useCallback)((date) => (e) => {
+		const selectedMonth = Number(e.target.value);
+		goToMonth(dateLib.setMonth(dateLib.startOfMonth(date), selectedMonth));
+	}, [dateLib, goToMonth]);
+	const handleYearChange = (0, import_react.useCallback)((date) => (e) => {
+		const selectedYear = Number(e.target.value);
+		goToMonth(dateLib.setYear(dateLib.startOfMonth(date), selectedYear));
+	}, [dateLib, goToMonth]);
+	const { className, style } = (0, import_react.useMemo)(() => ({
+		className: [classNames[UI.Root], props.className].filter(Boolean).join(" "),
+		style: {
+			...styles?.[UI.Root],
+			...props.style
+		}
+	}), [
+		classNames,
+		props.className,
+		props.style,
+		styles
+	]);
+	const dataAttributes = getDataAttributes(props);
+	const rootElRef = (0, import_react.useRef)(null);
+	useAnimation(rootElRef, Boolean(props.animate), {
+		classNames,
+		months,
+		focused,
+		dateLib
+	});
+	const contextValue = {
+		dayPickerProps: props,
+		selected: selectedValue,
+		select,
+		isSelected,
+		months,
+		nextMonth,
+		previousMonth,
+		goToMonth,
+		getModifiers,
+		components,
+		classNames,
+		styles,
+		labels,
+		formatters
+	};
+	return import_react.createElement(dayPickerContext.Provider, { value: contextValue }, import_react.createElement(components.Root, {
+		rootRef: props.animate ? rootElRef : void 0,
+		className,
+		style,
+		dir: props.dir,
+		id: props.id,
+		lang: props.lang ?? locale.code,
+		nonce: props.nonce,
+		title: props.title,
+		role: props.role,
+		"aria-label": props["aria-label"],
+		"aria-labelledby": props["aria-labelledby"],
+		...dataAttributes
+	}, import_react.createElement(components.Months, {
+		className: classNames[UI.Months],
+		style: styles?.[UI.Months]
+	}, !props.hideNavigation && !navLayout && import_react.createElement(components.Nav, {
+		"data-animated-nav": props.animate ? "true" : void 0,
+		className: classNames[UI.Nav],
+		style: styles?.[UI.Nav],
+		"aria-label": labelNav(),
+		onPreviousClick: handlePreviousClick,
+		onNextClick: handleNextClick,
+		previousMonth,
+		nextMonth
+	}), months.map((calendarMonth, displayIndex) => {
+		return import_react.createElement(components.Month, {
+			"data-animated-month": props.animate ? "true" : void 0,
+			className: classNames[UI.Month],
+			style: styles?.[UI.Month],
+			key: displayIndex,
+			displayIndex,
+			calendarMonth
+		}, navLayout === "around" && !props.hideNavigation && displayIndex === 0 && import_react.createElement(components.PreviousMonthButton, {
+			type: "button",
+			className: classNames[UI.PreviousMonthButton],
+			tabIndex: previousMonth ? void 0 : -1,
+			"aria-disabled": previousMonth ? void 0 : true,
+			"aria-label": labelPrevious(previousMonth),
+			onClick: handlePreviousClick,
+			"data-animated-button": props.animate ? "true" : void 0
+		}, import_react.createElement(components.Chevron, {
+			disabled: previousMonth ? void 0 : true,
+			className: classNames[UI.Chevron],
+			orientation: props.dir === "rtl" ? "right" : "left"
+		})), import_react.createElement(components.MonthCaption, {
+			"data-animated-caption": props.animate ? "true" : void 0,
+			className: classNames[UI.MonthCaption],
+			style: styles?.[UI.MonthCaption],
+			calendarMonth,
+			displayIndex
+		}, captionLayout?.startsWith("dropdown") ? import_react.createElement(components.DropdownNav, {
+			className: classNames[UI.Dropdowns],
+			style: styles?.[UI.Dropdowns]
+		}, (() => {
+			const monthControl = captionLayout === "dropdown" || captionLayout === "dropdown-months" ? import_react.createElement(components.MonthsDropdown, {
+				key: "month",
+				className: classNames[UI.MonthsDropdown],
+				"aria-label": labelMonthDropdown(),
+				classNames,
+				components,
+				disabled: Boolean(props.disableNavigation),
+				onChange: handleMonthChange(calendarMonth.date),
+				options: getMonthOptions(calendarMonth.date, navStart, navEnd, formatters, dateLib),
+				style: styles?.[UI.Dropdown],
+				value: dateLib.getMonth(calendarMonth.date)
+			}) : import_react.createElement("span", { key: "month" }, formatMonthDropdown(calendarMonth.date, dateLib));
+			const yearControl = captionLayout === "dropdown" || captionLayout === "dropdown-years" ? import_react.createElement(components.YearsDropdown, {
+				key: "year",
+				className: classNames[UI.YearsDropdown],
+				"aria-label": labelYearDropdown(dateLib.options),
+				classNames,
+				components,
+				disabled: Boolean(props.disableNavigation),
+				onChange: handleYearChange(calendarMonth.date),
+				options: getYearOptions(navStart, navEnd, formatters, dateLib, Boolean(props.reverseYears)),
+				style: styles?.[UI.Dropdown],
+				value: dateLib.getYear(calendarMonth.date)
+			}) : import_react.createElement("span", { key: "year" }, formatYearDropdown(calendarMonth.date, dateLib));
+			return dateLib.getMonthYearOrder() === "year-first" ? [yearControl, monthControl] : [monthControl, yearControl];
+		})(), import_react.createElement("span", {
+			role: "status",
+			"aria-live": "polite",
+			style: {
+				border: 0,
+				clip: "rect(0 0 0 0)",
+				height: "1px",
+				margin: "-1px",
+				overflow: "hidden",
+				padding: 0,
+				position: "absolute",
+				width: "1px",
+				whiteSpace: "nowrap",
+				wordWrap: "normal"
+			}
+		}, formatCaption(calendarMonth.date, dateLib.options, dateLib))) : import_react.createElement(components.CaptionLabel, {
+			className: classNames[UI.CaptionLabel],
+			role: "status",
+			"aria-live": "polite"
+		}, formatCaption(calendarMonth.date, dateLib.options, dateLib))), navLayout === "around" && !props.hideNavigation && displayIndex === numberOfMonths - 1 && import_react.createElement(components.NextMonthButton, {
+			type: "button",
+			className: classNames[UI.NextMonthButton],
+			tabIndex: nextMonth ? void 0 : -1,
+			"aria-disabled": nextMonth ? void 0 : true,
+			"aria-label": labelNext(nextMonth),
+			onClick: handleNextClick,
+			"data-animated-button": props.animate ? "true" : void 0
+		}, import_react.createElement(components.Chevron, {
+			disabled: nextMonth ? void 0 : true,
+			className: classNames[UI.Chevron],
+			orientation: props.dir === "rtl" ? "left" : "right"
+		})), displayIndex === numberOfMonths - 1 && navLayout === "after" && !props.hideNavigation && import_react.createElement(components.Nav, {
+			"data-animated-nav": props.animate ? "true" : void 0,
+			className: classNames[UI.Nav],
+			style: styles?.[UI.Nav],
+			"aria-label": labelNav(),
+			onPreviousClick: handlePreviousClick,
+			onNextClick: handleNextClick,
+			previousMonth,
+			nextMonth
+		}), import_react.createElement(components.MonthGrid, {
+			role: "grid",
+			"aria-multiselectable": mode === "multiple" || mode === "range",
+			"aria-label": labelGrid(calendarMonth.date, dateLib.options, dateLib) || void 0,
+			className: classNames[UI.MonthGrid],
+			style: styles?.[UI.MonthGrid]
+		}, !props.hideWeekdays && import_react.createElement(components.Weekdays, {
+			"data-animated-weekdays": props.animate ? "true" : void 0,
+			className: classNames[UI.Weekdays],
+			style: styles?.[UI.Weekdays]
+		}, showWeekNumber && import_react.createElement(components.WeekNumberHeader, {
+			"aria-label": labelWeekNumberHeader(dateLib.options),
+			className: classNames[UI.WeekNumberHeader],
+			style: styles?.[UI.WeekNumberHeader],
+			scope: "col"
+		}, formatWeekNumberHeader()), weekdays.map((weekday) => import_react.createElement(components.Weekday, {
+			"aria-label": labelWeekday(weekday, dateLib.options, dateLib),
+			className: classNames[UI.Weekday],
+			key: String(weekday),
+			style: styles?.[UI.Weekday],
+			scope: "col"
+		}, formatWeekdayName(weekday, dateLib.options, dateLib)))), import_react.createElement(components.Weeks, {
+			"data-animated-weeks": props.animate ? "true" : void 0,
+			className: classNames[UI.Weeks],
+			style: styles?.[UI.Weeks]
+		}, calendarMonth.weeks.map((week) => {
+			return import_react.createElement(components.Week, {
+				className: classNames[UI.Week],
+				key: week.weekNumber,
+				style: styles?.[UI.Week],
+				week
+			}, showWeekNumber && import_react.createElement(components.WeekNumber, {
+				week,
+				style: styles?.[UI.WeekNumber],
+				"aria-label": labelWeekNumber(week.weekNumber, { locale }),
+				className: classNames[UI.WeekNumber],
+				scope: "row",
+				role: "rowheader"
+			}, formatWeekNumber(week.weekNumber, dateLib)), week.days.map((day) => {
+				const { date } = day;
+				const modifiers = getModifiers(day);
+				modifiers[DayFlag.focused] = !modifiers.hidden && Boolean(focused?.isEqualTo(day));
+				modifiers[SelectionState.selected] = isSelected?.(date) || modifiers.selected;
+				if (isDateRange(selectedValue)) {
+					const { from, to } = selectedValue;
+					modifiers[SelectionState.range_start] = Boolean(from && to && dateLib.isSameDay(date, from));
+					modifiers[SelectionState.range_end] = Boolean(from && to && dateLib.isSameDay(date, to));
+					modifiers[SelectionState.range_middle] = rangeIncludesDate(selectedValue, date, true, dateLib);
+				}
+				const style = getStyleForModifiers(modifiers, styles, props.modifiersStyles);
+				const className = getClassNamesForModifiers(modifiers, classNames, props.modifiersClassNames);
+				const ariaLabel = !isInteractive && !modifiers.hidden ? labelGridcell(date, modifiers, dateLib.options, dateLib) : void 0;
+				return import_react.createElement(components.Day, {
+					key: `${day.isoDate}_${day.displayMonthId}`,
+					day,
+					modifiers,
+					className: className.join(" "),
+					style,
+					role: "gridcell",
+					"aria-selected": modifiers.selected || void 0,
+					"aria-label": ariaLabel,
+					"data-day": day.isoDate,
+					"data-month": day.outside ? day.dateMonthId : void 0,
+					"data-selected": modifiers.selected || void 0,
+					"data-disabled": modifiers.disabled || void 0,
+					"data-hidden": modifiers.hidden || void 0,
+					"data-outside": day.outside || void 0,
+					"data-focused": modifiers.focused || void 0,
+					"data-today": modifiers.today || void 0
+				}, !modifiers.hidden && isInteractive ? import_react.createElement(components.DayButton, {
+					className: classNames[UI.DayButton],
+					style: styles?.[UI.DayButton],
+					type: "button",
+					day,
+					modifiers,
+					disabled: !modifiers.focused && modifiers.disabled || void 0,
+					"aria-disabled": modifiers.focused && modifiers.disabled || void 0,
+					tabIndex: isFocusTarget(day) ? 0 : -1,
+					"aria-label": labelDayButton(date, modifiers, dateLib.options, dateLib),
+					onClick: handleDayClick(day, modifiers),
+					onBlur: handleDayBlur(day, modifiers),
+					onFocus: handleDayFocus(day, modifiers),
+					onKeyDown: handleDayKeyDown(day, modifiers),
+					onMouseEnter: handleDayMouseEnter(day, modifiers),
+					onMouseLeave: handleDayMouseLeave(day, modifiers)
+				}, formatDay(date, dateLib.options, dateLib)) : !modifiers.hidden && formatDay(day.date, dateLib.options, dateLib));
+			}));
+		}))));
+	})), props.footer && import_react.createElement(components.Footer, {
+		className: classNames[UI.Footer],
+		style: styles?.[UI.Footer],
+		role: "status",
+		"aria-live": "polite"
+	}, props.footer)));
+}
+//#endregion
+//#region src/components/ui/calendar.tsx
+function Calendar({ className, classNames, showOutsideDays = true, captionLayout = "label", buttonVariant = "ghost", formatters, components, ...props }) {
+	const defaultClassNames = getDefaultClassNames();
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DayPicker, {
+		"data-uid": "src/components/ui/calendar.tsx:24:5",
+		"data-prohibitions": "[editContent]",
+		showOutsideDays,
+		className: cn$1("bg-background group/calendar p-3 [--cell-size:2rem] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent", String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`, String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`, className),
+		captionLayout,
+		formatters: {
+			formatMonthDropdown: (date) => date.toLocaleString("default", { month: "short" }),
+			...formatters
+		},
+		classNames: {
+			root: cn$1("w-fit", defaultClassNames.root),
+			months: cn$1("relative flex flex-col gap-4 md:flex-row", defaultClassNames.months),
+			month: cn$1("flex w-full flex-col gap-4", defaultClassNames.month),
+			nav: cn$1("absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1", defaultClassNames.nav),
+			button_previous: cn$1(buttonVariants({ variant: buttonVariant }), "h-[--cell-size] w-[--cell-size] select-none p-0 aria-disabled:opacity-50", defaultClassNames.button_previous),
+			button_next: cn$1(buttonVariants({ variant: buttonVariant }), "h-[--cell-size] w-[--cell-size] select-none p-0 aria-disabled:opacity-50", defaultClassNames.button_next),
+			month_caption: cn$1("flex h-[--cell-size] w-full items-center justify-center px-[--cell-size]", defaultClassNames.month_caption),
+			dropdowns: cn$1("flex h-[--cell-size] w-full items-center justify-center gap-1.5 text-sm font-medium", defaultClassNames.dropdowns),
+			dropdown_root: cn$1("has-focus:border-ring border-input shadow-xs has-focus:ring-ring/50 has-focus:ring-[3px] relative rounded-md border", defaultClassNames.dropdown_root),
+			dropdown: cn$1("absolute inset-0 opacity-0", defaultClassNames.dropdown),
+			caption_label: cn$1("select-none font-medium", captionLayout === "label" ? "text-sm" : "[&>svg]:text-muted-foreground flex h-8 items-center gap-1 rounded-md pl-2 pr-1 text-sm [&>svg]:size-3.5", defaultClassNames.caption_label),
+			table: "w-full border-collapse",
+			weekdays: cn$1("flex", defaultClassNames.weekdays),
+			weekday: cn$1("text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal", defaultClassNames.weekday),
+			week: cn$1("mt-2 flex w-full", defaultClassNames.week),
+			week_number_header: cn$1("w-[--cell-size] select-none", defaultClassNames.week_number_header),
+			week_number: cn$1("text-muted-foreground select-none text-[0.8rem]", defaultClassNames.week_number),
+			day: cn$1("group/day relative aspect-square h-full w-full select-none p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md", defaultClassNames.day),
+			range_start: cn$1("bg-accent rounded-l-md", defaultClassNames.range_start),
+			range_middle: cn$1("rounded-none", defaultClassNames.range_middle),
+			range_end: cn$1("bg-accent rounded-r-md", defaultClassNames.range_end),
+			today: cn$1("bg-accent text-accent-foreground rounded-md data-[selected=true]:rounded-none", defaultClassNames.today),
+			outside: cn$1("text-muted-foreground aria-selected:text-muted-foreground", defaultClassNames.outside),
+			disabled: cn$1("text-muted-foreground opacity-50", defaultClassNames.disabled),
+			hidden: cn$1("invisible", defaultClassNames.hidden),
+			...classNames
+		},
+		components: {
+			Root: ({ className, rootRef, ...props }) => {
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					"data-uid": "src/components/ui/calendar.tsx:108:18",
 					"data-prohibitions": "[editContent]",
-					className: `px-2 py-1 rounded-full ${step === 1 ? "bg-primary text-primary-foreground" : "bg-slate-100"}`,
-					children: "1. Dados Básicos"
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					"data-uid": "src/components/documents/DocumentForm.tsx:52:9",
+					"data-slot": "calendar",
+					ref: rootRef,
+					className: cn$1(className),
+					...props
+				});
+			},
+			Chevron: ({ className, orientation, ...props }) => {
+				if (orientation === "left") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronLeft, {
+					"data-uid": "src/components/ui/calendar.tsx:112:20",
 					"data-prohibitions": "[editContent]",
-					className: "h-px w-8 bg-border"
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-					"data-uid": "src/components/documents/DocumentForm.tsx:53:9",
+					className: cn$1("size-4", className),
+					...props
+				});
+				if (orientation === "right") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronRight, {
+					"data-uid": "src/components/ui/calendar.tsx:116:20",
 					"data-prohibitions": "[editContent]",
-					className: `px-2 py-1 rounded-full ${step === 2 ? "bg-primary text-primary-foreground" : "bg-slate-100"}`,
-					children: "2. Detalhes"
-				})
-			]
-		}), step === 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			"data-uid": "src/components/documents/DocumentForm.tsx:61:9",
-			"data-prohibitions": "[]",
-			className: "space-y-4 animate-in slide-in-from-right-4",
-			children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/components/documents/DocumentForm.tsx:62:11",
-					"data-prohibitions": "[]",
-					className: "space-y-2",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label$1, {
-						"data-uid": "src/components/documents/DocumentForm.tsx:63:13",
-						"data-prohibitions": "[]",
-						children: "Nome do Cliente / Empresa"
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
-						"data-uid": "src/components/documents/DocumentForm.tsx:64:13",
+					className: cn$1("size-4", className),
+					...props
+				});
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronDown, {
+					"data-uid": "src/components/ui/calendar.tsx:119:18",
+					"data-prohibitions": "[editContent]",
+					className: cn$1("size-4", className),
+					...props
+				});
+			},
+			DayButton: CalendarDayButton,
+			WeekNumber: ({ children, ...props }) => {
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
+					"data-uid": "src/components/ui/calendar.tsx:124:13",
+					"data-prohibitions": "[editContent]",
+					...props,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						"data-uid": "src/components/ui/calendar.tsx:125:15",
 						"data-prohibitions": "[editContent]",
-						placeholder: "Ex: Tech Solutions Ltda"
-					})]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/components/documents/DocumentForm.tsx:66:11",
-					"data-prohibitions": "[]",
-					className: "space-y-2",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label$1, {
-						"data-uid": "src/components/documents/DocumentForm.tsx:67:13",
-						"data-prohibitions": "[]",
-						children: "Responsável"
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
-						"data-uid": "src/components/documents/DocumentForm.tsx:68:13",
-						"data-prohibitions": "[editContent]",
-						placeholder: "Ex: Carlos Mendes"
-					})]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-					"data-uid": "src/components/documents/DocumentForm.tsx:70:11",
-					"data-prohibitions": "[]",
-					onClick: handleNext,
-					className: "w-full",
-					children: "Próximo Passo"
-				})
-			]
-		}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			"data-uid": "src/components/documents/DocumentForm.tsx:75:9",
-			"data-prohibitions": "[]",
-			className: "space-y-4 animate-in slide-in-from-right-4",
-			children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/components/documents/DocumentForm.tsx:76:11",
-					"data-prohibitions": "[]",
-					className: "space-y-2",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label$1, {
-						"data-uid": "src/components/documents/DocumentForm.tsx:77:13",
-						"data-prohibitions": "[]",
-						children: "Nível de Criticidade"
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Select, {
-						"data-uid": "src/components/documents/DocumentForm.tsx:78:13",
-						"data-prohibitions": "[]",
-						defaultValue: "medio",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectTrigger, {
-							"data-uid": "src/components/documents/DocumentForm.tsx:79:15",
-							"data-prohibitions": "[]",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectValue, {
-								"data-uid": "src/components/documents/DocumentForm.tsx:80:17",
-								"data-prohibitions": "[editContent]",
-								placeholder: "Selecione"
-							})
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SelectContent, {
-							"data-uid": "src/components/documents/DocumentForm.tsx:82:15",
-							"data-prohibitions": "[]",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-									"data-uid": "src/components/documents/DocumentForm.tsx:83:17",
-									"data-prohibitions": "[]",
-									value: "baixo",
-									children: "Baixo"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-									"data-uid": "src/components/documents/DocumentForm.tsx:84:17",
-									"data-prohibitions": "[]",
-									value: "medio",
-									children: "Médio"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-									"data-uid": "src/components/documents/DocumentForm.tsx:85:17",
-									"data-prohibitions": "[]",
-									value: "alto",
-									children: "Alto"
-								})
-							]
-						})]
-					})]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/components/documents/DocumentForm.tsx:89:11",
-					"data-prohibitions": "[]",
-					className: "space-y-2",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label$1, {
-						"data-uid": "src/components/documents/DocumentForm.tsx:90:13",
-						"data-prohibitions": "[]",
-						children: "Observações Adicionais"
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
-						"data-uid": "src/components/documents/DocumentForm.tsx:91:13",
-						"data-prohibitions": "[editContent]",
-						placeholder: "Detalhes opcionais..."
-					})]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/components/documents/DocumentForm.tsx:93:11",
-					"data-prohibitions": "[]",
-					className: "flex gap-2",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-						"data-uid": "src/components/documents/DocumentForm.tsx:94:13",
-						"data-prohibitions": "[]",
-						variant: "outline",
-						onClick: () => setStep(1),
-						className: "w-full",
-						children: "Voltar"
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-						"data-uid": "src/components/documents/DocumentForm.tsx:97:13",
-						"data-prohibitions": "[]",
-						onClick: handleGenerate,
-						className: "w-full",
-						children: "Gerar Documento"
-					})]
-				})
-			]
-		})]
+						className: "flex size-[--cell-size] items-center justify-center text-center",
+						children
+					})
+				});
+			},
+			...components
+		},
+		...props
+	});
+}
+function CalendarDayButton({ className, day, modifiers, ...props }) {
+	const defaultClassNames = getDefaultClassNames();
+	const ref = import_react.useRef(null);
+	import_react.useEffect(() => {
+		if (modifiers.focused) ref.current?.focus();
+	}, [modifiers.focused]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$1, {
+		"data-uid": "src/components/ui/calendar.tsx:152:5",
+		"data-prohibitions": "[editContent]",
+		ref,
+		variant: "ghost",
+		size: "icon",
+		"data-day": day.date.toLocaleDateString(),
+		"data-selected-single": modifiers.selected && !modifiers.range_start && !modifiers.range_end && !modifiers.range_middle,
+		"data-range-start": modifiers.range_start,
+		"data-range-end": modifiers.range_end,
+		"data-range-middle": modifiers.range_middle,
+		className: cn$1("data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 flex aspect-square h-auto w-full min-w-[--cell-size] flex-col gap-1 font-normal leading-none data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] [&>span]:text-xs [&>span]:opacity-70", defaultClassNames.day, className),
+		...props
 	});
 }
 //#endregion
 //#region src/pages/Documentos.tsx
-var templates = [
-	{
-		id: 1,
-		title: "Relatório de Auditoria",
-		desc: "Modelo padrão para relatórios finais",
-		category: "Auditoria"
-	},
-	{
-		id: 2,
-		title: "Contrato de Prestação",
-		desc: "Contrato padrão de serviços B2B",
-		category: "Jurídico"
-	},
-	{
-		id: 3,
-		title: "Plano de Ação",
-		desc: "Planejamento de correções e melhorias",
-		category: "Gestão"
-	},
-	{
-		id: 4,
-		title: "Termo de Confidencialidade",
-		desc: "NDA padrão para novos projetos",
-		category: "Jurídico"
-	}
-];
 var recentDocs = [
 	{
 		id: "DOC-102",
@@ -33191,309 +37883,362 @@ var recentDocs = [
 	}
 ];
 function Documentos() {
-	const [isDialogOpen, setIsDialogOpen] = (0, import_react.useState)(false);
-	const [selectedTemplate, setSelectedTemplate] = (0, import_react.useState)(null);
-	const handleGenerate = (title) => {
-		setSelectedTemplate(title);
-		setIsDialogOpen(true);
+	const [docType, setDocType] = (0, import_react.useState)("");
+	const [clientName, setClientName] = (0, import_react.useState)("");
+	const [date, setDate] = (0, import_react.useState)();
+	const [description, setDescription] = (0, import_react.useState)("");
+	const [isGenerating, setIsGenerating] = (0, import_react.useState)(false);
+	const handleGenerate = (e) => {
+		e.preventDefault();
+		if (!docType || !clientName || !date || !description) {
+			toast.error("Preencha todos os campos antes de gerar o documento.");
+			return;
+		}
+		setIsGenerating(true);
+		setTimeout(() => {
+			setIsGenerating(false);
+			toast.success("Documento gerado com sucesso!", { description: `${docType} para ${clientName} foi processado.` });
+			setDocType("");
+			setClientName("");
+			setDate(void 0);
+			setDescription("");
+		}, 1500);
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		"data-uid": "src/pages/Documentos.tsx:73:5",
+		"data-uid": "src/pages/Documentos.tsx:67:5",
 		"data-prohibitions": "[editContent]",
-		className: "space-y-6",
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				"data-uid": "src/pages/Documentos.tsx:74:7",
+		className: "space-y-6 max-w-6xl mx-auto",
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			"data-uid": "src/pages/Documentos.tsx:68:7",
+			"data-prohibitions": "[]",
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
+				"data-uid": "src/pages/Documentos.tsx:69:9",
 				"data-prohibitions": "[]",
-				className: "flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/pages/Documentos.tsx:75:9",
-					"data-prohibitions": "[]",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
-						"data-uid": "src/pages/Documentos.tsx:76:11",
-						"data-prohibitions": "[]",
-						className: "text-2xl font-bold tracking-tight",
-						children: "Fábrica de Documentos"
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-						"data-uid": "src/pages/Documentos.tsx:77:11",
-						"data-prohibitions": "[]",
-						className: "text-muted-foreground",
-						children: "Gere contratos, relatórios e planos rapidamente."
-					})]
-				})
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-uid": "src/pages/Documentos.tsx:81:7",
+				className: "text-2xl font-bold tracking-tight",
+				children: "Fábrica de Documentos"
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+				"data-uid": "src/pages/Documentos.tsx:70:9",
 				"data-prohibitions": "[]",
-				className: "flex flex-col sm:flex-row gap-4 bg-white p-4 rounded-xl border shadow-sm",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/pages/Documentos.tsx:82:9",
-					"data-prohibitions": "[]",
-					className: "relative flex-1",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Search, {
-						"data-uid": "src/pages/Documentos.tsx:83:11",
-						"data-prohibitions": "[editContent]",
-						className: "absolute left-3 top-3 h-4 w-4 text-muted-foreground"
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
-						"data-uid": "src/pages/Documentos.tsx:84:11",
-						"data-prohibitions": "[editContent]",
-						placeholder: "Buscar templates...",
-						className: "pl-9 h-10"
-					})]
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/pages/Documentos.tsx:86:9",
-					"data-prohibitions": "[]",
-					className: "flex items-center gap-2",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Funnel, {
-						"data-uid": "src/pages/Documentos.tsx:87:11",
-						"data-prohibitions": "[editContent]",
-						className: "h-4 w-4 text-muted-foreground"
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Select, {
-						"data-uid": "src/pages/Documentos.tsx:88:11",
-						"data-prohibitions": "[]",
-						defaultValue: "todos",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectTrigger, {
-							"data-uid": "src/pages/Documentos.tsx:89:13",
-							"data-prohibitions": "[]",
-							className: "w-[180px] h-10",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectValue, {
-								"data-uid": "src/pages/Documentos.tsx:90:15",
-								"data-prohibitions": "[editContent]",
-								placeholder: "Categoria"
-							})
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SelectContent, {
-							"data-uid": "src/pages/Documentos.tsx:92:13",
-							"data-prohibitions": "[]",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-									"data-uid": "src/pages/Documentos.tsx:93:15",
-									"data-prohibitions": "[]",
-									value: "todos",
-									children: "Todas Categorias"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-									"data-uid": "src/pages/Documentos.tsx:94:15",
-									"data-prohibitions": "[]",
-									value: "auditoria",
-									children: "Auditoria"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-									"data-uid": "src/pages/Documentos.tsx:95:15",
-									"data-prohibitions": "[]",
-									value: "juridico",
-									children: "Jurídico"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-									"data-uid": "src/pages/Documentos.tsx:96:15",
-									"data-prohibitions": "[]",
-									value: "gestao",
-									children: "Gestão"
-								})
-							]
-						})]
-					})]
-				})]
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				"data-uid": "src/pages/Documentos.tsx:102:7",
+				className: "text-muted-foreground",
+				children: "Preencha o formulário para gerar um novo documento."
+			})]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			"data-uid": "src/pages/Documentos.tsx:73:7",
+			"data-prohibitions": "[editContent]",
+			className: "grid grid-cols-1 lg:grid-cols-3 gap-6",
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, {
+				"data-uid": "src/pages/Documentos.tsx:74:9",
 				"data-prohibitions": "[editContent]",
-				className: "grid gap-4 md:grid-cols-2 lg:grid-cols-4",
-				children: templates.map((tpl) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, {
-					"data-uid": "src/pages/Documentos.tsx:104:11",
+				className: "lg:col-span-2 shadow-sm border-slate-200",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CardHeader, {
+					"data-uid": "src/pages/Documentos.tsx:75:11",
+					"data-prohibitions": "[]",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardTitle, {
+						"data-uid": "src/pages/Documentos.tsx:76:13",
+						"data-prohibitions": "[]",
+						children: "Novo Documento"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardDescription, {
+						"data-uid": "src/pages/Documentos.tsx:77:13",
+						"data-prohibitions": "[]",
+						children: "Insira os dados do cliente e detalhes do projeto."
+					})]
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardContent, {
+					"data-uid": "src/pages/Documentos.tsx:79:11",
 					"data-prohibitions": "[editContent]",
-					className: "group hover:border-primary/50 transition-colors shadow-sm flex flex-col",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CardHeader, {
-						"data-uid": "src/pages/Documentos.tsx:108:13",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
+						"data-uid": "src/pages/Documentos.tsx:80:13",
 						"data-prohibitions": "[editContent]",
-						className: "pb-3",
+						onSubmit: handleGenerate,
+						className: "space-y-6",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								"data-uid": "src/pages/Documentos.tsx:109:15",
-								"data-prohibitions": "[editContent]",
-								className: "flex justify-between items-start",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-									"data-uid": "src/pages/Documentos.tsx:110:17",
+								"data-uid": "src/pages/Documentos.tsx:81:15",
+								"data-prohibitions": "[]",
+								className: "grid grid-cols-1 md:grid-cols-2 gap-6",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									"data-uid": "src/pages/Documentos.tsx:82:17",
 									"data-prohibitions": "[]",
-									className: "p-2 bg-blue-50 rounded-lg text-blue-600 mb-2",
-									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FileText, {
-										"data-uid": "src/pages/Documentos.tsx:111:19",
+									className: "space-y-2",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label$1, {
+										"data-uid": "src/pages/Documentos.tsx:83:19",
+										"data-prohibitions": "[]",
+										htmlFor: "docType",
+										children: "Tipo de Documento"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Select$1, {
+										"data-uid": "src/pages/Documentos.tsx:84:19",
+										"data-prohibitions": "[]",
+										value: docType,
+										onValueChange: setDocType,
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectTrigger, {
+											"data-uid": "src/pages/Documentos.tsx:85:21",
+											"data-prohibitions": "[]",
+											id: "docType",
+											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectValue, {
+												"data-uid": "src/pages/Documentos.tsx:86:23",
+												"data-prohibitions": "[editContent]",
+												placeholder: "Selecione o tipo..."
+											})
+										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SelectContent, {
+											"data-uid": "src/pages/Documentos.tsx:88:21",
+											"data-prohibitions": "[]",
+											children: [
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
+													"data-uid": "src/pages/Documentos.tsx:89:23",
+													"data-prohibitions": "[]",
+													value: "Proposta Comercial",
+													children: "Proposta Comercial"
+												}),
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
+													"data-uid": "src/pages/Documentos.tsx:90:23",
+													"data-prohibitions": "[]",
+													value: "Relatório de Auditoria",
+													children: "Relatório de Auditoria"
+												}),
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
+													"data-uid": "src/pages/Documentos.tsx:91:23",
+													"data-prohibitions": "[]",
+													value: "Manual de Procedimentos",
+													children: "Manual de Procedimentos"
+												}),
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
+													"data-uid": "src/pages/Documentos.tsx:94:23",
+													"data-prohibitions": "[]",
+													value: "Instrução de Trabalho",
+													children: "Instrução de Trabalho"
+												})
+											]
+										})]
+									})]
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									"data-uid": "src/pages/Documentos.tsx:99:17",
+									"data-prohibitions": "[]",
+									className: "space-y-2",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label$1, {
+										"data-uid": "src/pages/Documentos.tsx:100:19",
+										"data-prohibitions": "[]",
+										htmlFor: "clientName",
+										children: "Nome do Cliente"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
+										"data-uid": "src/pages/Documentos.tsx:101:19",
 										"data-prohibitions": "[editContent]",
-										className: "h-5 w-5"
-									})
-								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									"data-uid": "src/pages/Documentos.tsx:113:17",
-									"data-prohibitions": "[editContent]",
-									className: "text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded-full",
-									children: tpl.category
+										id: "clientName",
+										placeholder: "Ex: Tech Solutions Ltda",
+										value: clientName,
+										onChange: (e) => setClientName(e.target.value)
+									})]
 								})]
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardTitle, {
-								"data-uid": "src/pages/Documentos.tsx:117:15",
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								"data-uid": "src/pages/Documentos.tsx:110:15",
 								"data-prohibitions": "[editContent]",
-								className: "text-base",
-								children: tpl.title
+								className: "space-y-2 flex flex-col",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label$1, {
+									"data-uid": "src/pages/Documentos.tsx:111:17",
+									"data-prohibitions": "[]",
+									htmlFor: "date",
+									children: "Data"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Popover, {
+									"data-uid": "src/pages/Documentos.tsx:112:17",
+									"data-prohibitions": "[editContent]",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverTrigger, {
+										"data-uid": "src/pages/Documentos.tsx:113:19",
+										"data-prohibitions": "[editContent]",
+										asChild: true,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$1, {
+											"data-uid": "src/pages/Documentos.tsx:114:21",
+											"data-prohibitions": "[editContent]",
+											id: "date",
+											variant: "outline",
+											className: cn$1("w-full md:max-w-[240px] justify-start text-left font-normal", !date && "text-muted-foreground"),
+											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Calendar$1, {
+												"data-uid": "src/pages/Documentos.tsx:122:23",
+												"data-prohibitions": "[editContent]",
+												className: "mr-2 h-4 w-4"
+											}), date ? format(date, "dd/MM/yyyy", { locale: ptBR }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+												"data-uid": "src/pages/Documentos.tsx:126:25",
+												"data-prohibitions": "[]",
+												children: "Selecione uma data"
+											})]
+										})
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverContent, {
+										"data-uid": "src/pages/Documentos.tsx:130:19",
+										"data-prohibitions": "[]",
+										className: "w-auto p-0",
+										align: "start",
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Calendar, {
+											"data-uid": "src/pages/Documentos.tsx:131:21",
+											"data-prohibitions": "[editContent]",
+											mode: "single",
+											selected: date,
+											onSelect: setDate,
+											initialFocus: true
+										})
+									})]
+								})]
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardDescription, {
-								"data-uid": "src/pages/Documentos.tsx:118:15",
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								"data-uid": "src/pages/Documentos.tsx:136:15",
+								"data-prohibitions": "[]",
+								className: "space-y-2",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label$1, {
+									"data-uid": "src/pages/Documentos.tsx:137:17",
+									"data-prohibitions": "[]",
+									htmlFor: "description",
+									children: "Descrição Breve"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Textarea, {
+									"data-uid": "src/pages/Documentos.tsx:138:17",
+									"data-prohibitions": "[editContent]",
+									id: "description",
+									placeholder: "Descreva brevemente o propósito ou escopo deste documento...",
+									className: "min-h-[120px] resize-none",
+									value: description,
+									onChange: (e) => setDescription(e.target.value)
+								})]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								"data-uid": "src/pages/Documentos.tsx:147:15",
 								"data-prohibitions": "[editContent]",
-								className: "text-xs line-clamp-2",
-								children: tpl.desc
+								className: "pt-2",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$1, {
+									"data-uid": "src/pages/Documentos.tsx:148:17",
+									"data-prohibitions": "[editContent]",
+									type: "submit",
+									className: "w-full md:w-auto h-11 px-8 text-base font-medium shadow-sm hover:shadow-md transition-all",
+									disabled: isGenerating,
+									children: isGenerating ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LoaderCircle, {
+										"data-uid": "src/pages/Documentos.tsx:155:23",
+										"data-prohibitions": "[editContent]",
+										className: "mr-2 h-5 w-5 animate-spin"
+									}), "Processando..."] }) : "Gerar Documento"
+								})
 							})
 						]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardContent, {
-						"data-uid": "src/pages/Documentos.tsx:120:13",
-						"data-prohibitions": "[]",
-						className: "mt-auto pt-0",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-							"data-uid": "src/pages/Documentos.tsx:121:15",
-							"data-prohibitions": "[]",
-							variant: "outline",
-							className: "w-full group-hover:bg-primary group-hover:text-white transition-colors",
-							onClick: () => handleGenerate(tpl.title),
-							children: "Gerar Agora"
-						})
-					})]
-				}, tpl.id))
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, {
-				"data-uid": "src/pages/Documentos.tsx:133:7",
+					})
+				})]
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, {
+				"data-uid": "src/pages/Documentos.tsx:167:9",
 				"data-prohibitions": "[editContent]",
-				className: "shadow-sm",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardHeader, {
-					"data-uid": "src/pages/Documentos.tsx:134:9",
+				className: "shadow-sm border-slate-200 h-fit",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CardHeader, {
+					"data-uid": "src/pages/Documentos.tsx:168:11",
 					"data-prohibitions": "[]",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardTitle, {
-						"data-uid": "src/pages/Documentos.tsx:135:11",
+					className: "pb-3",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardTitle, {
+						"data-uid": "src/pages/Documentos.tsx:169:13",
 						"data-prohibitions": "[]",
 						className: "text-lg",
-						children: "Documentos Recentes"
-					})
+						children: "Gerados Recentemente"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardDescription, {
+						"data-uid": "src/pages/Documentos.tsx:170:13",
+						"data-prohibitions": "[]",
+						children: "Seus últimos documentos criados"
+					})]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardContent, {
-					"data-uid": "src/pages/Documentos.tsx:137:9",
+					"data-uid": "src/pages/Documentos.tsx:172:11",
 					"data-prohibitions": "[editContent]",
+					className: "px-0",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Table, {
-						"data-uid": "src/pages/Documentos.tsx:138:11",
+						"data-uid": "src/pages/Documentos.tsx:173:13",
 						"data-prohibitions": "[editContent]",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TableHeader, {
-							"data-uid": "src/pages/Documentos.tsx:139:13",
+							"data-uid": "src/pages/Documentos.tsx:174:15",
 							"data-prohibitions": "[]",
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(TableRow, {
-								"data-uid": "src/pages/Documentos.tsx:140:15",
+								"data-uid": "src/pages/Documentos.tsx:175:17",
 								"data-prohibitions": "[]",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TableHead, {
-										"data-uid": "src/pages/Documentos.tsx:141:17",
-										"data-prohibitions": "[]",
-										children: "Arquivo"
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TableHead, {
-										"data-uid": "src/pages/Documentos.tsx:142:17",
-										"data-prohibitions": "[]",
-										children: "Data de Geração"
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TableHead, {
-										"data-uid": "src/pages/Documentos.tsx:143:17",
-										"data-prohibitions": "[]",
-										children: "Gerado por"
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TableHead, {
-										"data-uid": "src/pages/Documentos.tsx:144:17",
-										"data-prohibitions": "[]",
-										className: "text-right",
-										children: "Ações"
-									})
-								]
+								className: "hover:bg-transparent border-slate-100",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TableHead, {
+									"data-uid": "src/pages/Documentos.tsx:176:19",
+									"data-prohibitions": "[]",
+									className: "font-semibold text-slate-600",
+									children: "Arquivo"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TableHead, {
+									"data-uid": "src/pages/Documentos.tsx:177:19",
+									"data-prohibitions": "[]",
+									className: "font-semibold text-slate-600 text-right",
+									children: "Ações"
+								})]
 							})
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TableBody, {
-							"data-uid": "src/pages/Documentos.tsx:147:13",
+							"data-uid": "src/pages/Documentos.tsx:180:15",
 							"data-prohibitions": "[editContent]",
 							children: recentDocs.map((doc) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(TableRow, {
-								"data-uid": "src/pages/Documentos.tsx:149:17",
+								"data-uid": "src/pages/Documentos.tsx:182:19",
 								"data-prohibitions": "[editContent]",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(TableCell, {
-										"data-uid": "src/pages/Documentos.tsx:150:19",
+								className: "border-slate-100",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TableCell, {
+									"data-uid": "src/pages/Documentos.tsx:183:21",
+									"data-prohibitions": "[editContent]",
+									className: "font-medium",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										"data-uid": "src/pages/Documentos.tsx:184:23",
 										"data-prohibitions": "[editContent]",
-										className: "font-medium flex items-center gap-2",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FileText, {
-											"data-uid": "src/pages/Documentos.tsx:151:21",
-											"data-prohibitions": "[editContent]",
-											className: "h-4 w-4 text-slate-400"
-										}), doc.name]
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TableCell, {
-										"data-uid": "src/pages/Documentos.tsx:154:19",
-										"data-prohibitions": "[editContent]",
-										children: doc.date
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TableCell, {
-										"data-uid": "src/pages/Documentos.tsx:155:19",
-										"data-prohibitions": "[editContent]",
-										children: doc.author
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(TableCell, {
-										"data-uid": "src/pages/Documentos.tsx:156:19",
-										"data-prohibitions": "[]",
-										className: "text-right",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-											"data-uid": "src/pages/Documentos.tsx:157:21",
+										className: "flex items-center gap-2",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+											"data-uid": "src/pages/Documentos.tsx:185:25",
 											"data-prohibitions": "[]",
-											variant: "ghost",
-											size: "icon",
-											title: "Editar",
-											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SquarePen, {
-												"data-uid": "src/pages/Documentos.tsx:158:23",
+											className: "p-2 bg-slate-100 rounded-md text-slate-500",
+											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FileText, {
+												"data-uid": "src/pages/Documentos.tsx:186:27",
 												"data-prohibitions": "[editContent]",
 												className: "h-4 w-4"
 											})
-										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-											"data-uid": "src/pages/Documentos.tsx:160:21",
+										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+											"data-uid": "src/pages/Documentos.tsx:188:25",
+											"data-prohibitions": "[editContent]",
+											className: "flex flex-col",
+											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+												"data-uid": "src/pages/Documentos.tsx:189:27",
+												"data-prohibitions": "[editContent]",
+												className: "text-sm truncate w-[140px] text-slate-900",
+												children: doc.name
+											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+												"data-uid": "src/pages/Documentos.tsx:192:27",
+												"data-prohibitions": "[editContent]",
+												className: "text-xs text-slate-500",
+												children: doc.date
+											})]
+										})]
+									})
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TableCell, {
+									"data-uid": "src/pages/Documentos.tsx:196:21",
+									"data-prohibitions": "[]",
+									className: "text-right",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										"data-uid": "src/pages/Documentos.tsx:197:23",
+										"data-prohibitions": "[]",
+										className: "flex justify-end gap-1",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$1, {
+											"data-uid": "src/pages/Documentos.tsx:198:25",
 											"data-prohibitions": "[]",
 											variant: "ghost",
 											size: "icon",
-											title: "Download",
+											className: "h-8 w-8 text-slate-500",
+											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SquarePen, {
+												"data-uid": "src/pages/Documentos.tsx:199:27",
+												"data-prohibitions": "[editContent]",
+												className: "h-4 w-4"
+											})
+										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$1, {
+											"data-uid": "src/pages/Documentos.tsx:201:25",
+											"data-prohibitions": "[]",
+											variant: "ghost",
+											size: "icon",
+											className: "h-8 w-8 text-slate-500",
 											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FileDown, {
-												"data-uid": "src/pages/Documentos.tsx:161:23",
+												"data-uid": "src/pages/Documentos.tsx:202:27",
 												"data-prohibitions": "[editContent]",
 												className: "h-4 w-4"
 											})
 										})]
 									})
-								]
+								})]
 							}, doc.id))
 						})]
 					})
 				})]
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Dialog, {
-				"data-uid": "src/pages/Documentos.tsx:171:7",
-				"data-prohibitions": "[editContent]",
-				open: isDialogOpen,
-				onOpenChange: setIsDialogOpen,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DialogContent, {
-					"data-uid": "src/pages/Documentos.tsx:172:9",
-					"data-prohibitions": "[editContent]",
-					className: "sm:max-w-[425px]",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DialogHeader, {
-						"data-uid": "src/pages/Documentos.tsx:173:11",
-						"data-prohibitions": "[editContent]",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DialogTitle, {
-							"data-uid": "src/pages/Documentos.tsx:174:13",
-							"data-prohibitions": "[editContent]",
-							children: ["Gerar ", selectedTemplate]
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogDescription, {
-							"data-uid": "src/pages/Documentos.tsx:175:13",
-							"data-prohibitions": "[]",
-							children: "Preencha os dados abaixo para gerar o documento automaticamente."
-						})]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DocumentForm, {
-						"data-uid": "src/pages/Documentos.tsx:179:11",
-						"data-prohibitions": "[editContent]",
-						onSuccess: () => setIsDialogOpen(false)
-					})]
-				})
-			})
-		]
+			})]
+		})]
 	});
 }
 //#endregion
@@ -33560,7 +38305,7 @@ function AuditForm({ onSuccess }) {
 							"data-prohibitions": "[]",
 							htmlFor: "status",
 							children: "Status Inicial"
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Select, {
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Select$1, {
 							"data-uid": "src/components/audits/AuditForm.tsx:35:13",
 							"data-prohibitions": "[]",
 							defaultValue: "progresso",
@@ -33599,7 +38344,7 @@ function AuditForm({ onSuccess }) {
 						"data-prohibitions": "[]",
 						htmlFor: "auditor",
 						children: "Auditor Responsável"
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Select, {
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Select$1, {
 						"data-uid": "src/components/audits/AuditForm.tsx:49:11",
 						"data-prohibitions": "[]",
 						defaultValue: "joao",
@@ -33642,7 +38387,7 @@ function AuditForm({ onSuccess }) {
 			"data-uid": "src/components/audits/AuditForm.tsx:61:7",
 			"data-prohibitions": "[]",
 			className: "flex justify-end pt-4 border-t",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$1, {
 				"data-uid": "src/components/audits/AuditForm.tsx:62:9",
 				"data-prohibitions": "[]",
 				type: "submit",
@@ -33836,7 +38581,7 @@ function Auditorias() {
 						className: "text-muted-foreground",
 						children: "Acompanhe e gerencie todas as auditorias em andamento."
 					})]
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$1, {
 					"data-uid": "src/pages/Auditorias.tsx:115:9",
 					"data-prohibitions": "[]",
 					onClick: () => setIsSheetOpen(true),
@@ -33961,7 +38706,7 @@ function Auditorias() {
 												"data-uid": "src/pages/Auditorias.tsx:150:21",
 												"data-prohibitions": "[]",
 												asChild: true,
-												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$1, {
 													"data-uid": "src/pages/Auditorias.tsx:151:23",
 													"data-prohibitions": "[]",
 													variant: "ghost",
@@ -34121,7 +38866,7 @@ var TabsList$1 = import_react.forwardRef((props, forwardedRef) => {
 	const { __scopeTabs, loop = true, ...listProps } = props;
 	const context = useTabsContext(TAB_LIST_NAME, __scopeTabs);
 	const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeTabs);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$3, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$4, {
 		asChild: true,
 		...rovingFocusGroupScope,
 		orientation: context.orientation,
@@ -34469,7 +39214,7 @@ function Configuracoes() {
 											"data-prohibitions": "[editContent]",
 											children: user?.name?.charAt(0)
 										})]
-									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$1, {
 										"data-uid": "src/pages/Configuracoes.tsx:52:17",
 										"data-prohibitions": "[]",
 										variant: "outline",
@@ -34688,7 +39433,7 @@ function Configuracoes() {
 											"data-uid": "src/pages/Configuracoes.tsx:125:17",
 											"data-prohibitions": "[]",
 											children: "Idioma"
-										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Select, {
+										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Select$1, {
 											"data-uid": "src/pages/Configuracoes.tsx:126:17",
 											"data-prohibitions": "[]",
 											defaultValue: "pt",
@@ -34736,7 +39481,7 @@ function Configuracoes() {
 				"data-uid": "src/pages/Configuracoes.tsx:142:7",
 				"data-prohibitions": "[]",
 				className: "flex justify-end",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$1, {
 					"data-uid": "src/pages/Configuracoes.tsx:143:9",
 					"data-prohibitions": "[]",
 					onClick: handleSave,
@@ -34865,4 +39610,4 @@ var App = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AuthProvider, {
 }));
 //#endregion
 
-//# sourceMappingURL=index-aoqYosbP.js.map
+//# sourceMappingURL=index-BDqhg6Ad.js.map
