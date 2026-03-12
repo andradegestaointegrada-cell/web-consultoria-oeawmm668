@@ -1,5 +1,8 @@
 {
   "_versions": {
-    "gerar_documento_com_ia": 6
+    "gerar_documento_com_ia": 6,
+    "parse_docx": 1,
+    "generate_docx": 1,
+    "functions": 1
   }
 }

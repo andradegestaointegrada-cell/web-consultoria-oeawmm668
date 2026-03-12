@@ -1,9 +1,23 @@
 import { useState } from 'react'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Plus, Loader2, FileText } from 'lucide-react'
 import { supabase } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
@@ -53,19 +67,19 @@ export function TemplateUploadDialog({ onSuccess }: { onSuccess: () => void }) {
     try {
       const ext = file.name.split('.').pop()
       const path = `${user?.id}/${Date.now()}.${ext}`
-      
+
       const { error: uploadError } = await supabase.storage.from('templates').upload(path, file)
       if (uploadError) throw uploadError
 
       setUploadedPath(path)
 
       const { data, error: parseError } = await supabase.functions.invoke('parse_docx', {
-        body: { path }
+        body: { path },
       })
       if (parseError) throw parseError
 
       setPlaceholders(data.placeholders || [])
-      
+
       const initMap: Record<string, Omit<PlaceholderMapping, 'name'>> = {}
       ;(data.placeholders || []).forEach((p: string) => {
         initMap[p] = { type: 'text', mappedField: 'none' }
@@ -82,16 +96,16 @@ export function TemplateUploadDialog({ onSuccess }: { onSuccess: () => void }) {
   const handleSave = async () => {
     setLoading(true)
     try {
-      const placeholdersToSave = placeholders.map(p => ({
+      const placeholdersToSave = placeholders.map((p) => ({
         name: p,
-        ...mappings[p]
+        ...mappings[p],
       }))
 
       const { error } = await supabase.from('templates').insert({
         nome,
         tipo: 'Word',
         arquivo_docx_url: uploadedPath,
-        placeholders: placeholdersToSave as any
+        placeholders: placeholdersToSave as any,
       })
 
       if (error) throw error
@@ -109,14 +123,18 @@ export function TemplateUploadDialog({ onSuccess }: { onSuccess: () => void }) {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button><Plus className="mr-2 h-4 w-4" /> Novo Template</Button>
+        <Button>
+          <Plus className="mr-2 h-4 w-4" /> Novo Template
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>{step === 1 ? 'Enviar Template Word' : 'Mapeamento de Variáveis'}</DialogTitle>
+          <DialogTitle>
+            {step === 1 ? 'Enviar Template Word' : 'Mapeamento de Variáveis'}
+          </DialogTitle>
           <DialogDescription>
-            {step === 1 
-              ? 'Faça o upload de um arquivo .docx contendo variáveis no formato {{nome}}.' 
+            {step === 1
+              ? 'Faça o upload de um arquivo .docx contendo variáveis no formato {{nome}}.'
               : 'Verifique as variáveis encontradas no documento e defina seus tipos e mapeamentos automáticos.'}
           </DialogDescription>
         </DialogHeader>
@@ -125,7 +143,12 @@ export function TemplateUploadDialog({ onSuccess }: { onSuccess: () => void }) {
           <div className="space-y-4 py-4">
             <div className="space-y-2">
               <Label>Nome do Template</Label>
-              <Input placeholder="Ex: Proposta Comercial V2" value={nome} onChange={e => setNome(e.target.value)} disabled={loading} />
+              <Input
+                placeholder="Ex: Proposta Comercial V2"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                disabled={loading}
+              />
             </div>
             <div className="space-y-2">
               <Label>Arquivo (.docx)</Label>
@@ -137,17 +160,24 @@ export function TemplateUploadDialog({ onSuccess }: { onSuccess: () => void }) {
             {placeholders.length > 0 ? (
               <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-2">
                 {placeholders.map((p) => (
-                  <div key={p} className="grid grid-cols-1 md:grid-cols-3 gap-3 p-3 border rounded-md bg-muted/30">
+                  <div
+                    key={p}
+                    className="grid grid-cols-1 md:grid-cols-3 gap-3 p-3 border rounded-md bg-muted/30"
+                  >
                     <div className="md:col-span-1 flex items-center font-medium">
-                      <code className="text-sm bg-muted px-2 py-1 rounded text-primary">{{`{{${p}}}`}}</code>
+                      <code className="text-sm bg-muted px-2 py-1 rounded text-primary">{`{{${p}}}`}</code>
                     </div>
                     <div>
                       <Label className="text-xs mb-1 block">Tipo de Dado</Label>
-                      <Select 
-                        value={mappings[p]?.type} 
-                        onValueChange={(v: any) => setMappings(prev => ({...prev, [p]: {...prev[p], type: v}}))}
+                      <Select
+                        value={mappings[p]?.type}
+                        onValueChange={(v: any) =>
+                          setMappings((prev) => ({ ...prev, [p]: { ...prev[p], type: v } }))
+                        }
                       >
-                        <SelectTrigger className="h-8 text-sm"><SelectValue /></SelectTrigger>
+                        <SelectTrigger className="h-8 text-sm">
+                          <SelectValue />
+                        </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="text">Texto Curto</SelectItem>
                           <SelectItem value="longtext">Texto Longo</SelectItem>
@@ -157,11 +187,15 @@ export function TemplateUploadDialog({ onSuccess }: { onSuccess: () => void }) {
                     </div>
                     <div>
                       <Label className="text-xs mb-1 block">Auto-preenchimento</Label>
-                      <Select 
-                        value={mappings[p]?.mappedField} 
-                        onValueChange={(v) => setMappings(prev => ({...prev, [p]: {...prev[p], mappedField: v}}))}
+                      <Select
+                        value={mappings[p]?.mappedField}
+                        onValueChange={(v) =>
+                          setMappings((prev) => ({ ...prev, [p]: { ...prev[p], mappedField: v } }))
+                        }
                       >
-                        <SelectTrigger className="h-8 text-sm"><SelectValue /></SelectTrigger>
+                        <SelectTrigger className="h-8 text-sm">
+                          <SelectValue />
+                        </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="none">Nenhum (Manual)</SelectItem>
                           <SelectItem value="nome_cliente">Nome do Cliente</SelectItem>
@@ -175,8 +209,12 @@ export function TemplateUploadDialog({ onSuccess }: { onSuccess: () => void }) {
             ) : (
               <div className="py-8 text-center flex flex-col items-center justify-center text-muted-foreground">
                 <FileText className="h-10 w-10 mb-2 opacity-20" />
-                <p>Nenhuma variável do tipo <code>{'{{variavel}}'}</code> encontrada no documento.</p>
-                <p className="text-sm mt-2">Você pode salvar o arquivo como um documento estático.</p>
+                <p>
+                  Nenhuma variável do tipo <code>{'{{variavel}}'}</code> encontrada no documento.
+                </p>
+                <p className="text-sm mt-2">
+                  Você pode salvar o arquivo como um documento estático.
+                </p>
               </div>
             )}
           </div>
