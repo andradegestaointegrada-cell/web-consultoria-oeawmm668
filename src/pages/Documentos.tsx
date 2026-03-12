@@ -27,21 +27,31 @@ import {
 } from '@/components/ui/table'
 import { toast } from 'sonner'
 import { supabase } from '@/lib/supabase/client'
-
-const recentDocs = [
-  { id: 'DOC-102', name: 'Auditoria_TechCorp.pdf', date: '12/10/2023', author: 'João Silva' },
-  { id: 'DOC-101', name: 'Contrato_GlobalSys.pdf', date: '10/10/2023', author: 'Ana Souza' },
-  { id: 'DOC-100', name: 'PlanoAcao_Marketing.pdf', date: '08/10/2023', author: 'Carlos Mendes' },
-]
+import { useAuth } from '@/contexts/AuthContext'
 
 export default function Documentos() {
+  const { user } = useAuth()
   const [docType, setDocType] = useState<string>('')
   const [clientName, setClientName] = useState('')
   const [date, setDate] = useState<Date>()
   const [description, setDescription] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
+
   const [templates, setTemplates] = useState<{ id: string; tipo: string; nome: string }[]>([])
   const [isLoadingTemplates, setIsLoadingTemplates] = useState(true)
+  const [recentDocs, setRecentDocs] = useState<any[]>([])
+
+  const fetchRecentDocs = async () => {
+    if (!user) return
+    const { data } = await supabase
+      .from('documentos')
+      .select('*')
+      .eq('usuario_id', user.id)
+      .order('data_criacao', { ascending: false })
+      .limit(5)
+
+    if (data) setRecentDocs(data)
+  }
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -49,17 +59,20 @@ export default function Documentos() {
       const { data, error } = await supabase
         .from('templates')
         .select('*')
-        .order('criado_em', { ascending: true })
+        .order('nome', { ascending: true })
+
       if (!error && data) {
-        const uniqueTemplates = Array.from(new Map(data.map((item) => [item.tipo, item])).values())
-        setTemplates(uniqueTemplates)
+        setTemplates(data)
       }
       setIsLoadingTemplates(false)
     }
-    fetchTemplates()
-  }, [])
 
-  const handleGenerate = (e: React.FormEvent) => {
+    fetchTemplates()
+    fetchRecentDocs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
+
+  const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!docType || !clientName || !date || !description) {
@@ -67,19 +80,34 @@ export default function Documentos() {
       return
     }
 
+    if (!user) return
+
     setIsGenerating(true)
 
-    setTimeout(() => {
-      setIsGenerating(false)
-      toast.success('Documento gerado com sucesso!', {
-        description: `${docType} para ${clientName} foi processado.`,
-      })
+    const { error } = await supabase.from('documentos').insert({
+      usuario_id: user.id,
+      tipo_documento: docType,
+      nome_cliente: clientName,
+      status: 'rascunho',
+    })
 
-      setDocType('')
-      setClientName('')
-      setDate(undefined)
-      setDescription('')
-    }, 1500)
+    setIsGenerating(false)
+
+    if (error) {
+      toast.error('Erro ao gerar documento.', { description: error.message })
+      return
+    }
+
+    toast.success('Documento gerado com sucesso!', {
+      description: `${docType} para ${clientName} foi processado.`,
+    })
+
+    setDocType('')
+    setClientName('')
+    setDate(undefined)
+    setDescription('')
+
+    fetchRecentDocs()
   }
 
   return (
@@ -108,8 +136,8 @@ export default function Documentos() {
                     </SelectTrigger>
                     <SelectContent>
                       {templates.map((t) => (
-                        <SelectItem key={t.id} value={t.tipo}>
-                          {t.tipo}
+                        <SelectItem key={t.id} value={t.nome}>
+                          {t.nome}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -200,41 +228,56 @@ export default function Documentos() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {recentDocs.map((doc) => (
-                  <TableRow key={doc.id}>
-                    <TableCell className="font-medium">
-                      <div className="flex items-center gap-2">
-                        <div className="p-2 bg-muted rounded-md text-muted-foreground">
-                          <FileText className="h-4 w-4" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-sm truncate w-[140px] text-foreground">
-                            {doc.name}
-                          </span>
-                          <span className="text-xs text-muted-foreground">{doc.date}</span>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end gap-1">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                        >
-                          <FileDown className="h-4 w-4" />
-                        </Button>
-                      </div>
+                {recentDocs.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={2} className="text-center text-muted-foreground py-6">
+                      Nenhum documento recente.
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  recentDocs.map((doc) => (
+                    <TableRow key={doc.id}>
+                      <TableCell className="font-medium">
+                        <div className="flex items-center gap-2">
+                          <div className="p-2 bg-muted rounded-md text-muted-foreground">
+                            <FileText className="h-4 w-4" />
+                          </div>
+                          <div className="flex flex-col overflow-hidden">
+                            <span
+                              className="text-sm truncate w-[140px] text-foreground"
+                              title={`${doc.nome_cliente} - ${doc.tipo_documento}`}
+                            >
+                              {doc.nome_cliente} - {doc.tipo_documento}
+                            </span>
+                            <span className="text-xs text-muted-foreground">
+                              {doc.data_criacao
+                                ? format(new Date(doc.data_criacao), 'dd/MM/yyyy')
+                                : '-'}
+                            </span>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-1">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                          >
+                            <FileDown className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </CardContent>

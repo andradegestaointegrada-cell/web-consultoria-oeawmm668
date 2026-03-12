@@ -5,6 +5,9 @@ import { Button } from '@/components/ui/button'
 import { FileText, PlusCircle, Calendar as CalendarIcon } from 'lucide-react'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { useState, useEffect } from 'react'
+import { supabase } from '@/lib/supabase/client'
+import { cn } from '@/lib/utils'
 import {
   Table,
   TableBody,
@@ -15,19 +18,53 @@ import {
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 
-const recentDocuments = [
-  { id: 1, name: 'Projeto Residencial Silva', date: '25/10/2023', type: 'Proposta' },
-  { id: 2, name: 'Auditoria Interna Q3', date: '22/10/2023', type: 'Relatório' },
-  { id: 3, name: 'Manual de Integração de TI', date: '20/10/2023', type: 'Manual' },
-  { id: 4, name: 'Proposta Comercial - TechCorp', date: '18/10/2023', type: 'Proposta' },
-  { id: 5, name: 'Relatório de Conformidade ISO', date: '15/10/2023', type: 'Relatório' },
-]
-
 export default function Index() {
   const { profile, user } = useAuth()
   const today = format(new Date(), "dd 'de' MMMM, yyyy", { locale: ptBR })
 
   const displayName = profile?.nome?.split(' ')[0] || user?.email?.split('@')[0] || 'Usuário'
+
+  const [recentDocs, setRecentDocs] = useState<any[]>([])
+  const [currentMonthCount, setCurrentMonthCount] = useState<number | null>(null)
+  const [prevMonthCount, setPrevMonthCount] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (!user) return
+
+    const loadDashboardData = async () => {
+      // Recent docs
+      const { data: docs } = await supabase
+        .from('documentos')
+        .select('*')
+        .eq('usuario_id', user.id)
+        .order('data_criacao', { ascending: false })
+        .limit(5)
+
+      if (docs) setRecentDocs(docs)
+
+      const now = new Date()
+      const startOfCurrent = new Date(now.getFullYear(), now.getMonth(), 1)
+      const startOfPrev = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+
+      const { count: currentCount } = await supabase
+        .from('documentos')
+        .select('*', { count: 'exact', head: true })
+        .eq('usuario_id', user.id)
+        .gte('data_criacao', startOfCurrent.toISOString())
+
+      const { count: prevCount } = await supabase
+        .from('documentos')
+        .select('*', { count: 'exact', head: true })
+        .eq('usuario_id', user.id)
+        .gte('data_criacao', startOfPrev.toISOString())
+        .lt('data_criacao', startOfCurrent.toISOString())
+
+      setCurrentMonthCount(currentCount || 0)
+      setPrevMonthCount(prevCount || 0)
+    }
+
+    loadDashboardData()
+  }, [user])
 
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
@@ -59,10 +96,20 @@ export default function Index() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-bold text-foreground">24</div>
-            <p className="text-sm text-emerald-600 dark:text-emerald-500 mt-2 font-medium bg-emerald-50 dark:bg-emerald-500/10 w-fit px-2 py-0.5 rounded-md">
-              +4 em relação ao mês anterior
-            </p>
+            <div className="text-4xl font-bold text-foreground">{currentMonthCount ?? '-'}</div>
+            {prevMonthCount !== null && currentMonthCount !== null && (
+              <p
+                className={cn(
+                  'text-sm mt-2 font-medium w-fit px-2 py-0.5 rounded-md',
+                  currentMonthCount >= prevMonthCount
+                    ? 'text-emerald-600 dark:text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10'
+                    : 'text-rose-600 dark:text-rose-500 bg-rose-50 dark:bg-rose-500/10',
+                )}
+              >
+                {currentMonthCount >= prevMonthCount ? '+' : ''}
+                {currentMonthCount - prevMonthCount} em relação ao mês anterior
+              </p>
+            )}
           </CardContent>
         </Card>
 
@@ -101,11 +148,12 @@ export default function Index() {
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
-                <TableHead className="font-semibold text-muted-foreground">
-                  Nome do Documento
-                </TableHead>
-                <TableHead className="font-semibold text-muted-foreground w-[150px]">
+                <TableHead className="font-semibold text-muted-foreground">Cliente</TableHead>
+                <TableHead className="font-semibold text-muted-foreground w-[200px]">
                   Tipo
+                </TableHead>
+                <TableHead className="font-semibold text-muted-foreground w-[120px]">
+                  Status
                 </TableHead>
                 <TableHead className="font-semibold text-muted-foreground text-right w-[150px]">
                   Data de Criação
@@ -113,33 +161,48 @@ export default function Index() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {recentDocuments.map((doc) => (
-                <TableRow key={doc.id} className="hover:bg-muted/50 transition-colors">
-                  <TableCell className="font-medium text-foreground flex items-center gap-3">
-                    <div className="p-2 bg-muted rounded-md text-muted-foreground">
-                      <FileText className="h-4 w-4" />
-                    </div>
-                    {doc.name}
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      variant="secondary"
-                      className={
-                        doc.type === 'Proposta'
-                          ? 'bg-blue-100 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/30 border-transparent'
-                          : doc.type === 'Relatório'
-                            ? 'bg-purple-100 text-purple-700 hover:bg-purple-100 dark:bg-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/30 border-transparent'
-                            : 'bg-orange-100 text-orange-700 hover:bg-orange-100 dark:bg-orange-900/30 dark:text-orange-400 dark:hover:bg-orange-900/30 border-transparent'
-                      }
-                    >
-                      {doc.type}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right text-muted-foreground font-medium">
-                    {doc.date}
+              {recentDocs.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={4} className="text-center py-6 text-muted-foreground">
+                    Nenhum documento encontrado.
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                recentDocs.map((doc) => (
+                  <TableRow key={doc.id} className="hover:bg-muted/50 transition-colors">
+                    <TableCell className="font-medium text-foreground">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-muted rounded-md text-muted-foreground">
+                          <FileText className="h-4 w-4" />
+                        </div>
+                        {doc.nome_cliente}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="secondary" className="border-transparent bg-muted">
+                        {doc.tipo_documento}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className={
+                          doc.status === 'rascunho'
+                            ? 'text-orange-600 bg-orange-50 border-orange-200 dark:bg-orange-900/20 dark:border-orange-900/50'
+                            : 'text-green-600 bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-900/50'
+                        }
+                      >
+                        {doc.status === 'rascunho' ? 'Rascunho' : 'Finalizado'}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right text-muted-foreground font-medium">
+                      {doc.data_criacao
+                        ? format(new Date(doc.data_criacao), 'dd/MM/yyyy', { locale: ptBR })
+                        : '-'}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </CardContent>
