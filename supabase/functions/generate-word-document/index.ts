@@ -18,7 +18,7 @@ Deno.serve(async (req: Request) => {
 
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
     )
 
     const { data, error } = await supabase.storage.from('templates').download(path)
@@ -28,27 +28,27 @@ Deno.serve(async (req: Request) => {
 
     const arrayBuffer = await data.arrayBuffer()
     const zip = new PizZip(arrayBuffer)
-    
+
     const doc = new Docxtemplater(zip, {
-        paragraphLoop: true,
-        linebreaks: true,
+      paragraphLoop: true,
+      linebreaks: true,
     })
 
     doc.render(templateData)
 
     const generatedZip = doc.getZip().generate({
-        type: 'base64',
-        mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        compression: "DEFLATE",
+      type: 'base64',
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      compression: 'DEFLATE',
     })
 
     return new Response(JSON.stringify({ base64: generatedZip }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err.message }), { 
-      status: 400, 
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   }
 })

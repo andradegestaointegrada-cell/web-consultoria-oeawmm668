@@ -3,11 +3,14 @@
     "gerar_documento_com_ia": 6,
     "parse_docx": 3,
     "generate_docx": 2,
-    "functions": 3,
-    "parse-word-placeholders": 1,
+    "functions": 4,
+    "parse-word-placeholders": 2,
     "generate-word-document": 3,
-    "read-excel-rows": 1,
-    "send-email-document": 5,
-    "cleanup-bucket": 1
+    "read-excel-rows": 2,
+    "send-email-document": 8,
+    "cleanup-bucket": 1,
+    "process-scheduled-emails": 2,
+    "retry-failed-emails": 1,
+    "validate-excel-mapping": 1
   }
 }

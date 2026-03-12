@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Loader2, Database, FileText, Cpu, AlertCircle } from 'lucide-react'
+import { Loader2, Database, FileText, Cpu, Settings2 } from 'lucide-react'
 import { supabase } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -10,13 +10,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
 import { BatchGeneratorTable } from '@/components/gerar-documento/BatchGeneratorTable'
+import { ExcelMappingForm } from '@/components/gerar-documento/ExcelMappingForm'
 
 export default function GerarDocumento() {
   const { user } = useAuth()
   const [uploads, setUploads] = useState<any[]>([])
   const [allTemplates, setAllTemplates] = useState<any[]>([])
-  const [mappings, setMappings] = useState<any[]>([])
+  const [legacyMappings, setLegacyMappings] = useState<any[]>([])
+  const [excelMappings, setExcelMappings] = useState<any[]>([])
 
   const [selectedUploadId, setSelectedUploadId] = useState<string>('')
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>('')
@@ -24,19 +27,32 @@ export default function GerarDocumento() {
   const [rows, setRows] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isLoadingRows, setIsLoadingRows] = useState(false)
+  const [forceMapping, setForceMapping] = useState(false)
+
+  const fetchMappings = async () => {
+    if (!user) return
+    const [mRes, meRes] = await Promise.all([
+      supabase.from('mapeamento_placeholders').select('*').eq('usuario_id', user.id),
+      supabase
+        .from('mapeamento_excel' as any)
+        .select('*')
+        .eq('usuario_id', user.id),
+    ])
+    if (mRes.data) setLegacyMappings(mRes.data)
+    if (meRes.data) setExcelMappings(meRes.data)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       if (!user) return
       setIsLoading(true)
-      const [uRes, tRes, mRes] = await Promise.all([
+      const [uRes, tRes] = await Promise.all([
         supabase.from('uploads_excel').select('*').eq('usuario_id', user.id).order('nome'),
         supabase.from('templates').select('*').eq('usuario_id', user.id).order('nome'),
-        supabase.from('mapeamento_placeholders').select('*').eq('usuario_id', user.id),
       ])
       if (uRes.data) setUploads(uRes.data)
       if (tRes.data) setAllTemplates(tRes.data)
-      if (mRes.data) setMappings(mRes.data)
+      await fetchMappings()
       setIsLoading(false)
     }
     fetchData()
@@ -76,12 +92,30 @@ export default function GerarDocumento() {
     }
     fetchRows()
     setSelectedTemplateId('')
+    setForceMapping(false)
   }, [selectedUploadId, uploads])
 
-  const availableTemplates = allTemplates.filter((t) =>
-    mappings.some((m) => m.upload_excel_id === selectedUploadId && m.template_id === t.id),
-  )
   const columns = rows.length > 0 ? Object.keys(rows[0]).slice(0, 5) : []
+
+  const currentExcelMapping = excelMappings.find(
+    (m) => m.template_id === selectedTemplateId && m.upload_excel_id === selectedUploadId,
+  )
+  const legacyMappingExists = legacyMappings.some(
+    (m) => m.template_id === selectedTemplateId && m.upload_excel_id === selectedUploadId,
+  )
+
+  const hasAnyMapping = !!currentExcelMapping || legacyMappingExists
+  const needsMapping = selectedUploadId && selectedTemplateId && (!hasAnyMapping || forceMapping)
+
+  const activeMappings = currentExcelMapping
+    ? currentExcelMapping.mapeamento_json.map((m: any) => ({
+        placeholder_nome: m.placeholder,
+        coluna_excel_mapeada: m.column,
+        tipo_dado: m.type,
+      }))
+    : legacyMappings.filter(
+        (m) => m.template_id === selectedTemplateId && m.upload_excel_id === selectedUploadId,
+      )
 
   if (isLoading) {
     return (
@@ -139,67 +173,84 @@ export default function GerarDocumento() {
           <CardContent>
             <Select
               value={selectedTemplateId}
-              onValueChange={setSelectedTemplateId}
-              disabled={!selectedUploadId || availableTemplates.length === 0}
+              onValueChange={(v) => {
+                setSelectedTemplateId(v)
+                setForceMapping(false)
+              }}
+              disabled={!selectedUploadId || allTemplates.length === 0}
             >
               <SelectTrigger>
                 <SelectValue
                   placeholder={
-                    !selectedUploadId
-                      ? 'Selecione a base primeiro'
-                      : 'Escolha o template compatível...'
+                    !selectedUploadId ? 'Selecione a base primeiro' : 'Escolha um template...'
                   }
                 />
               </SelectTrigger>
               <SelectContent>
-                {availableTemplates.map((t) => (
+                {allTemplates.map((t) => (
                   <SelectItem key={t.id} value={t.id}>
                     {t.nome}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            {selectedUploadId && availableTemplates.length === 0 && (
-              <p className="text-xs text-amber-600 mt-2 flex items-center gap-1">
-                <AlertCircle className="h-3 w-3" /> Nenhum template mapeado para esta base.
-              </p>
-            )}
           </CardContent>
         </Card>
       </div>
 
-      {selectedUploadId && (
-        <Card className="shadow-sm border-border animate-slide-up">
-          <CardHeader>
-            <CardTitle>Registros da Planilha</CardTitle>
-            <CardDescription>
-              Selecione registros para gerar documentos em lote ou individualmente.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-0 sm:p-6 sm:pt-0">
-            {isLoadingRows ? (
-              <div className="py-12 flex justify-center">
-                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      {needsMapping ? (
+        <ExcelMappingForm
+          template={allTemplates.find((t) => t.id === selectedTemplateId)}
+          uploadId={selectedUploadId}
+          columns={columns}
+          onSaved={async () => {
+            await fetchMappings()
+            setForceMapping(false)
+          }}
+          onCancel={() => setForceMapping(false)}
+        />
+      ) : (
+        selectedUploadId &&
+        selectedTemplateId && (
+          <Card className="shadow-sm border-border animate-slide-up">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <div className="space-y-1">
+                <CardTitle>Registros da Planilha</CardTitle>
+                <CardDescription>
+                  Mapeamento ativo detectado. Selecione registros para gerar.
+                </CardDescription>
               </div>
-            ) : rows.length === 0 ? (
-              <div className="py-12 text-center text-muted-foreground">
-                Nenhum dado encontrado nesta planilha.
-              </div>
-            ) : (
-              <BatchGeneratorTable
-                rows={rows}
-                columns={columns}
-                template={allTemplates.find((t) => t.id === selectedTemplateId)}
-                mappings={mappings.filter(
-                  (m) =>
-                    m.template_id === selectedTemplateId && m.upload_excel_id === selectedUploadId,
-                )}
-                uploadId={selectedUploadId}
-                userId={user?.id || ''}
-              />
-            )}
-          </CardContent>
-        </Card>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setForceMapping(true)}
+                className="shrink-0 gap-2"
+              >
+                <Settings2 className="h-4 w-4" /> Configurar Variáveis
+              </Button>
+            </CardHeader>
+            <CardContent className="p-0 sm:p-6 sm:pt-0">
+              {isLoadingRows ? (
+                <div className="py-12 flex justify-center">
+                  <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                </div>
+              ) : rows.length === 0 ? (
+                <div className="py-12 text-center text-muted-foreground">
+                  Nenhum dado encontrado nesta planilha.
+                </div>
+              ) : (
+                <BatchGeneratorTable
+                  rows={rows}
+                  columns={columns}
+                  template={allTemplates.find((t) => t.id === selectedTemplateId)}
+                  mappings={activeMappings}
+                  uploadId={selectedUploadId}
+                  userId={user?.id || ''}
+                />
+              )}
+            </CardContent>
+          </Card>
+        )
       )}
     </div>
   )
