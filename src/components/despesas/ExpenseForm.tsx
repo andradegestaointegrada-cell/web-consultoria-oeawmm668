@@ -1,0 +1,163 @@
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Calendar } from '@/components/ui/calendar'
+import { CalendarIcon, Loader2 } from 'lucide-react'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { cn } from '@/lib/utils'
+import { supabase } from '@/lib/supabase/client'
+import { useAuth } from '@/contexts/AuthContext'
+import { toast } from 'sonner'
+
+export function ExpenseForm({
+  onSuccess,
+  clients,
+  onCancel,
+}: {
+  onSuccess: () => void
+  clients: string[]
+  onCancel: () => void
+}) {
+  const { user } = useAuth()
+  const [data, setData] = useState<Date>()
+  const [categoria, setCategoria] = useState('')
+  const [valor, setValor] = useState('')
+  const [descricao, setDescricao] = useState('')
+  const [cliente, setCliente] = useState('none')
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!data || !categoria || !valor || !descricao) {
+      toast.error('Preencha os campos obrigatórios')
+      return
+    }
+    if (!user) return
+    setLoading(true)
+
+    const { error } = await supabase.from('despesas' as any).insert({
+      usuario_id: user.id,
+      data: format(data, 'yyyy-MM-dd'),
+      categoria,
+      valor: parseFloat(valor.replace(',', '.')),
+      descricao,
+      cliente_id: cliente !== 'none' ? cliente : null,
+    })
+
+    setLoading(false)
+    if (error) {
+      toast.error('Erro ao salvar despesa', { description: error.message })
+    } else {
+      toast.success('Despesa registrada com sucesso!')
+      onSuccess()
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 pt-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2 flex flex-col">
+          <Label>Data *</Label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  'w-full justify-start text-left font-normal',
+                  !data && 'text-muted-foreground',
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {data ? format(data, 'dd/MM/yyyy') : 'Selecione a data'}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={data}
+                onSelect={setData}
+                initialFocus
+                locale={ptBR}
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+        <div className="space-y-2">
+          <Label>Categoria *</Label>
+          <Select value={categoria} onValueChange={setCategoria}>
+            <SelectTrigger>
+              <SelectValue placeholder="Selecione..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="transporte">Transporte</SelectItem>
+              <SelectItem value="hospedagem">Hospedagem</SelectItem>
+              <SelectItem value="alimentação">Alimentação</SelectItem>
+              <SelectItem value="material">Material</SelectItem>
+              <SelectItem value="outros">Outros</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label>Valor (R$) *</Label>
+          <Input
+            type="number"
+            step="0.01"
+            min="0"
+            placeholder="0.00"
+            value={valor}
+            onChange={(e) => setValor(e.target.value)}
+          />
+        </div>
+        <div className="space-y-2">
+          <Label>Cliente Associado</Label>
+          <Select value={cliente} onValueChange={setCliente}>
+            <SelectTrigger>
+              <SelectValue placeholder="Opcional" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">Nenhum</SelectItem>
+              {clients.map((c) => (
+                <SelectItem key={c} value={c}>
+                  {c}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label>Descrição *</Label>
+        <Textarea
+          placeholder="Detalhes da despesa..."
+          value={descricao}
+          onChange={(e) => setDescricao(e.target.value)}
+        />
+      </div>
+
+      <div className="flex justify-end gap-2 pt-4">
+        <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
+          Cancelar
+        </Button>
+        <Button type="submit" disabled={loading}>
+          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          Salvar
+        </Button>
+      </div>
+    </form>
+  )
+}

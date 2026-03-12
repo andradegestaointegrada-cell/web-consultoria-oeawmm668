@@ -14,6 +14,7 @@ import {
   BarChart3,
   Trash2,
   Activity,
+  Receipt,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import {
@@ -34,6 +35,7 @@ const navItems = [
   { title: 'Dashboard', url: '/dashboard', icon: LayoutDashboard },
   { title: 'Analytics', url: '/analytics', icon: BarChart3 },
   { title: 'Status Report', url: '/status-report', icon: Activity },
+  { title: 'Relatório de Despesas', url: '/relatorio-despesas', icon: Receipt },
   { title: 'Fábrica de Documentos', url: '/documentos', icon: FileText },
   { title: 'Gerenciar Dados', url: '/gerenciar-dados', icon: Database },
   { title: 'Conectar Dados', url: '/mapeamento-placeholders', icon: Link2 },
