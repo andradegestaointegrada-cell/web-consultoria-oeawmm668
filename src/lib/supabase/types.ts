@@ -295,8 +295,15 @@ export const Constants = {
 //     USING: (auth.uid() = usuario_id)
 //     WITH CHECK: (auth.uid() = usuario_id)
 // Table: templates
-//   Policy "Authenticated users can view templates" (SELECT, PERMISSIVE) roles={authenticated}
+//   Policy "templates_delete_policy" (DELETE, PERMISSIVE) roles={authenticated}
 //     USING: true
+//   Policy "templates_insert_policy" (INSERT, PERMISSIVE) roles={authenticated}
+//     WITH CHECK: true
+//   Policy "templates_select_policy" (SELECT, PERMISSIVE) roles={authenticated}
+//     USING: true
+//   Policy "templates_update_policy" (UPDATE, PERMISSIVE) roles={authenticated}
+//     USING: true
+//     WITH CHECK: true
 // Table: usuarios
 //   Policy "Users can update their own profile" (UPDATE, PERMISSIVE) roles={authenticated}
 //     USING: (auth.uid() = id)
