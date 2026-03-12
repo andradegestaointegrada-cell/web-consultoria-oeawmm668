@@ -11,9 +11,10 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Progress } from '@/components/ui/progress'
-import { Loader2, FileDown, Layers } from 'lucide-react'
+import { Loader2, FileDown, Layers, Mail, CheckCircle2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { processBatchGeneration, processSingleDocument } from '@/lib/generate-docs'
+import { EmailDispatchDialog } from './EmailDispatchDialog'
 
 interface BatchTableProps {
   rows: any[]
@@ -36,6 +37,10 @@ export function BatchGeneratorTable({
   const [generatingRowId, setGeneratingRowId] = useState<number | null>(null)
   const [isBatching, setIsBatching] = useState(false)
   const [batchProgress, setBatchProgress] = useState({ current: 0, total: 0 })
+
+  // States for Email Dispatch feature
+  const [lastGeneratedIds, setLastGeneratedIds] = useState<string[]>([])
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -60,8 +65,13 @@ export function BatchGeneratorTable({
   const handleSingleGenerate = async (row: any, idx: number) => {
     if (!template) return
     setGeneratingRowId(idx)
+    setLastGeneratedIds([]) // Clear previous runs
+
     try {
-      await processSingleDocument(row, idx, template, mappings, uploadId, userId)
+      const result = await processSingleDocument(row, idx, template, mappings, uploadId, userId)
+      if (result?.documentId) {
+        setLastGeneratedIds([result.documentId])
+      }
       toast.success('Documento gerado com sucesso!')
     } catch (error: any) {
       toast.error('Erro na geração', { description: error.message })
@@ -73,10 +83,11 @@ export function BatchGeneratorTable({
   const handleBatchGenerate = async () => {
     if (!template || selectedRows.length === 0) return
     setIsBatching(true)
+    setLastGeneratedIds([]) // Clear previous runs
     setBatchProgress({ current: 0, total: selectedRows.length })
 
     try {
-      const { successCount, errorCount } = await processBatchGeneration({
+      const { successCount, errorCount, documentIds } = await processBatchGeneration({
         rows,
         selectedRows,
         template,
@@ -91,6 +102,9 @@ export function BatchGeneratorTable({
           description: `${successCount} documentos gerados. ${errorCount > 0 ? `${errorCount} falhas.` : ''}`,
         })
         setSelectedRows([])
+        if (documentIds?.length > 0) {
+          setLastGeneratedIds(documentIds)
+        }
       } else {
         toast.error('Nenhum documento gerado no lote.')
       }
@@ -104,6 +118,23 @@ export function BatchGeneratorTable({
 
   return (
     <div className="space-y-4">
+      {lastGeneratedIds.length > 0 && !isBatching && generatingRowId === null && (
+        <div className="bg-primary/10 border border-primary/20 p-4 rounded-md flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 animate-in fade-in slide-in-from-top-2">
+          <div className="flex items-center gap-3">
+            <CheckCircle2 className="h-8 w-8 text-primary shrink-0" />
+            <div>
+              <h4 className="font-semibold text-primary">Ação Concluída!</h4>
+              <p className="text-sm text-primary/80">
+                {lastGeneratedIds.length} documento(s) pronto(s). Deseja automatizar a entrega?
+              </p>
+            </div>
+          </div>
+          <Button onClick={() => setIsEmailModalOpen(true)} className="gap-2 shrink-0">
+            <Mail className="h-4 w-4" /> Enviar por E-mail
+          </Button>
+        </div>
+      )}
+
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-muted/30 p-3 rounded-md gap-4">
         <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
           <Layers className="h-4 w-4" /> {selectedRows.length} registro(s) selecionado(s)
@@ -206,6 +237,13 @@ export function BatchGeneratorTable({
         </Table>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
+
+      <EmailDispatchDialog
+        isOpen={isEmailModalOpen}
+        onOpenChange={setIsEmailModalOpen}
+        documentIds={lastGeneratedIds}
+        onSuccess={() => setLastGeneratedIds([])}
+      />
     </div>
   )
 }

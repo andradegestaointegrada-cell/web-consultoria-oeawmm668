@@ -6,6 +6,7 @@
     "functions": 3,
     "parse-word-placeholders": 1,
     "generate-word-document": 3,
-    "read-excel-rows": 1
+    "read-excel-rows": 1,
+    "send-email-document": 1
   }
 }
