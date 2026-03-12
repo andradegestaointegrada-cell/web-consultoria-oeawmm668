@@ -11,11 +11,12 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Progress } from '@/components/ui/progress'
-import { Loader2, FileDown, Layers, Mail, CheckCircle2 } from 'lucide-react'
+import { Loader2, FileDown, Layers, Mail, CheckCircle2, CalendarClock } from 'lucide-react'
 import { toast } from 'sonner'
 import { processBatchGeneration, processSingleDocument } from '@/lib/generate-docs'
 import { EmailDispatchDialog } from './EmailDispatchDialog'
 import { BatchEmailDispatchDialog } from './BatchEmailDispatchDialog'
+import { ScheduleEmailDialog } from './ScheduleEmailDialog'
 
 interface BatchTableProps {
   rows: any[]
@@ -42,6 +43,7 @@ export function BatchGeneratorTable({
   const [lastGeneratedItems, setLastGeneratedItems] = useState<{ id: string; row: any }[]>([])
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
   const [isBatchEmailModalOpen, setIsBatchEmailModalOpen] = useState(false)
+  const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false)
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -130,16 +132,28 @@ export function BatchGeneratorTable({
               </p>
             </div>
           </div>
-          <Button
-            onClick={() => {
-              if (lastGeneratedItems.length === 1) setIsEmailModalOpen(true)
-              else setIsBatchEmailModalOpen(true)
-            }}
-            className="gap-2 shrink-0"
-          >
-            <Mail className="h-4 w-4" />
-            {lastGeneratedItems.length === 1 ? 'Enviar por E-mail' : 'Enviar E-mails em Lote'}
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center gap-2 shrink-0">
+            {lastGeneratedItems.length === 1 && (
+              <Button
+                variant="outline"
+                onClick={() => setIsScheduleModalOpen(true)}
+                className="gap-2 w-full sm:w-auto bg-background"
+              >
+                <CalendarClock className="h-4 w-4" />
+                Agendar Envio
+              </Button>
+            )}
+            <Button
+              onClick={() => {
+                if (lastGeneratedItems.length === 1) setIsEmailModalOpen(true)
+                else setIsBatchEmailModalOpen(true)
+              }}
+              className="gap-2 w-full sm:w-auto"
+            >
+              <Mail className="h-4 w-4" />
+              {lastGeneratedItems.length === 1 ? 'Enviar Agora' : 'Enviar em Lote'}
+            </Button>
+          </div>
         </div>
       )}
 
@@ -258,6 +272,14 @@ export function BatchGeneratorTable({
         isOpen={isBatchEmailModalOpen}
         onOpenChange={setIsBatchEmailModalOpen}
         batchItems={lastGeneratedItems}
+        onSuccess={() => setLastGeneratedItems([])}
+      />
+
+      <ScheduleEmailDialog
+        isOpen={isScheduleModalOpen}
+        onOpenChange={setIsScheduleModalOpen}
+        documentId={lastGeneratedItems.length === 1 ? lastGeneratedItems[0].id : ''}
+        rowData={lastGeneratedItems[0]?.row}
         onSuccess={() => setLastGeneratedItems([])}
       />
     </div>
