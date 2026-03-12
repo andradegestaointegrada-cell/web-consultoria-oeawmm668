@@ -53,29 +53,99 @@ export type Database = {
       templates: {
         Row: {
           arquivo_docx_url: string | null
+          categoria: string | null
           criado_em: string
+          data_atualizacao: string | null
+          data_criacao: string | null
+          descricao: string | null
           id: string
           nome: string
           placeholders: Json | null
           tipo: string
+          usuario_id: string
+          versao: number | null
         }
         Insert: {
           arquivo_docx_url?: string | null
+          categoria?: string | null
           criado_em?: string
+          data_atualizacao?: string | null
+          data_criacao?: string | null
+          descricao?: string | null
           id?: string
           nome: string
           placeholders?: Json | null
           tipo: string
+          usuario_id: string
+          versao?: number | null
         }
         Update: {
           arquivo_docx_url?: string | null
+          categoria?: string | null
           criado_em?: string
+          data_atualizacao?: string | null
+          data_criacao?: string | null
+          descricao?: string | null
           id?: string
           nome?: string
           placeholders?: Json | null
           tipo?: string
+          usuario_id?: string
+          versao?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'templates_usuario_id_fkey'
+            columns: ['usuario_id']
+            isOneToOne: false
+            referencedRelation: 'usuarios'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      uploads_excel: {
+        Row: {
+          arquivo_url: string | null
+          colunas: Json | null
+          data_atualizacao: string | null
+          data_upload: string | null
+          descricao: string | null
+          id: string
+          nome: string
+          tipo_dados: string | null
+          usuario_id: string
+        }
+        Insert: {
+          arquivo_url?: string | null
+          colunas?: Json | null
+          data_atualizacao?: string | null
+          data_upload?: string | null
+          descricao?: string | null
+          id?: string
+          nome: string
+          tipo_dados?: string | null
+          usuario_id: string
+        }
+        Update: {
+          arquivo_url?: string | null
+          colunas?: Json | null
+          data_atualizacao?: string | null
+          data_upload?: string | null
+          descricao?: string | null
+          id?: string
+          nome?: string
+          tipo_dados?: string | null
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'uploads_excel_usuario_id_fkey'
+            columns: ['usuario_id']
+            isOneToOne: false
+            referencedRelation: 'usuarios'
+            referencedColumns: ['id']
+          },
+        ]
       }
       usuarios: {
         Row: {
@@ -264,6 +334,22 @@ export const Constants = {
 //   arquivo_docx_url: text (nullable)
 //   criado_em: timestamp with time zone (not null, default: now())
 //   placeholders: jsonb (nullable, default: '[]'::jsonb)
+//   usuario_id: uuid (not null)
+//   categoria: text (nullable)
+//   descricao: text (nullable)
+//   versao: numeric (nullable)
+//   data_criacao: timestamp with time zone (nullable, default: now())
+//   data_atualizacao: timestamp with time zone (nullable, default: now())
+// Table: uploads_excel
+//   id: uuid (not null, default: gen_random_uuid())
+//   usuario_id: uuid (not null)
+//   nome: text (not null)
+//   descricao: text (nullable)
+//   tipo_dados: text (nullable)
+//   data_upload: timestamp with time zone (nullable, default: now())
+//   data_atualizacao: timestamp with time zone (nullable, default: now())
+//   arquivo_url: text (nullable)
+//   colunas: jsonb (nullable, default: '[]'::jsonb)
 // Table: usuarios
 //   id: uuid (not null)
 //   email: text (not null)
@@ -278,6 +364,10 @@ export const Constants = {
 //   FOREIGN KEY documentos_usuario_id_fkey: FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 // Table: templates
 //   PRIMARY KEY templates_pkey: PRIMARY KEY (id)
+//   FOREIGN KEY templates_usuario_id_fkey: FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+// Table: uploads_excel
+//   PRIMARY KEY uploads_excel_pkey: PRIMARY KEY (id)
+//   FOREIGN KEY uploads_excel_usuario_id_fkey: FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 // Table: usuarios
 //   FOREIGN KEY usuarios_id_fkey: FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE
 //   PRIMARY KEY usuarios_pkey: PRIMARY KEY (id)
@@ -295,15 +385,25 @@ export const Constants = {
 //     USING: (auth.uid() = usuario_id)
 //     WITH CHECK: (auth.uid() = usuario_id)
 // Table: templates
-//   Policy "templates_delete_policy" (DELETE, PERMISSIVE) roles={authenticated}
-//     USING: true
-//   Policy "templates_insert_policy" (INSERT, PERMISSIVE) roles={authenticated}
-//     WITH CHECK: true
-//   Policy "templates_select_policy" (SELECT, PERMISSIVE) roles={authenticated}
-//     USING: true
-//   Policy "templates_update_policy" (UPDATE, PERMISSIVE) roles={authenticated}
-//     USING: true
-//     WITH CHECK: true
+//   Policy "templates_delete" (DELETE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//   Policy "templates_insert" (INSERT, PERMISSIVE) roles={authenticated}
+//     WITH CHECK: (auth.uid() = usuario_id)
+//   Policy "templates_select" (SELECT, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//   Policy "templates_update" (UPDATE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//     WITH CHECK: (auth.uid() = usuario_id)
+// Table: uploads_excel
+//   Policy "uploads_excel_delete" (DELETE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//   Policy "uploads_excel_insert" (INSERT, PERMISSIVE) roles={authenticated}
+//     WITH CHECK: (auth.uid() = usuario_id)
+//   Policy "uploads_excel_select" (SELECT, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//   Policy "uploads_excel_update" (UPDATE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//     WITH CHECK: (auth.uid() = usuario_id)
 // Table: usuarios
 //   Policy "Users can update their own profile" (UPDATE, PERMISSIVE) roles={authenticated}
 //     USING: (auth.uid() = id)

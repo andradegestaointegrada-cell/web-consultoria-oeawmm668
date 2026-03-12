@@ -24,10 +24,12 @@ export default function Templates() {
   const [loading, setLoading] = useState(true)
 
   const fetchTemplates = async () => {
+    if (!user) return
     setLoading(true)
     const { data, error } = await supabase
       .from('templates')
       .select('*')
+      .eq('usuario_id', user.id)
       .order('criado_em', { ascending: false })
 
     if (error) toast.error('Erro ao buscar templates')
@@ -37,7 +39,8 @@ export default function Templates() {
 
   useEffect(() => {
     fetchTemplates()
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
 
   const handleDelete = async (template: any) => {
     if (!confirm(`Deseja realmente excluir o template "${template.nome}"?`)) return
@@ -65,7 +68,7 @@ export default function Templates() {
             Gerenciamento de Templates
           </h1>
           <p className="text-muted-foreground mt-1">
-            Faça upload de arquivos Word para gerar documentos dinamicamente.
+            Mantenha seus arquivos Word catalogados para geração rápida de documentos.
           </p>
         </div>
         <TemplateUploadDialog onSuccess={fetchTemplates} />
@@ -73,16 +76,16 @@ export default function Templates() {
 
       <Card className="shadow-sm border-border">
         <CardHeader>
-          <CardTitle className="text-lg">Templates Disponíveis</CardTitle>
-          <CardDescription>
-            Arquivos base que podem ser utilizados na fábrica de documentos.
-          </CardDescription>
+          <CardTitle className="text-lg">Modelos Cadastrados</CardTitle>
+          <CardDescription>Lista completa de arquivos disponíveis no sistema.</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[400px]">Nome do Template</TableHead>
+                <TableHead className="w-[300px]">Nome do Template</TableHead>
+                <TableHead>Categoria</TableHead>
+                <TableHead>Versão</TableHead>
                 <TableHead>Variáveis Detectadas</TableHead>
                 <TableHead>Data de Criação</TableHead>
                 <TableHead className="text-right">Ações</TableHead>
@@ -91,19 +94,17 @@ export default function Templates() {
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                     Carregando templates...
                   </TableCell>
                 </TableRow>
               ) : templates.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={4} className="text-center py-12 text-muted-foreground">
+                  <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
                     <div className="flex flex-col items-center justify-center">
                       <FileText className="h-10 w-10 mb-3 opacity-20" />
                       <p>Nenhum template cadastrado.</p>
-                      <p className="text-sm mt-1">
-                        Faça o upload de um arquivo .docx para começar.
-                      </p>
+                      <p className="text-sm mt-1">Faça o upload de um modelo para começar.</p>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -115,20 +116,44 @@ export default function Templates() {
                         <div className="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-md">
                           <FileText className="h-4 w-4" />
                         </div>
-                        {template.nome}
+                        <div className="flex flex-col overflow-hidden">
+                          <span className="truncate max-w-[200px]">{template.nome}</span>
+                          {template.descricao && (
+                            <span
+                              className="text-xs text-muted-foreground font-normal truncate max-w-[200px] mt-0.5"
+                              title={template.descricao}
+                            >
+                              {template.descricao}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </TableCell>
                     <TableCell>
-                      {template.placeholders && template.placeholders.length > 0 ? (
-                        <Badge variant="secondary" className="font-normal bg-muted">
-                          {template.placeholders.length} variáveis
+                      {template.categoria ? (
+                        <Badge variant="outline" className="font-normal bg-background">
+                          {template.categoria}
                         </Badge>
                       ) : (
-                        <span className="text-sm text-muted-foreground">Nenhuma</span>
+                        <span className="text-muted-foreground text-sm">-</span>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm font-medium">
+                        {template.versao ? `v${template.versao}` : 'v1.0'}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      {template.placeholders && template.placeholders.length > 0 ? (
+                        <span className="text-sm font-medium">
+                          {template.placeholders.length} campos
+                        </span>
+                      ) : (
+                        <span className="text-sm text-muted-foreground">Nenhum</span>
                       )}
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">
-                      {format(new Date(template.criado_em), 'dd/MM/yyyy HH:mm', { locale: ptBR })}
+                      {format(new Date(template.criado_em), 'dd/MM/yyyy', { locale: ptBR })}
                     </TableCell>
                     <TableCell className="text-right">
                       <Button

@@ -6,6 +6,7 @@ import {
   Settings,
   Briefcase,
   LogOut,
+  Database,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import {
@@ -25,6 +26,7 @@ import { toast } from 'sonner'
 const navItems = [
   { title: 'Dashboard', url: '/dashboard', icon: LayoutDashboard },
   { title: 'Fábrica de Documentos', url: '/documentos', icon: FileText },
+  { title: 'Gerenciar Dados', url: '/gerenciar-dados', icon: Database },
   { title: 'Auditorias', url: '/auditorias', icon: ClipboardCheck },
   { title: 'Configurações', url: '/configuracoes', icon: Settings },
 ]
