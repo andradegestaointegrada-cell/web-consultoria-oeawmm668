@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { CalendarIcon, FileText, Loader2, FileDown, Edit } from 'lucide-react'
@@ -263,8 +264,11 @@ export default function Documentos() {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                            asChild
                           >
-                            <Edit className="h-4 w-4" />
+                            <Link to={`/documentos/${doc.id}/editor`}>
+                              <Edit className="h-4 w-4" />
+                            </Link>
                           </Button>
                           <Button
                             variant="ghost"

@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound'
 import Login from './pages/Login'
 import Index from './pages/Index'
 import Documentos from './pages/Documentos'
+import DocumentEditor from './pages/DocumentEditor'
 import Auditorias from './pages/Auditorias'
 import Configuracoes from './pages/Configuracoes'
 
@@ -30,6 +31,7 @@ const App = () => (
                 <Route path="/" element={<Navigate to="/dashboard" replace />} />
                 <Route path="/dashboard" element={<Index />} />
                 <Route path="/documentos" element={<Documentos />} />
+                <Route path="/documentos/:id/editor" element={<DocumentEditor />} />
                 <Route path="/auditorias" element={<Auditorias />} />
                 <Route path="/configuracoes" element={<Configuracoes />} />
               </Route>
