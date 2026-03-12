@@ -3,6 +3,7 @@ import { Toaster } from '@/components/ui/toaster'
 import { Toaster as Sonner } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { AuthProvider } from './contexts/AuthContext'
+import { ThemeProvider } from '@/components/theme-provider'
 import ProtectedRoute from './components/ProtectedRoute'
 import Layout from './components/Layout'
 import NotFound from './pages/NotFound'
@@ -13,30 +14,32 @@ import Auditorias from './pages/Auditorias'
 import Configuracoes from './pages/Configuracoes'
 
 const App = () => (
-  <AuthProvider>
-    <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/login" element={<Login />} />
+  <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme" attribute="class">
+    <AuthProvider>
+      <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/login" element={<Login />} />
 
-          {/* Protected Routes */}
-          <Route element={<ProtectedRoute />}>
-            <Route element={<Layout />}>
-              <Route path="/" element={<Index />} />
-              <Route path="/documentos" element={<Documentos />} />
-              <Route path="/auditorias" element={<Auditorias />} />
-              <Route path="/configuracoes" element={<Configuracoes />} />
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route element={<Layout />}>
+                <Route path="/" element={<Index />} />
+                <Route path="/documentos" element={<Documentos />} />
+                <Route path="/auditorias" element={<Auditorias />} />
+                <Route path="/configuracoes" element={<Configuracoes />} />
+              </Route>
             </Route>
-          </Route>
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </TooltipProvider>
-    </BrowserRouter>
-  </AuthProvider>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </TooltipProvider>
+      </BrowserRouter>
+    </AuthProvider>
+  </ThemeProvider>
 )
 
 export default App

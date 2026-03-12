@@ -66,12 +66,12 @@ export default function Documentos() {
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Fábrica de Documentos</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">Fábrica de Documentos</h1>
         <p className="text-muted-foreground">Preencha o formulário para gerar um novo documento.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2 shadow-sm border-slate-200">
+        <Card className="lg:col-span-2 shadow-sm">
           <CardHeader>
             <CardTitle>Novo Documento</CardTitle>
             <CardDescription>Insira os dados do cliente e detalhes do projeto.</CardDescription>
@@ -164,7 +164,7 @@ export default function Documentos() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-sm border-slate-200 h-fit">
+        <Card className="shadow-sm h-fit">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg">Gerados Recentemente</CardTitle>
             <CardDescription>Seus últimos documentos criados</CardDescription>
@@ -172,33 +172,43 @@ export default function Documentos() {
           <CardContent className="px-0">
             <Table>
               <TableHeader>
-                <TableRow className="hover:bg-transparent border-slate-100">
-                  <TableHead className="font-semibold text-slate-600">Arquivo</TableHead>
-                  <TableHead className="font-semibold text-slate-600 text-right">Ações</TableHead>
+                <TableRow className="hover:bg-transparent">
+                  <TableHead className="font-semibold text-muted-foreground">Arquivo</TableHead>
+                  <TableHead className="font-semibold text-muted-foreground text-right">
+                    Ações
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {recentDocs.map((doc) => (
-                  <TableRow key={doc.id} className="border-slate-100">
+                  <TableRow key={doc.id}>
                     <TableCell className="font-medium">
                       <div className="flex items-center gap-2">
-                        <div className="p-2 bg-slate-100 rounded-md text-slate-500">
+                        <div className="p-2 bg-muted rounded-md text-muted-foreground">
                           <FileText className="h-4 w-4" />
                         </div>
                         <div className="flex flex-col">
-                          <span className="text-sm truncate w-[140px] text-slate-900">
+                          <span className="text-sm truncate w-[140px] text-foreground">
                             {doc.name}
                           </span>
-                          <span className="text-xs text-slate-500">{doc.date}</span>
+                          <span className="text-xs text-muted-foreground">{doc.date}</span>
                         </div>
                       </div>
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                        >
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                        >
                           <FileDown className="h-4 w-4" />
                         </Button>
                       </div>

@@ -13,6 +13,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useAuth } from '@/contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import { ModeToggle } from './ModeToggle'
 
 export function AppHeader() {
   const { user, logout } = useAuth()
@@ -24,7 +25,7 @@ export function AppHeader() {
   }
 
   return (
-    <header className="flex h-16 shrink-0 items-center justify-between border-b bg-white px-4 shadow-sm transition-all animate-fade-in-down">
+    <header className="flex h-16 shrink-0 items-center justify-between border-b bg-background px-4 shadow-sm transition-all animate-fade-in-down">
       <div className="flex items-center gap-4">
         <SidebarTrigger className="-ml-1" />
         <div className="hidden md:block relative w-64">
@@ -32,18 +33,23 @@ export function AppHeader() {
           <Input
             type="search"
             placeholder="Buscar..."
-            className="w-full bg-slate-50 pl-9 rounded-full border-none focus-visible:ring-1 focus-visible:ring-primary/50"
+            className="w-full bg-muted pl-9 rounded-full border-none focus-visible:ring-1 focus-visible:ring-primary/50"
           />
         </div>
       </div>
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="relative text-muted-foreground">
+      <div className="flex items-center gap-2 md:gap-4">
+        <ModeToggle />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="relative text-muted-foreground hover:text-foreground"
+        >
           <Bell className="h-5 w-5" />
           <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-destructive" />
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+            <Button variant="ghost" className="relative h-8 w-8 rounded-full ml-1">
               <Avatar className="h-9 w-9 border border-border">
                 <AvatarImage src={user?.avatar} alt={user?.name} />
                 <AvatarFallback>{user?.name?.charAt(0) || 'U'}</AvatarFallback>
@@ -58,11 +64,11 @@ export function AppHeader() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate('/configuracoes')}>
+            <DropdownMenuItem onClick={() => navigate('/configuracoes')} className="cursor-pointer">
               <User className="mr-2 h-4 w-4" />
               <span>Meu Perfil</span>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleLogout} className="text-destructive">
+            <DropdownMenuItem onClick={handleLogout} className="text-destructive cursor-pointer">
               <LogOut className="mr-2 h-4 w-4" />
               <span>Sair</span>
             </DropdownMenuItem>

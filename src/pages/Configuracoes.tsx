@@ -1,4 +1,5 @@
 import { useAuth } from '@/contexts/AuthContext'
+import { useTheme } from 'next-themes'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Input } from '@/components/ui/input'
@@ -18,6 +19,7 @@ import { toast } from 'sonner'
 
 export default function Configuracoes() {
   const { user } = useAuth()
+  const { theme, setTheme } = useTheme()
 
   const handleSave = () => {
     toast.success('Configurações salvas com sucesso!')
@@ -106,11 +108,12 @@ export default function Configuracoes() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label className="text-base">Modo Escuro</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Alternar tema visual (Demonstração)
-                  </p>
+                  <p className="text-sm text-muted-foreground">Alternar tema visual</p>
                 </div>
-                <Switch />
+                <Switch
+                  checked={theme === 'dark'}
+                  onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+                />
               </div>
 
               <div className="flex items-center justify-between">

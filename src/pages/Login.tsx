@@ -27,20 +27,18 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
-      <div className="absolute inset-0 bg-[url('https://img.usecurling.com/p/1920/1080?q=modern%20office&color=blue&dpr=1')] bg-cover bg-center opacity-5" />
-      <Card className="w-full max-w-md relative z-10 animate-slide-up shadow-xl border-0">
+    <div className="min-h-screen flex items-center justify-center bg-background p-4 relative">
+      <div className="absolute inset-0 bg-[url('https://img.usecurling.com/p/1920/1080?q=modern%20office&color=blue&dpr=1')] bg-cover bg-center opacity-5 dark:opacity-10" />
+      <Card className="w-full max-w-md relative z-10 animate-slide-up shadow-xl border border-border">
         <CardHeader className="space-y-3 text-center pb-8">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg">
             <Briefcase className="h-7 w-7" />
           </div>
           <div className="space-y-1">
-            <CardTitle className="text-2xl font-bold tracking-tight text-slate-900">
+            <CardTitle className="text-2xl font-bold tracking-tight text-foreground">
               Bem-vindo de volta
             </CardTitle>
-            <CardDescription className="text-slate-500">
-              Entre com suas credenciais para acessar o sistema
-            </CardDescription>
+            <CardDescription>Entre com suas credenciais para acessar o sistema</CardDescription>
           </div>
         </CardHeader>
         <CardContent>
