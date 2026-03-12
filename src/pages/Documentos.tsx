@@ -88,9 +88,8 @@ export default function Documentos() {
                     <SelectContent>
                       <SelectItem value="Proposta Comercial">Proposta Comercial</SelectItem>
                       <SelectItem value="Relatório de Auditoria">Relatório de Auditoria</SelectItem>
-                      <SelectItem value="Manual de Procedimentos">
-                        Manual de Procedimentos
-                      </SelectItem>
+                      <SelectItem value="Manual">Manual</SelectItem>
+                      <SelectItem value="Procedimentos">Procedimentos</SelectItem>
                       <SelectItem value="Instrução de Trabalho">Instrução de Trabalho</SelectItem>
                     </SelectContent>
                   </Select>
