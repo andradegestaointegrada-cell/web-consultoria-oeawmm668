@@ -56,6 +56,7 @@ export type Database = {
           criado_em: string
           id: string
           nome: string
+          placeholders: Json | null
           tipo: string
         }
         Insert: {
@@ -63,6 +64,7 @@ export type Database = {
           criado_em?: string
           id?: string
           nome: string
+          placeholders?: Json | null
           tipo: string
         }
         Update: {
@@ -70,6 +72,7 @@ export type Database = {
           criado_em?: string
           id?: string
           nome?: string
+          placeholders?: Json | null
           tipo?: string
         }
         Relationships: []
@@ -260,6 +263,7 @@ export const Constants = {
 //   tipo: text (not null)
 //   arquivo_docx_url: text (nullable)
 //   criado_em: timestamp with time zone (not null, default: now())
+//   placeholders: jsonb (nullable, default: '[]'::jsonb)
 // Table: usuarios
 //   id: uuid (not null)
 //   email: text (not null)
