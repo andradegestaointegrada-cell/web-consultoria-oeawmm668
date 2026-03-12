@@ -18,7 +18,7 @@ import { Upload, Save } from 'lucide-react'
 import { toast } from 'sonner'
 
 export default function Configuracoes() {
-  const { user } = useAuth()
+  const { profile } = useAuth()
   const { theme, setTheme } = useTheme()
 
   const handleSave = () => {
@@ -48,8 +48,8 @@ export default function Configuracoes() {
             <CardContent className="space-y-6">
               <div className="flex items-center gap-6">
                 <Avatar className="h-20 w-20 border border-border">
-                  <AvatarImage src={user?.avatar} />
-                  <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+                  <AvatarImage src={profile?.avatar} />
+                  <AvatarFallback>{profile?.nome?.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <Button variant="outline" size="sm">
                   <Upload className="mr-2 h-4 w-4" />
@@ -60,15 +60,18 @@ export default function Configuracoes() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label>Nome Completo</Label>
-                  <Input defaultValue={user?.name} />
+                  <Input defaultValue={profile?.nome} />
                 </div>
                 <div className="space-y-2">
                   <Label>E-mail</Label>
-                  <Input defaultValue={user?.email} disabled />
+                  <Input defaultValue={profile?.email} disabled />
                 </div>
                 <div className="space-y-2 sm:col-span-2">
                   <Label>Cargo / Função</Label>
-                  <Input defaultValue="Consultor Sênior" />
+                  <Input
+                    defaultValue={profile?.role === 'admin' ? 'Administrador' : 'Consultor'}
+                    disabled
+                  />
                 </div>
               </div>
             </CardContent>

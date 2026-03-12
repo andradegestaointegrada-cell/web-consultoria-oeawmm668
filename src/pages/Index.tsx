@@ -24,15 +24,17 @@ const recentDocuments = [
 ]
 
 export default function Index() {
-  const { user } = useAuth()
+  const { profile, user } = useAuth()
   const today = format(new Date(), "dd 'de' MMMM, yyyy", { locale: ptBR })
+
+  const displayName = profile?.nome?.split(' ')[0] || user?.email?.split('@')[0] || 'Usuário'
 
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground">
-            Olá, {user?.name?.split(' ')[0]} 👋
+            Olá, {displayName} 👋
           </h1>
           <p className="text-muted-foreground mt-1">
             Aqui está o resumo do seu desempenho e atividades.

@@ -16,11 +16,11 @@ import { useNavigate } from 'react-router-dom'
 import { ModeToggle } from './ModeToggle'
 
 export function AppHeader() {
-  const { user, logout } = useAuth()
+  const { profile, signOut } = useAuth()
   const navigate = useNavigate()
 
-  const handleLogout = () => {
-    logout()
+  const handleLogout = async () => {
+    await signOut()
     navigate('/login')
   }
 
@@ -51,16 +51,16 @@ export function AppHeader() {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-8 w-8 rounded-full ml-1">
               <Avatar className="h-9 w-9 border border-border">
-                <AvatarImage src={user?.avatar} alt={user?.name} />
-                <AvatarFallback>{user?.name?.charAt(0) || 'U'}</AvatarFallback>
+                <AvatarImage src={profile?.avatar} alt={profile?.nome} />
+                <AvatarFallback>{profile?.nome?.charAt(0) || 'U'}</AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">{user?.name}</p>
-                <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+                <p className="text-sm font-medium leading-none">{profile?.nome}</p>
+                <p className="text-xs leading-none text-muted-foreground">{profile?.email}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />

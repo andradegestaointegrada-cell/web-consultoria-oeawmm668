@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Briefcase } from 'lucide-react'
+import { Briefcase, Loader2 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -12,16 +12,34 @@ import { toast } from 'sonner'
 export default function Login() {
   const [email, setEmail] = useState('admin@agiconsult.com')
   const [password, setPassword] = useState('password123')
-  const { login } = useAuth()
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
+  const { signIn, user, loading } = useAuth()
   const navigate = useNavigate()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (user && !loading) {
+      navigate('/')
+    }
+  }, [user, loading, navigate])
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email || !password) {
       toast.error('Preencha todos os campos')
       return
     }
-    login(email)
+
+    setIsLoggingIn(true)
+    const { error } = await signIn(email, password)
+    setIsLoggingIn(false)
+
+    if (error) {
+      toast.error('Erro na autenticação', {
+        description: error.message || 'Verifique suas credenciais e tente novamente.',
+      })
+      return
+    }
+
     toast.success('Bem-vindo de volta!')
     navigate('/')
   }
@@ -52,6 +70,7 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="nome@empresa.com"
                 className="h-11"
+                disabled={isLoggingIn}
               />
             </div>
             <div className="space-y-2">
@@ -67,10 +86,11 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="h-11"
+                disabled={isLoggingIn}
               />
             </div>
             <div className="flex items-center space-x-2">
-              <Checkbox id="remember" />
+              <Checkbox id="remember" disabled={isLoggingIn} />
               <Label
                 htmlFor="remember"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -78,8 +98,19 @@ export default function Login() {
                 Lembrar-me
               </Label>
             </div>
-            <Button type="submit" className="w-full h-11 text-base font-medium">
-              Entrar
+            <Button
+              type="submit"
+              className="w-full h-11 text-base font-medium"
+              disabled={isLoggingIn}
+            >
+              {isLoggingIn ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Entrando...
+                </>
+              ) : (
+                'Entrar'
+              )}
             </Button>
           </form>
         </CardContent>

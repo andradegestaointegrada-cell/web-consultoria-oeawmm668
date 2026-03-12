@@ -9,7 +9,92 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      documentos: {
+        Row: {
+          arquivo_url: string | null
+          data_criacao: string
+          id: string
+          nome_cliente: string
+          status: string
+          tipo_documento: string
+          usuario_id: string
+        }
+        Insert: {
+          arquivo_url?: string | null
+          data_criacao?: string
+          id?: string
+          nome_cliente: string
+          status: string
+          tipo_documento: string
+          usuario_id: string
+        }
+        Update: {
+          arquivo_url?: string | null
+          data_criacao?: string
+          id?: string
+          nome_cliente?: string
+          status?: string
+          tipo_documento?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'documentos_usuario_id_fkey'
+            columns: ['usuario_id']
+            isOneToOne: false
+            referencedRelation: 'usuarios'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      templates: {
+        Row: {
+          arquivo_docx_url: string | null
+          criado_em: string
+          id: string
+          nome: string
+          tipo: string
+        }
+        Insert: {
+          arquivo_docx_url?: string | null
+          criado_em?: string
+          id?: string
+          nome: string
+          tipo: string
+        }
+        Update: {
+          arquivo_docx_url?: string | null
+          criado_em?: string
+          id?: string
+          nome?: string
+          tipo?: string
+        }
+        Relationships: []
+      }
+      usuarios: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          nome: string
+          role: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id: string
+          nome: string
+          role: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          nome?: string
+          role?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -153,6 +238,63 @@ export const Constants = {
 // IMPORTANT: The TypeScript types above map UUID, TEXT, VARCHAR all to "string".
 // Use the COLUMN TYPES section below to know the real PostgreSQL type for each column.
 // Always use the correct PostgreSQL type when writing SQL migrations.
+
+// --- COLUMN TYPES (actual PostgreSQL types) ---
+// Use this to know the real database type when writing migrations.
+// "string" in TypeScript types above may be uuid, text, varchar, timestamptz, etc.
+// Table: documentos
+//   id: uuid (not null, default: gen_random_uuid())
+//   usuario_id: uuid (not null)
+//   tipo_documento: text (not null)
+//   nome_cliente: text (not null)
+//   data_criacao: timestamp with time zone (not null, default: now())
+//   status: text (not null)
+//   arquivo_url: text (nullable)
+// Table: templates
+//   id: uuid (not null, default: gen_random_uuid())
+//   nome: text (not null)
+//   tipo: text (not null)
+//   arquivo_docx_url: text (nullable)
+//   criado_em: timestamp with time zone (not null, default: now())
+// Table: usuarios
+//   id: uuid (not null)
+//   email: text (not null)
+//   nome: text (not null)
+//   role: text (not null)
+//   created_at: timestamp with time zone (not null, default: now())
+
+// --- CONSTRAINTS ---
+// Table: documentos
+//   PRIMARY KEY documentos_pkey: PRIMARY KEY (id)
+//   CHECK documentos_status_check: CHECK ((status = ANY (ARRAY['rascunho'::text, 'finalizado'::text])))
+//   FOREIGN KEY documentos_usuario_id_fkey: FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+// Table: templates
+//   PRIMARY KEY templates_pkey: PRIMARY KEY (id)
+// Table: usuarios
+//   FOREIGN KEY usuarios_id_fkey: FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE
+//   PRIMARY KEY usuarios_pkey: PRIMARY KEY (id)
+//   CHECK usuarios_role_check: CHECK ((role = ANY (ARRAY['admin'::text, 'consultor'::text, 'viewer'::text])))
+
+// --- ROW LEVEL SECURITY POLICIES ---
+// Table: documentos
+//   Policy "Users can delete their own documents" (DELETE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//   Policy "Users can insert their own documents" (INSERT, PERMISSIVE) roles={authenticated}
+//     WITH CHECK: (auth.uid() = usuario_id)
+//   Policy "Users can select their own documents" (SELECT, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//   Policy "Users can update their own documents" (UPDATE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = usuario_id)
+//     WITH CHECK: (auth.uid() = usuario_id)
+// Table: templates
+//   Policy "Authenticated users can view templates" (SELECT, PERMISSIVE) roles={authenticated}
+//     USING: true
+// Table: usuarios
+//   Policy "Users can update their own profile" (UPDATE, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = id)
+//     WITH CHECK: (auth.uid() = id)
+//   Policy "Users can view their own profile" (SELECT, PERMISSIVE) roles={authenticated}
+//     USING: (auth.uid() = id)
 
 // --- DATABASE FUNCTIONS ---
 // FUNCTION rls_auto_enable()
