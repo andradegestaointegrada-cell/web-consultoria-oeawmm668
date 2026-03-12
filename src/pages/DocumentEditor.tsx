@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/dialog'
 import { useAuth } from '@/contexts/AuthContext'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { exportToWord } from '@/lib/word-export'
 
 interface Section {
   id: string
@@ -114,67 +115,7 @@ export default function DocumentEditor() {
   const handleExportWord = async () => {
     setExporting(true)
     try {
-      const { titulo, introducao, secoes, conclusao } = content
-
-      const htmlContent = `
-        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-        <head>
-          <meta charset='utf-8'>
-          <title>${titulo}</title>
-          <style>
-            body { font-family: 'Calibri', 'Arial', sans-serif; line-height: 1.6; color: #000; }
-            h1 { font-size: 24pt; color: #111; margin-bottom: 20px; font-weight: bold; }
-            h2 { font-size: 18pt; color: #222; margin-top: 24px; margin-bottom: 12px; font-weight: bold; }
-            p { margin-bottom: 12px; }
-            ul, ol { margin-bottom: 12px; margin-left: 24px; }
-            li { margin-bottom: 6px; }
-            b, strong { font-weight: bold; }
-            i, em { font-style: italic; }
-            u { text-decoration: underline; }
-          </style>
-        </head>
-        <body>
-          <h1>${titulo}</h1>
-          ${introducao ? `<div>${introducao}</div>` : ''}
-          ${secoes
-            .map(
-              (s) => `
-            <h2>${s.subtitulo}</h2>
-            <div>${s.conteudo}</div>
-          `,
-            )
-            .join('')}
-          ${conclusao ? `<div style="margin-top: 24px;">${conclusao}</div>` : ''}
-        </body>
-        </html>
-      `
-
-      // We use application/msword with .docx extension. Word recognizes the format automatically.
-      const blob = new Blob(['\ufeff', htmlContent], { type: 'application/msword' })
-
-      const date = new Date()
-      const dd = String(date.getDate()).padStart(2, '0')
-      const mm = String(date.getMonth() + 1).padStart(2, '0')
-      const yyyy = date.getFullYear()
-
-      const normalizedTitle = titulo
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-zA-Z0-9]/g, '_')
-        .replace(/_+/g, '_')
-        .replace(/^_|_$/g, '')
-
-      const fileName = `${normalizedTitle || 'Documento'}_${dd}_${mm}_${yyyy}.docx`
-
-      const url = URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = fileName
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      URL.revokeObjectURL(url)
-
+      exportToWord(content)
       toast.success('Documento exportado com sucesso!')
     } catch (error) {
       console.error('Erro ao exportar:', error)

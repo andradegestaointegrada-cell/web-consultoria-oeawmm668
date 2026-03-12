@@ -12,6 +12,7 @@ export type Database = {
       documentos: {
         Row: {
           arquivo_url: string | null
+          conteudo: Json | null
           data_criacao: string
           id: string
           nome_cliente: string
@@ -21,6 +22,7 @@ export type Database = {
         }
         Insert: {
           arquivo_url?: string | null
+          conteudo?: Json | null
           data_criacao?: string
           id?: string
           nome_cliente: string
@@ -30,6 +32,7 @@ export type Database = {
         }
         Update: {
           arquivo_url?: string | null
+          conteudo?: Json | null
           data_criacao?: string
           id?: string
           nome_cliente?: string
@@ -250,6 +253,7 @@ export const Constants = {
 //   data_criacao: timestamp with time zone (not null, default: now())
 //   status: text (not null)
 //   arquivo_url: text (nullable)
+//   conteudo: jsonb (nullable, default: '{}'::jsonb)
 // Table: templates
 //   id: uuid (not null, default: gen_random_uuid())
 //   nome: text (not null)
