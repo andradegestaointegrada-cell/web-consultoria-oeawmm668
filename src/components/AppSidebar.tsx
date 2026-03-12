@@ -7,6 +7,7 @@ import {
   Briefcase,
   LogOut,
   Database,
+  Link2,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import {
@@ -27,6 +28,7 @@ const navItems = [
   { title: 'Dashboard', url: '/dashboard', icon: LayoutDashboard },
   { title: 'Fábrica de Documentos', url: '/documentos', icon: FileText },
   { title: 'Gerenciar Dados', url: '/gerenciar-dados', icon: Database },
+  { title: 'Conectar Dados', url: '/mapeamento-placeholders', icon: Link2 },
   { title: 'Auditorias', url: '/auditorias', icon: ClipboardCheck },
   { title: 'Configurações', url: '/configuracoes', icon: Settings },
 ]
