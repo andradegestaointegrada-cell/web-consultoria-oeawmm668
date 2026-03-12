@@ -13,6 +13,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { BatchGeneratorTable } from '@/components/gerar-documento/BatchGeneratorTable'
 import { ExcelMappingForm } from '@/components/gerar-documento/ExcelMappingForm'
+import { EvolutionChart } from '@/components/gerar-documento/EvolutionChart'
 
 export default function GerarDocumento() {
   const { user } = useAuth()
@@ -28,6 +29,10 @@ export default function GerarDocumento() {
   const [isLoading, setIsLoading] = useState(true)
   const [isLoadingRows, setIsLoadingRows] = useState(false)
   const [forceMapping, setForceMapping] = useState(false)
+
+  const [dateCol, setDateCol] = useState<string>('')
+  const [numericCols, setNumericCols] = useState<string[]>([])
+  const [chartImageBase64, setChartImageBase64] = useState<string | null>(null)
 
   const fetchMappings = async () => {
     if (!user) return
@@ -94,6 +99,38 @@ export default function GerarDocumento() {
     setSelectedTemplateId('')
     setForceMapping(false)
   }, [selectedUploadId, uploads])
+
+  useEffect(() => {
+    if (rows.length > 0) {
+      const first = rows[0]
+      const numCols: string[] = []
+      let dCol = ''
+      Object.keys(first).forEach((k) => {
+        const val = first[k]
+        if (
+          typeof val === 'number' ||
+          (typeof val === 'string' && !isNaN(Number(val)) && val.trim() !== '')
+        ) {
+          numCols.push(k)
+        } else if (
+          (typeof val === 'string' &&
+            (val.includes('-') || val.includes('/')) &&
+            !isNaN(Date.parse(val))) ||
+          k.toLowerCase().includes('data') ||
+          k.toLowerCase().includes('date')
+        ) {
+          if (!dCol) dCol = k
+        }
+      })
+      setDateCol(dCol)
+      setNumericCols(numCols)
+      setChartImageBase64(null)
+    } else {
+      setDateCol('')
+      setNumericCols([])
+      setChartImageBase64(null)
+    }
+  }, [rows])
 
   const columns = rows.length > 0 ? Object.keys(rows[0]).slice(0, 5) : []
 
@@ -246,11 +283,21 @@ export default function GerarDocumento() {
                   mappings={activeMappings}
                   uploadId={selectedUploadId}
                   userId={user?.id || ''}
+                  chartImageBase64={chartImageBase64}
                 />
               )}
             </CardContent>
           </Card>
         )
+      )}
+
+      {dateCol && numericCols.length > 0 && selectedUploadId && !needsMapping && (
+        <EvolutionChart
+          data={rows}
+          dateCol={dateCol}
+          numericCols={numericCols}
+          onImageGenerated={setChartImageBase64}
+        />
       )}
     </div>
   )

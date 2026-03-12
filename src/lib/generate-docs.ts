@@ -8,6 +8,7 @@ export interface BatchProcessOptions {
   mappings: any[]
   uploadId: string
   userId: string
+  chartImageBase64?: string | null
   onProgress?: (current: number, total: number) => void
 }
 
@@ -18,6 +19,7 @@ export async function processBatchGeneration({
   mappings,
   uploadId,
   userId,
+  chartImageBase64,
   onProgress,
 }: BatchProcessOptions) {
   const { default: JSZip } = await import(/* @vite-ignore */ 'https://esm.sh/jszip@3.10.1')
@@ -38,6 +40,10 @@ export async function processBatchGeneration({
       payloadData[m.placeholder_nome] = row[m.coluna_excel_mapeada] || ''
     })
 
+    if (chartImageBase64) {
+      payloadData['grafico_evolucao'] = chartImageBase64
+    }
+
     try {
       const { data, error } = await supabase.functions.invoke('generate-word-document', {
         body: { path: template.arquivo_docx_url, data: payloadData },
@@ -57,7 +63,6 @@ export async function processBatchGeneration({
         .toLowerCase()
       const fileName = `Documento_${safeClienteStr}_${rowIdx}.docx`
 
-      // 1. Convert base64 to Blob
       const byteChars = atob(data.base64)
       const byteNumbers = new Array(byteChars.length)
       for (let k = 0; k < byteChars.length; k++) byteNumbers[k] = byteChars.charCodeAt(k)
@@ -65,10 +70,8 @@ export async function processBatchGeneration({
         type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       })
 
-      // 2. Add to local ZIP for user download
       zip.file(fileName, blob)
 
-      // 3. Upload to Supabase Storage
       const storagePath = `${userId}/${Date.now()}_${fileName}`
       const { error: uploadError } = await supabase.storage
         .from('generated_docs')
@@ -80,7 +83,6 @@ export async function processBatchGeneration({
       if (uploadError)
         console.error(`Falha ao enviar arquivo pro Storage (${fileName}):`, uploadError)
 
-      // 4. Save to Database
       const { data: insertedDoc } = await supabase
         .from('documento_gerado')
         .insert({
@@ -105,7 +107,6 @@ export async function processBatchGeneration({
     }
   }
 
-  // Trigger client-side ZIP download
   if (successCount > 0) {
     const content = await zip.generateAsync({ type: 'blob' })
     const url = URL.createObjectURL(content)
@@ -128,11 +129,16 @@ export async function processSingleDocument(
   mappings: any[],
   uploadId: string,
   userId: string,
+  chartImageBase64?: string | null,
 ) {
   const payloadData: Record<string, any> = {}
   mappings.forEach((m: any) => {
     payloadData[m.placeholder_nome] = row[m.coluna_excel_mapeada] || ''
   })
+
+  if (chartImageBase64) {
+    payloadData['grafico_evolucao'] = chartImageBase64
+  }
 
   const { data, error } = await supabase.functions.invoke('generate-word-document', {
     body: { path: template.arquivo_docx_url, data: payloadData },

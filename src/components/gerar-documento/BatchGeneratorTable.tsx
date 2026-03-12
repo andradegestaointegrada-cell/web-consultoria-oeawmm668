@@ -25,6 +25,7 @@ interface BatchTableProps {
   mappings: any[]
   uploadId: string
   userId: string
+  chartImageBase64?: string | null
 }
 
 export function BatchGeneratorTable({
@@ -34,6 +35,7 @@ export function BatchGeneratorTable({
   mappings,
   uploadId,
   userId,
+  chartImageBase64,
 }: BatchTableProps) {
   const [selectedRows, setSelectedRows] = useState<number[]>([])
   const [generatingRowId, setGeneratingRowId] = useState<number | null>(null)
@@ -71,7 +73,15 @@ export function BatchGeneratorTable({
     setLastGeneratedItems([])
 
     try {
-      const result = await processSingleDocument(row, idx, template, mappings, uploadId, userId)
+      const result = await processSingleDocument(
+        row,
+        idx,
+        template,
+        mappings,
+        uploadId,
+        userId,
+        chartImageBase64,
+      )
       if (result?.documentId) {
         setLastGeneratedItems([{ id: result.documentId, row }])
       }
@@ -97,6 +107,7 @@ export function BatchGeneratorTable({
         mappings,
         uploadId,
         userId,
+        chartImageBase64,
         onProgress: (c, t) => setBatchProgress({ current: c, total: t }),
       })
 
@@ -259,29 +270,6 @@ export function BatchGeneratorTable({
         </Table>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
-
-      <EmailDispatchDialog
-        isOpen={isEmailModalOpen}
-        onOpenChange={setIsEmailModalOpen}
-        documentIds={lastGeneratedItems.map((i) => i.id)}
-        rowData={lastGeneratedItems[0]?.row}
-        onSuccess={() => setLastGeneratedItems([])}
-      />
-
-      <BatchEmailDispatchDialog
-        isOpen={isBatchEmailModalOpen}
-        onOpenChange={setIsBatchEmailModalOpen}
-        batchItems={lastGeneratedItems}
-        onSuccess={() => setLastGeneratedItems([])}
-      />
-
-      <ScheduleEmailDialog
-        isOpen={isScheduleModalOpen}
-        onOpenChange={setIsScheduleModalOpen}
-        documentId={lastGeneratedItems.length === 1 ? lastGeneratedItems[0].id : ''}
-        rowData={lastGeneratedItems[0]?.row}
-        onSuccess={() => setLastGeneratedItems([])}
-      />
     </div>
   )
 }
