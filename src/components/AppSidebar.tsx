@@ -11,6 +11,7 @@ import {
   Cpu,
   History,
   LayoutTemplate,
+  BarChart3,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import {
@@ -29,6 +30,7 @@ import { toast } from 'sonner'
 
 const navItems = [
   { title: 'Dashboard', url: '/dashboard', icon: LayoutDashboard },
+  { title: 'Analytics', url: '/analytics', icon: BarChart3 },
   { title: 'Fábrica de Documentos', url: '/documentos', icon: FileText },
   { title: 'Gerenciar Dados', url: '/gerenciar-dados', icon: Database },
   { title: 'Conectar Dados', url: '/mapeamento-placeholders', icon: Link2 },

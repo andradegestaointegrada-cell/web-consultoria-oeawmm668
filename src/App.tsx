@@ -19,6 +19,7 @@ import MapeamentoPlaceholders from './pages/MapeamentoPlaceholders'
 import GerarDocumento from './pages/GerarDocumento'
 import HistoricoDocumentos from './pages/HistoricoDocumentos'
 import TemplatesEmail from './pages/TemplatesEmail'
+import Analytics from './pages/Analytics'
 
 const App = () => (
   <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme" attribute="class">
@@ -36,6 +37,7 @@ const App = () => (
               <Route element={<Layout />}>
                 <Route path="/" element={<Navigate to="/dashboard" replace />} />
                 <Route path="/dashboard" element={<Index />} />
+                <Route path="/analytics" element={<Analytics />} />
                 <Route path="/documentos" element={<Documentos />} />
                 <Route path="/documentos/:id/editor" element={<DocumentEditor />} />
                 <Route path="/gerenciar-dados" element={<GerenciarDados />} />
