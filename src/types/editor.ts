@@ -28,3 +28,9 @@ export interface StatusReportContent {
   risks: string
   next_steps: string
 }
+
+export interface PlaceholderMapping {
+  name: string
+  type: 'text' | 'date' | 'longtext'
+  mappedField: string
+}

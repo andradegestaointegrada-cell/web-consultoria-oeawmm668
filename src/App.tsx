@@ -13,6 +13,7 @@ import Documentos from './pages/Documentos'
 import DocumentEditor from './pages/DocumentEditor'
 import Auditorias from './pages/Auditorias'
 import Configuracoes from './pages/Configuracoes'
+import Templates from './pages/Templates'
 
 const App = () => (
   <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme" attribute="class">
@@ -34,6 +35,7 @@ const App = () => (
                 <Route path="/documentos/:id/editor" element={<DocumentEditor />} />
                 <Route path="/auditorias" element={<Auditorias />} />
                 <Route path="/configuracoes" element={<Configuracoes />} />
+                <Route path="/templates" element={<Templates />} />
               </Route>
             </Route>
 

@@ -10,6 +10,7 @@ import { supabase } from '@/lib/supabase/client'
 import { exportToWord } from '@/lib/word-export'
 import { DocumentPreviewDialog } from './DocumentPreviewDialog'
 import { StandardEditorSections } from './StandardEditorSections'
+import { TemplateGenerationDialog } from '@/components/templates/TemplateGenerationDialog'
 import type { StandardContent } from '@/types/editor'
 
 export function StandardEditor({ documento, onBack }: { documento: any; onBack: () => void }) {
@@ -68,7 +69,8 @@ export function StandardEditor({ documento, onBack }: { documento: any; onBack: 
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          {!isReadOnly && <TemplateGenerationDialog documento={documento} />}
           <Button variant="outline" onClick={handleExportWord} disabled={exporting}>
             {exporting ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -8,6 +8,7 @@ import { Save, ArrowLeft, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { supabase } from '@/lib/supabase/client'
 import { StatusReportTasks } from './StatusReportTasks'
+import { TemplateGenerationDialog } from '@/components/templates/TemplateGenerationDialog'
 import type { StatusReportContent } from '@/types/editor'
 
 export function StatusReportEditor({ documento, onBack }: { documento: any; onBack: () => void }) {
@@ -66,6 +67,7 @@ export function StatusReportEditor({ documento, onBack }: { documento: any; onBa
           </div>
         </div>
         <div className="flex items-center gap-2">
+          {!isReadOnly && <TemplateGenerationDialog documento={documento} />}
           {!isReadOnly && (
             <Button onClick={handleSave} disabled={saving}>
               {saving ? (
