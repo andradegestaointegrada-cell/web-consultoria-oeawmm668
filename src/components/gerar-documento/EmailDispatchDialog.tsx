@@ -77,7 +77,7 @@ export function EmailDispatchDialog({
       const fetchTemplates = async () => {
         setIsLoadingTemplates(true)
         const { data } = await supabase
-          .from('email_templates' as any)
+          .from('email_templates')
           .select('*')
           .eq('usuario_id', user.id)
           .order('nome')
@@ -110,14 +110,15 @@ export function EmailDispatchDialog({
         documento: 'Documento Gerado',
       }
 
-      replaced = replaced.replace(/{{cliente}}/gi, context.cliente)
-      replaced = replaced.replace(/{{data}}/gi, context.data)
-      replaced = replaced.replace(/{{valor}}/gi, context.valor)
-      replaced = replaced.replace(/{{documento}}/gi, context.documento)
+      replaced = replaced.replace(/\{\{cliente\}\}/gi, context.cliente)
+      replaced = replaced.replace(/\{\{data\}\}/gi, context.data)
+      replaced = replaced.replace(/\{\{valor\}\}/gi, context.valor)
+      replaced = replaced.replace(/\{\{documento\}\}/gi, context.documento)
 
       if (rowData) {
         Object.keys(rowData).forEach((key) => {
-          const regex = new RegExp(`{{${key}}}`, 'gi')
+          const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+          const regex = new RegExp(`\\{\\{${escapedKey}\\}\\}`, 'gi')
           replaced = replaced.replace(regex, String(rowData[key] || ''))
         })
       }
@@ -139,7 +140,7 @@ export function EmailDispatchDialog({
     try {
       await supabase
         .from('documento_gerado')
-        .update({ status_envio: 'pendente' } as any)
+        .update({ status_envio: 'pendente' })
         .in('id', documentIds)
 
       const { data, error } = await supabase.functions.invoke('send-email-document', {
@@ -159,7 +160,7 @@ export function EmailDispatchDialog({
         .update({
           status_envio: 'enviado',
           data_envio: new Date().toISOString(),
-        } as any)
+        })
         .in('id', documentIds)
 
       toast.success(
@@ -171,10 +172,7 @@ export function EmailDispatchDialog({
       onOpenChange(false)
       onSuccess?.()
     } catch (err: any) {
-      await supabase
-        .from('documento_gerado')
-        .update({ status_envio: 'erro' } as any)
-        .in('id', documentIds)
+      await supabase.from('documento_gerado').update({ status_envio: 'erro' }).in('id', documentIds)
 
       toast.error('Falha ao enviar e-mail', {
         description: err.message,

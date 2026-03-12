@@ -75,7 +75,7 @@ export function BatchEmailDispatchDialog({
           c.toLowerCase() === 'contato',
       )
       form.reset({ templateId: '', emailColumn: detected || '' })
-      setProgress({ current: 0, total: 0, errors: 0 })
+      setProgress({ current: 0, total: batchItems.length, errors: 0 })
     }
   }, [isOpen, batchItems, form])
 
@@ -84,7 +84,7 @@ export function BatchEmailDispatchDialog({
       const fetchTemplates = async () => {
         setIsLoadingTemplates(true)
         const { data } = await supabase
-          .from('email_templates' as any)
+          .from('email_templates')
           .select('*')
           .eq('usuario_id', user.id)
           .order('nome')
@@ -96,6 +96,37 @@ export function BatchEmailDispatchDialog({
   }, [isOpen, user])
 
   const columns = batchItems.length > 0 ? Object.keys(batchItems[0].row) : []
+
+  const replacePlaceholders = (text: string, rowData: any) => {
+    if (!text) return ''
+    let replaced = text
+    const ctx = {
+      cliente:
+        rowData?.cliente ||
+        rowData?.Cliente ||
+        rowData?.['Nome do Cliente'] ||
+        rowData?.nome ||
+        rowData?.Nome ||
+        '',
+      data: rowData?.data || rowData?.Data || new Date().toLocaleDateString('pt-BR'),
+      valor: rowData?.valor || rowData?.Valor || rowData?.['Valor Total'] || '',
+      documento: 'Documento Gerado',
+    }
+
+    replaced = replaced.replace(/\{\{cliente\}\}/gi, ctx.cliente)
+    replaced = replaced.replace(/\{\{data\}\}/gi, ctx.data)
+    replaced = replaced.replace(/\{\{valor\}\}/gi, ctx.valor)
+    replaced = replaced.replace(/\{\{documento\}\}/gi, ctx.documento)
+
+    if (rowData) {
+      Object.keys(rowData).forEach((key) => {
+        const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        const regex = new RegExp(`\\{\\{${escapedKey}\\}\\}`, 'gi')
+        replaced = replaced.replace(regex, String(rowData[key] || ''))
+      })
+    }
+    return replaced
+  }
 
   const onSubmit = async (values: FormValues) => {
     if (batchItems.length === 0) return
@@ -111,44 +142,14 @@ export function BatchEmailDispatchDialog({
       const item = batchItems[i]
       const targetEmail = item.row[values.emailColumn]
 
-      const replacePlaceholders = (text: string, rowData: any) => {
-        if (!text) return ''
-        let replaced = text
-        const ctx = {
-          cliente:
-            rowData?.cliente ||
-            rowData?.Cliente ||
-            rowData?.['Nome do Cliente'] ||
-            rowData?.nome ||
-            rowData?.Nome ||
-            '',
-          data: rowData?.data || rowData?.Data || new Date().toLocaleDateString('pt-BR'),
-          valor: rowData?.valor || rowData?.Valor || rowData?.['Valor Total'] || '',
-          documento: 'Documento Gerado',
-        }
-        replaced = replaced.replace(/{{cliente}}/gi, ctx.cliente)
-        replaced = replaced.replace(/{{data}}/gi, ctx.data)
-        replaced = replaced.replace(/{{valor}}/gi, ctx.valor)
-        replaced = replaced.replace(/{{documento}}/gi, ctx.documento)
-
-        Object.keys(rowData).forEach((key) => {
-          const regex = new RegExp(`{{${key}}}`, 'gi')
-          replaced = replaced.replace(regex, String(rowData[key] || ''))
-        })
-        return replaced
-      }
-
       if (!targetEmail) {
         errorCount++
-        await supabase
-          .from('documento_gerado')
-          .update({ status_envio: 'erro' } as any)
-          .eq('id', item.id)
+        await supabase.from('documento_gerado').update({ status_envio: 'erro' }).eq('id', item.id)
       } else {
         try {
           await supabase
             .from('documento_gerado')
-            .update({ status_envio: 'pendente' } as any)
+            .update({ status_envio: 'pendente' })
             .eq('id', item.id)
 
           const subject = replacePlaceholders(selectedTemplate.assunto, item.row)
@@ -158,22 +159,20 @@ export function BatchEmailDispatchDialog({
             body: { documentIds: [item.id], email: targetEmail, subject, message },
           })
 
-          if (error || data?.error) throw new Error(error?.message || data?.error)
+          if (error) throw new Error(error.message)
+          if (data?.error) throw new Error(data.error)
 
           await supabase
             .from('documento_gerado')
             .update({
               status_envio: 'enviado',
               data_envio: new Date().toISOString(),
-            } as any)
+            })
             .eq('id', item.id)
         } catch (err) {
           console.error(`Falha no envio para ${targetEmail}`, err)
           errorCount++
-          await supabase
-            .from('documento_gerado')
-            .update({ status_envio: 'erro' } as any)
-            .eq('id', item.id)
+          await supabase.from('documento_gerado').update({ status_envio: 'erro' }).eq('id', item.id)
         }
       }
       setProgress((prev) => ({ ...prev, current: i + 1, errors: errorCount }))
