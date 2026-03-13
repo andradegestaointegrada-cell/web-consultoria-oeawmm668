@@ -2,7 +2,6 @@ import { useLocation, Link, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard,
   FileText,
-  ClipboardCheck,
   Settings,
   Briefcase,
   LogOut,
@@ -16,6 +15,7 @@ import {
   Activity,
   Receipt,
   CreditCard,
+  CheckCircle2,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import {
@@ -44,7 +44,7 @@ const navItems = [
   { title: 'Gerar Documento', url: '/gerar-documento', icon: Cpu },
   { title: 'Templates de E-mail', url: '/templates-email', icon: LayoutTemplate },
   { title: 'Histórico', url: '/historico-documentos', icon: History },
-  { title: 'Auditorias', url: '/auditorias', icon: ClipboardCheck },
+  { title: 'Auditorias', url: '/auditorias', icon: CheckCircle2 },
   { title: 'Gerenciador de Arquivos', url: '/gerenciador-arquivos', icon: Trash2 },
   { title: 'Configurações', url: '/configuracoes', icon: Settings },
 ]

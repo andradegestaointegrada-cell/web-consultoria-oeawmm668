@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Plus, Search, MoreHorizontal, Eye } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Plus, Search, MoreHorizontal, CheckCircle2, Loader2, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
@@ -13,12 +13,12 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet'
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,178 +26,212 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { AuditForm } from '@/components/audits/AuditForm'
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '@/components/ui/pagination'
-
-type StatusType = 'Concluído' | 'Em Progresso' | 'Crítico'
-
-const auditsData = [
-  {
-    id: 'AUD-2023-01',
-    client: 'Tech Solutions',
-    date: '15/10/2023',
-    auditor: 'João Consultor',
-    status: 'Concluído' as StatusType,
-  },
-  {
-    id: 'AUD-2023-02',
-    client: 'Global Systems',
-    date: '18/10/2023',
-    auditor: 'Maria Silva',
-    status: 'Em Progresso' as StatusType,
-  },
-  {
-    id: 'AUD-2023-03',
-    client: 'Alpha Industries',
-    date: '20/10/2023',
-    auditor: 'Carlos Mendes',
-    status: 'Crítico' as StatusType,
-  },
-  {
-    id: 'AUD-2023-04',
-    client: 'Beta Logistics',
-    date: '22/10/2023',
-    auditor: 'João Consultor',
-    status: 'Em Progresso' as StatusType,
-  },
-  {
-    id: 'AUD-2023-05',
-    client: 'Mega Retail',
-    date: '25/10/2023',
-    auditor: 'Ana Paula',
-    status: 'Concluído' as StatusType,
-  },
-]
+import { format, parseISO } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { supabase } from '@/lib/supabase/client'
+import { useAuth } from '@/contexts/AuthContext'
+import { toast } from 'sonner'
 
 export default function Auditorias() {
-  const [isSheetOpen, setIsSheetOpen] = useState(false)
+  const { user } = useAuth()
+  const [audits, setAudits] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [search, setSearch] = useState('')
 
-  const getStatusBadge = (status: StatusType) => {
-    switch (status) {
-      case 'Concluído':
+  const fetchAudits = async () => {
+    if (!user) return
+    setLoading(true)
+    const { data, error } = await supabase
+      .from('auditorias' as any)
+      .select(`*, projeto_status(cliente), auditor:usuarios!auditor_id(nome)`)
+      .eq('usuario_id', user.id)
+      .order('created_at', { ascending: false })
+
+    if (error) {
+      toast.error('Erro ao buscar auditorias')
+    } else if (data && data.length > 0) {
+      setAudits(data)
+    } else {
+      setAudits([
+        {
+          id: 'mock-1',
+          norma: 'ISO 9001',
+          data_auditoria: new Date().toISOString(),
+          status: 'planejada',
+          projeto_status: { cliente: 'Tech Solutions' },
+          auditor: { nome: 'João Consultor' },
+        },
+        {
+          id: 'mock-2',
+          norma: 'ISO 14001',
+          data_auditoria: '2023-10-15',
+          status: 'em_andamento',
+          projeto_status: { cliente: 'Global Systems' },
+          auditor: { nome: 'Maria Silva' },
+        },
+      ])
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    fetchAudits()
+  }, [user])
+
+  const handleDelete = async (id: string) => {
+    if (id.startsWith('mock-')) return setAudits(audits.filter((a) => a.id !== id))
+    if (!confirm('Excluir auditoria permanentemente?')) return
+    const { error } = await supabase
+      .from('auditorias' as any)
+      .delete()
+      .eq('id', id)
+    if (error) toast.error('Erro ao excluir', { description: error.message })
+    else {
+      toast.success('Auditoria excluída')
+      fetchAudits()
+    }
+  }
+
+  const filtered = audits.filter((a) =>
+    a.projeto_status?.cliente?.toLowerCase().includes(search.toLowerCase()),
+  )
+
+  const getStatusBadge = (s: string) => {
+    switch (s) {
+      case 'concluida':
         return (
-          <Badge className="bg-green-100 text-green-800 hover:bg-green-100/80 border-transparent shadow-none">
-            Concluído
+          <Badge className="bg-green-100 text-green-800 hover:bg-green-100 border-none shadow-none">
+            Concluída
           </Badge>
         )
-      case 'Em Progresso':
+      case 'em_andamento':
         return (
-          <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100/80 border-transparent shadow-none">
-            Em Progresso
+          <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100 border-none shadow-none">
+            Em Andamento
           </Badge>
         )
-      case 'Crítico':
+      case 'planejada':
         return (
-          <Badge className="bg-red-100 text-red-800 hover:bg-red-100/80 border-transparent shadow-none">
-            Crítico
+          <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 border-none shadow-none">
+            Planejada
           </Badge>
         )
       default:
-        return <Badge variant="outline">{status}</Badge>
+        return <Badge variant="outline">{s}</Badge>
     }
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-6xl mx-auto animate-fade-in-up pb-12">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Auditorias</h1>
-          <p className="text-muted-foreground">
-            Acompanhe e gerencie todas as auditorias em andamento.
+          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <CheckCircle2 className="h-6 w-6 text-primary" /> Auditorias
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            Acompanhe e gerencie auditorias em andamento.
           </p>
         </div>
-        <Button onClick={() => setIsSheetOpen(true)}>
-          <Plus className="mr-2 h-4 w-4" />
-          Nova Auditoria
+        <Button onClick={() => setIsDialogOpen(true)}>
+          <Plus className="mr-2 h-4 w-4" /> Nova Auditoria
         </Button>
       </div>
 
-      <Card className="shadow-sm">
-        <div className="p-4 border-b flex flex-col sm:flex-row gap-4 justify-between items-center">
+      <Card className="shadow-sm border-border">
+        <div className="p-4 border-b flex items-center">
           <div className="relative w-full sm:max-w-sm">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Buscar por cliente ou ID..." className="pl-9" />
+            <Input
+              placeholder="Buscar por cliente..."
+              className="pl-9"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
         </div>
 
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead className="w-[120px]">ID</TableHead>
+            <TableRow className="bg-muted/50">
               <TableHead>Cliente</TableHead>
-              <TableHead>Data</TableHead>
-              <TableHead>Auditor</TableHead>
+              <TableHead>Norma</TableHead>
+              <TableHead>Data da Auditoria</TableHead>
+              <TableHead>Auditor Responsável</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Ações</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {auditsData.map((audit) => (
-              <TableRow key={audit.id}>
-                <TableCell className="font-medium text-muted-foreground">{audit.id}</TableCell>
-                <TableCell className="font-semibold text-slate-900">{audit.client}</TableCell>
-                <TableCell>{audit.date}</TableCell>
-                <TableCell>{audit.auditor}</TableCell>
-                <TableCell>{getStatusBadge(audit.status)}</TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="h-8 w-8 p-0">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem>
-                        <Eye className="mr-2 h-4 w-4" />
-                        <span>Ver Detalhes</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-12">
+                  <Loader2 className="h-6 w-6 animate-spin mx-auto text-primary" />
                 </TableCell>
               </TableRow>
-            ))}
+            ) : filtered.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
+                  Nenhuma auditoria encontrada.
+                </TableCell>
+              </TableRow>
+            ) : (
+              filtered.map((a) => (
+                <TableRow key={a.id} className="hover:bg-muted/50">
+                  <TableCell className="font-medium text-slate-900 dark:text-slate-200">
+                    {a.projeto_status?.cliente || '-'}
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="secondary" className="font-normal bg-background">
+                      {a.norma}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {format(parseISO(a.data_auditoria), 'dd/MM/yyyy', { locale: ptBR })}
+                  </TableCell>
+                  <TableCell>{a.auditor?.nome || '-'}</TableCell>
+                  <TableCell>{getStatusBadge(a.status)}</TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          className="text-destructive focus:bg-destructive/10 focus:text-destructive"
+                          onClick={() => handleDelete(a.id)}
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" /> Excluir
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
-
-        <div className="p-4 border-t flex items-center justify-end">
-          <Pagination className="justify-end">
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" isActive>
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
       </Card>
 
-      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetContent className="sm:max-w-md">
-          <SheetHeader>
-            <SheetTitle>Cadastrar Nova Auditoria</SheetTitle>
-            <SheetDescription>
-              Preencha as informações iniciais para registrar uma nova auditoria no sistema.
-            </SheetDescription>
-          </SheetHeader>
-          <AuditForm onSuccess={() => setIsSheetOpen(false)} />
-        </SheetContent>
-      </Sheet>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-md md:max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Nova Auditoria</DialogTitle>
+            <DialogDescription>
+              Preencha os dados técnicos e administrativos da auditoria.
+            </DialogDescription>
+          </DialogHeader>
+          <AuditForm
+            onSuccess={() => {
+              setIsDialogOpen(false)
+              fetchAudits()
+            }}
+            onCancel={() => setIsDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
