@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { supabase } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
 import { cn } from '@/lib/utils'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -32,10 +33,7 @@ import {
 } from '@/components/ui/select'
 
 const invoiceSchema = z.object({
-  cliente_id: z
-    .string()
-    .uuid('Selecione um cliente válido cadastrado')
-    .min(1, 'Selecione um cliente'),
+  cliente_id: z.string({ required_error: 'Selecione um cliente' }).min(1, 'Selecione um cliente'),
   cnpj_cliente: z.string().min(14, 'CNPJ inválido'),
   data_emissao: z.date({ required_error: 'Data de emissão é obrigatória' }),
   data_vencimento: z.date({ required_error: 'Data de vencimento é obrigatória' }),
@@ -88,11 +86,6 @@ export function InvoiceForm({ projects, onSuccess, onCancel }: InvoiceFormProps)
       })
 
       if (error) {
-        if (error.message.includes('invalid input syntax for type uuid')) {
-          throw new Error(
-            'O identificador do cliente é inválido. Certifique-se de selecionar um cliente cadastrado.',
-          )
-        }
         throw new Error(error.message)
       }
 
@@ -105,11 +98,6 @@ export function InvoiceForm({ projects, onSuccess, onCancel }: InvoiceFormProps)
     }
   }
 
-  // Filter distinct clients from projects to avoid duplicates in dropdown
-  const uniqueClients = Array.from(
-    new Map(projects.filter((p) => p.cliente).map((p) => [p.cliente, p])).values(),
-  )
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-4">
@@ -119,27 +107,43 @@ export function InvoiceForm({ projects, onSuccess, onCancel }: InvoiceFormProps)
             name="cliente_id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Cliente</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue
-                        placeholder={
-                          uniqueClients.length === 0
-                            ? 'Nenhum cliente cadastrado'
-                            : 'Selecione o cliente'
-                        }
-                      />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {uniqueClients.map((p) => (
-                      <SelectItem key={p.id} value={p.id}>
-                        {p.cliente}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <FormLabel>Cliente / Projeto</FormLabel>
+                {projects.length === 0 ? (
+                  <div className="space-y-2">
+                    <Select disabled>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Nenhum cliente cadastrado" />
+                        </SelectTrigger>
+                      </FormControl>
+                    </Select>
+                    <p className="text-xs text-muted-foreground">
+                      Cadastre um projeto em{' '}
+                      <Link
+                        to="/status-report"
+                        className="text-[#6B46C1] hover:underline font-medium"
+                      >
+                        Status Report
+                      </Link>{' '}
+                      primeiro.
+                    </p>
+                  </div>
+                ) : (
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o cliente" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {projects.map((p) => (
+                        <SelectItem key={p.id} value={p.id}>
+                          {p.cliente} {p.projeto ? `- ${p.projeto}` : ''}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
                 <FormMessage />
               </FormItem>
             )}
@@ -312,7 +316,7 @@ export function InvoiceForm({ projects, onSuccess, onCancel }: InvoiceFormProps)
           <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
             Cancelar
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
+          <Button type="submit" disabled={isSubmitting || projects.length === 0}>
             {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Salvar Fatura
           </Button>

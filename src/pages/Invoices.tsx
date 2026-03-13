@@ -37,10 +37,10 @@ export default function Invoices() {
     setLoading(true)
 
     try {
-      // Fetch clients/projects for the dropdowns - REAL DATA ONLY
+      // Fetch clients/projects for the dropdowns
       const { data: projData, error: projError } = await supabase
         .from('projeto_status' as any)
-        .select('id, cliente')
+        .select('id, cliente, projeto')
         .eq('usuario_id', user.id)
 
       if (projError) throw projError
