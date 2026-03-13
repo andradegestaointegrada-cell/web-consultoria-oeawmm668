@@ -15,6 +15,7 @@ import {
   Trash2,
   Activity,
   Receipt,
+  CreditCard,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import {
@@ -36,6 +37,7 @@ const navItems = [
   { title: 'Analytics', url: '/analytics', icon: BarChart3 },
   { title: 'Status Report', url: '/status-report', icon: Activity },
   { title: 'Relatório de Despesas', url: '/relatorio-despesas', icon: Receipt },
+  { title: 'Faturas', url: '/invoices', icon: CreditCard },
   { title: 'Fábrica de Documentos', url: '/documentos', icon: FileText },
   { title: 'Gerenciar Dados', url: '/gerenciar-dados', icon: Database },
   { title: 'Conectar Dados', url: '/mapeamento-placeholders', icon: Link2 },
@@ -65,8 +67,8 @@ export function AppSidebar() {
   return (
     <Sidebar variant="inset" className="print-hidden">
       <SidebarHeader className="flex h-16 items-center justify-center border-b px-4">
-        <Link to="/dashboard" className="flex items-center gap-2 font-bold text-primary">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+        <Link to="/dashboard" className="flex items-center gap-2 font-bold text-[#6B46C1]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#6B46C1] text-white">
             <Briefcase className="h-5 w-5" />
           </div>
           <span className="text-xl tracking-tight">AGI Consult</span>

@@ -23,6 +23,7 @@ import Analytics from './pages/Analytics'
 import GerenciadorArquivos from './pages/GerenciadorArquivos'
 import StatusReport from './pages/StatusReport'
 import RelatorioDespesas from './pages/RelatorioDespesas'
+import Invoices from './pages/Invoices'
 
 const App = () => (
   <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme" attribute="class">
@@ -43,6 +44,7 @@ const App = () => (
                 <Route path="/analytics" element={<Analytics />} />
                 <Route path="/status-report" element={<StatusReport />} />
                 <Route path="/relatorio-despesas" element={<RelatorioDespesas />} />
+                <Route path="/invoices" element={<Invoices />} />
                 <Route path="/documentos" element={<Documentos />} />
                 <Route path="/documentos/:id/editor" element={<DocumentEditor />} />
                 <Route path="/gerenciar-dados" element={<GerenciarDados />} />
