@@ -14,8 +14,12 @@ Deno.serve(async (req: Request) => {
 
     const labels = data.map((d: any) => d[xAxisKey] || '')
     const colors = [
-      'rgb(59, 130, 246)', 'rgb(16, 185, 129)', 'rgb(249, 115, 22)', 
-      'rgb(139, 92, 246)', 'rgb(236, 72, 153)', 'rgb(234, 179, 8)'
+      'rgb(59, 130, 246)',
+      'rgb(16, 185, 129)',
+      'rgb(249, 115, 22)',
+      'rgb(139, 92, 246)',
+      'rgb(236, 72, 153)',
+      'rgb(234, 179, 8)',
     ]
 
     const datasets = yAxisKeys.map((key: string, idx: number) => ({
@@ -37,13 +41,13 @@ Deno.serve(async (req: Request) => {
         responsive: false,
         plugins: {
           title: { display: true, text: 'Evolução de Indicadores', font: { size: 16 } },
-          legend: { position: 'bottom' }
+          legend: { position: 'bottom' },
         },
         scales: {
           x: { display: true },
-          y: { display: true, beginAtZero: true }
-        }
-      }
+          y: { display: true, beginAtZero: true },
+        },
+      },
     }
 
     const response = await fetch('https://quickchart.io/chart', {
@@ -54,8 +58,8 @@ Deno.serve(async (req: Request) => {
         width: 800,
         height: 400,
         backgroundColor: 'white',
-        format: 'png'
-      })
+        format: 'png',
+      }),
     })
 
     if (!response.ok) {
@@ -72,12 +76,12 @@ Deno.serve(async (req: Request) => {
     const base64Data = btoa(binary)
 
     return new Response(JSON.stringify({ base64: base64Data }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err.message }), { 
-      status: 400, 
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   }
 })

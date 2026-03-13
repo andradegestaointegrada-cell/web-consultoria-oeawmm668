@@ -1,12 +1,14 @@
 import { useState, useEffect, useMemo } from 'react'
-import { ReceiptText, Plus, Loader2 } from 'lucide-react'
+import { ReceiptText, Plus, Loader2, ChartPie } from 'lucide-react'
 import { DateRange } from 'react-day-picker'
 import { toast } from 'sonner'
+import { format } from 'date-fns'
 import { supabase } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Dialog,
   DialogContent,
@@ -18,6 +20,7 @@ import {
 import { InvoiceFilters } from '@/components/invoices/InvoiceFilters'
 import { InvoiceTable } from '@/components/invoices/InvoiceTable'
 import { InvoiceForm } from '@/components/invoices/InvoiceForm'
+import { FinancialDashboard } from '@/components/invoices/FinancialDashboard'
 
 export default function Invoices() {
   const { user } = useAuth()
@@ -54,7 +57,34 @@ export default function Invoices() {
         .order('data_criacao', { ascending: false })
 
       if (invError) throw invError
-      setInvoices(invData || [])
+
+      if (!invData || invData.length === 0) {
+        // Introduce mock data for empty state demonstration
+        const now = new Date()
+        const mockInvoices = Array.from({ length: 15 }).map((_, i) => {
+          const date = new Date(now)
+          date.setMonth(date.getMonth() - (i % 6))
+          const statuses = ['paga', 'paga', 'emitida', 'vencida', 'rascunho']
+          const statusStr = statuses[Math.floor(Math.random() * statuses.length)]
+          return {
+            id: `mock-${i}`,
+            cliente_id: projData?.[0]?.id || 'mock-client',
+            data_emissao: format(date, 'yyyy-MM-dd'),
+            data_vencimento: format(new Date(date.setDate(date.getDate() + 15)), 'yyyy-MM-dd'),
+            servico: 'consultoria',
+            valor: Math.floor(Math.random() * 8000) + 2000,
+            descricao: 'Serviços de consultoria',
+            centro_custo: 'Geral',
+            cnpj_cliente: '00.000.000/0001-00',
+            status: statusStr,
+            projeto_status: { cliente: projData?.[0]?.cliente || 'Cliente Exemplo Ltda' },
+            data_criacao: new Date().toISOString(),
+          }
+        })
+        setInvoices(mockInvoices)
+      } else {
+        setInvoices(invData)
+      }
     } catch (err: any) {
       toast.error('Erro ao buscar dados', { description: err.message })
     } finally {
@@ -68,6 +98,12 @@ export default function Invoices() {
 
   const handleUpdateStatus = async (id: string, newStatus: string) => {
     try {
+      if (id.startsWith('mock-')) {
+        toast.success('Status da fatura atualizado (Mock)')
+        setInvoices(invoices.map((inv) => (inv.id === id ? { ...inv, status: newStatus } : inv)))
+        return
+      }
+
       const { error } = await supabase
         .from('invoices' as any)
         .update({ status: newStatus })
@@ -119,36 +155,60 @@ export default function Invoices() {
           </p>
         </div>
         <Button
-          className="bg-[#6B46C1] hover:bg-[#5b3da6] text-white"
+          className="bg-[#6B46C1] hover:bg-[#5b3da6] text-white shrink-0"
           onClick={() => setIsFormOpen(true)}
         >
           <Plus className="mr-2 h-4 w-4" /> Nova Fatura
         </Button>
       </div>
 
-      <InvoiceFilters
-        clients={clientsList}
-        statusFilter={statusFilter}
-        setStatusFilter={setStatusFilter}
-        clientFilter={clientFilter}
-        setClientFilter={setClientFilter}
-        search={search}
-        setSearch={setSearch}
-        dateRange={dateRange}
-        setDateRange={setDateRange}
-      />
+      <Tabs defaultValue="list" className="w-full">
+        <TabsList className="mb-6 bg-muted/50 p-1 w-full sm:w-auto flex flex-row">
+          <TabsTrigger value="list" className="flex-1 sm:flex-none flex items-center gap-2 px-4">
+            <ReceiptText className="h-4 w-4" />
+            <span className="hidden sm:inline">Lista de Faturas</span>
+            <span className="sm:hidden">Faturas</span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="dashboard"
+            className="flex-1 sm:flex-none flex items-center gap-2 px-4"
+          >
+            <ChartPie className="h-4 w-4" />
+            <span className="hidden sm:inline">Dashboard Financeiro</span>
+            <span className="sm:hidden">Dashboard</span>
+          </TabsTrigger>
+        </TabsList>
 
-      <Card className="shadow-sm border-border">
-        <CardContent className="p-0 sm:p-6">
-          {loading ? (
-            <div className="flex h-64 items-center justify-center">
-              <Loader2 className="h-8 w-8 animate-spin text-[#6B46C1]" />
-            </div>
-          ) : (
-            <InvoiceTable invoices={filteredInvoices} onUpdateStatus={handleUpdateStatus} />
-          )}
-        </CardContent>
-      </Card>
+        <TabsContent value="list" className="space-y-6 m-0 animate-fade-in">
+          <InvoiceFilters
+            clients={clientsList}
+            statusFilter={statusFilter}
+            setStatusFilter={setStatusFilter}
+            clientFilter={clientFilter}
+            setClientFilter={setClientFilter}
+            search={search}
+            setSearch={setSearch}
+            dateRange={dateRange}
+            setDateRange={setDateRange}
+          />
+
+          <Card className="shadow-sm border-border">
+            <CardContent className="p-0 sm:p-6">
+              {loading ? (
+                <div className="flex h-64 items-center justify-center">
+                  <Loader2 className="h-8 w-8 animate-spin text-[#6B46C1]" />
+                </div>
+              ) : (
+                <InvoiceTable invoices={filteredInvoices} onUpdateStatus={handleUpdateStatus} />
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="dashboard" className="m-0 animate-fade-in">
+          <FinancialDashboard invoices={invoices} loading={loading} />
+        </TabsContent>
+      </Tabs>
 
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[600px]">
