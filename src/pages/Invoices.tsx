@@ -160,6 +160,7 @@ export default function Invoices() {
           </DialogHeader>
           <InvoiceForm
             projects={projects}
+            onProjectCreated={(newProject) => setProjects((prev) => [...prev, newProject])}
             onSuccess={() => {
               setIsFormOpen(false)
               fetchData()
