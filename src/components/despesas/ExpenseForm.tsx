@@ -22,11 +22,11 @@ import { toast } from 'sonner'
 
 export function ExpenseForm({
   onSuccess,
-  clients,
+  projects,
   onCancel,
 }: {
   onSuccess: () => void
-  clients: string[]
+  projects: any[]
   onCancel: () => void
 }) {
   const { user } = useAuth()
@@ -34,7 +34,7 @@ export function ExpenseForm({
   const [categoria, setCategoria] = useState('')
   const [valor, setValor] = useState('')
   const [descricao, setDescricao] = useState('')
-  const [cliente, setCliente] = useState('none')
+  const [projeto, setProjeto] = useState('none')
   const [file, setFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -68,7 +68,8 @@ export function ExpenseForm({
       categoria,
       valor: parseFloat(valor.replace(',', '.')),
       descricao,
-      cliente_id: cliente !== 'none' ? cliente : null,
+      projeto_id: projeto !== 'none' ? projeto : null,
+      cliente_id: projeto !== 'none' ? projects.find((p) => p.id === projeto)?.cliente : null,
       comprovante_url,
     })
 
@@ -142,16 +143,16 @@ export function ExpenseForm({
           />
         </div>
         <div className="space-y-2">
-          <Label>Cliente Associado</Label>
-          <Select value={cliente} onValueChange={setCliente} disabled={loading}>
+          <Label>Projeto Associado</Label>
+          <Select value={projeto} onValueChange={setProjeto} disabled={loading}>
             <SelectTrigger>
               <SelectValue placeholder="Opcional" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="none">Nenhum</SelectItem>
-              {clients.map((c) => (
-                <SelectItem key={c} value={c}>
-                  {c}
+              {projects.map((p) => (
+                <SelectItem key={p.id} value={p.id}>
+                  {p.projeto} ({p.cliente})
                 </SelectItem>
               ))}
             </SelectContent>

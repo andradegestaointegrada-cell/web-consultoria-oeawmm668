@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Receipt, Plus, FileSpreadsheet, FileText, Loader2 } from 'lucide-react'
+import { Plus, FileSpreadsheet, FileText, Loader2, BookOpen, HandCoins } from 'lucide-react'
 import { supabase } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
@@ -25,14 +25,15 @@ import { ExpenseTable } from '@/components/despesas/ExpenseTable'
 import { ExpenseCharts } from '@/components/despesas/ExpenseCharts'
 import { BudgetDashboard } from '@/components/despesas/BudgetDashboard'
 import { format } from 'date-fns'
+import { toast } from 'sonner'
 
 export default function RelatorioDespesas() {
   const { user } = useAuth()
   const [expenses, setExpenses] = useState<any[]>([])
   const [projects, setProjects] = useState<any[]>([])
-  const [clients, setClients] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const [isFormOpen, setIsFormOpen] = useState(false)
+  const [generatingDossier, setGeneratingDossier] = useState(false)
 
   const [dateRange, setDateRange] = useState<DateRange | undefined>()
   const [categoryFilter, setCategoryFilter] = useState('all')
@@ -42,11 +43,39 @@ export default function RelatorioDespesas() {
     if (!user) return
     setLoading(true)
 
-    // Fetch despesas
+    const { data: projetosData } = await supabase.from('projeto_status' as any).select('*')
+
+    let finalProjetos = projetosData || []
+    if (finalProjetos.length === 0) {
+      finalProjetos = [
+        {
+          id: 'p1',
+          cliente: 'Tech Solutions',
+          projeto: 'Implementação de QMS',
+          orcamento_previsto: 2000,
+          usuario_id: user.id,
+        },
+        {
+          id: 'p2',
+          cliente: 'Global Systems',
+          projeto: 'Auditoria Externa',
+          orcamento_previsto: 500,
+          usuario_id: user.id,
+        },
+        {
+          id: 'p3',
+          cliente: 'Alpha Industries',
+          projeto: 'Treinamento de Equipe',
+          orcamento_previsto: 1000,
+          usuario_id: user.id,
+        },
+      ]
+    }
+    setProjects(finalProjetos)
+
     const { data: despesasData } = await supabase
       .from('despesas' as any)
-      .select('*')
-      .eq('usuario_id', user.id)
+      .select('*, usuarios(nome), projeto_status(projeto, cliente)')
       .order('data', { ascending: false })
 
     let finalData = despesasData || []
@@ -58,8 +87,10 @@ export default function RelatorioDespesas() {
           categoria: 'transporte',
           valor: 150.5,
           descricao: 'Uber para cliente',
-          cliente_id: 'Tech Solutions',
+          projeto_id: 'p1',
           comprovante_url: null,
+          usuarios: { nome: 'Ana Paula' },
+          projeto_status: { projeto: 'Implementação de QMS', cliente: 'Tech Solutions' },
         },
         {
           id: 'm2',
@@ -67,8 +98,10 @@ export default function RelatorioDespesas() {
           categoria: 'hospedagem',
           valor: 450.0,
           descricao: 'Hotel SP',
-          cliente_id: 'Global Systems',
+          projeto_id: 'p2',
           comprovante_url: null,
+          usuarios: { nome: 'Carlos Mendes' },
+          projeto_status: { projeto: 'Auditoria Externa', cliente: 'Global Systems' },
         },
         {
           id: 'm3',
@@ -76,8 +109,10 @@ export default function RelatorioDespesas() {
           categoria: 'alimentação',
           valor: 85.0,
           descricao: 'Almoço reuniões',
-          cliente_id: 'Global Systems',
+          projeto_id: 'p2',
           comprovante_url: null,
+          usuarios: { nome: 'Lino e Consuelo' },
+          projeto_status: { projeto: 'Auditoria Externa', cliente: 'Global Systems' },
         },
         {
           id: 'm4',
@@ -85,42 +120,14 @@ export default function RelatorioDespesas() {
           categoria: 'material',
           valor: 320.0,
           descricao: 'Impressões e encadernação',
-          cliente_id: 'Alpha Industries',
+          projeto_id: 'p3',
           comprovante_url: null,
+          usuarios: { nome: 'Ana Paula' },
+          projeto_status: { projeto: 'Treinamento de Equipe', cliente: 'Alpha Industries' },
         },
       ]
     }
     setExpenses(finalData)
-
-    // Fetch projetos for budget tracking
-    const { data: projetosData } = await supabase
-      .from('projeto_status' as any)
-      .select('*')
-      .eq('usuario_id', user.id)
-
-    let finalProjetos = projetosData || []
-    if (finalProjetos.length === 0) {
-      finalProjetos = [
-        { id: 'p1', cliente: 'Tech Solutions', orcamento_previsto: 2000, usuario_id: user.id },
-        { id: 'p2', cliente: 'Global Systems', orcamento_previsto: 500, usuario_id: user.id },
-        { id: 'p3', cliente: 'Alpha Industries', orcamento_previsto: 1000, usuario_id: user.id },
-      ]
-    }
-    setProjects(finalProjetos)
-
-    const { data: clientsData } = await supabase
-      .from('documentos')
-      .select('nome_cliente')
-      .eq('usuario_id', user.id)
-
-    const uniqueClients = Array.from(
-      new Set([
-        ...(clientsData?.map((c) => c.nome_cliente) || []),
-        ...finalData.map((d) => d.cliente_id).filter(Boolean),
-        ...finalProjetos.map((p) => p.cliente).filter(Boolean),
-      ]),
-    )
-    setClients(uniqueClients as string[])
     setLoading(false)
   }
 
@@ -128,11 +135,16 @@ export default function RelatorioDespesas() {
     fetchData()
   }, [user])
 
+  const clients = Array.from(new Set(projects.map((p) => p.cliente).filter(Boolean)))
+
   const filteredExpenses = useMemo(() => {
     return expenses.filter((e) => {
       let match = true
       if (categoryFilter !== 'all' && e.categoria !== categoryFilter) match = false
-      if (clientFilter !== 'all' && e.cliente_id !== clientFilter) match = false
+      if (clientFilter !== 'all') {
+        const cId = e.projeto_status?.cliente || e.cliente_id
+        if (cId !== clientFilter) match = false
+      }
       if (dateRange?.from) {
         const eDate = new Date(e.data)
         if (eDate < dateRange.from) match = false
@@ -143,23 +155,43 @@ export default function RelatorioDespesas() {
   }, [expenses, categoryFilter, clientFilter, dateRange])
 
   const handleExportCSV = () => {
-    let csv = 'Relatorio de Despesas\n'
-    csv += `Periodo: ${dateRange?.from ? format(dateRange.from, 'dd/MM/yyyy') : 'Todos'} ate ${dateRange?.to ? format(dateRange.to, 'dd/MM/yyyy') : 'Todos'}\n`
-    csv += `Categoria: ${categoryFilter}\nCliente: ${clientFilter}\n\n`
-    csv += 'Data,Categoria,Valor,Descricao,Cliente\n'
-
+    let csv = 'Relatorio de Despesas\nData,Categoria,Valor,Descricao,Projeto/Cliente\n'
     let total = 0
     filteredExpenses.forEach((d) => {
-      csv += `${d.data},${d.categoria},${d.valor},"${d.descricao}",${d.cliente_id || ''}\n`
+      const projStr = d.projeto_status
+        ? `${d.projeto_status.projeto} (${d.projeto_status.cliente})`
+        : d.cliente_id || ''
+      csv += `${d.data},${d.categoria},${d.valor},"${d.descricao}","${projStr}"\n`
       total += Number(d.valor)
     })
     csv += `\nTotal,,,${total}\n`
-
     const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' })
     const link = document.createElement('a')
     link.href = URL.createObjectURL(blob)
     link.download = `despesas_${format(new Date(), 'yyyyMMdd')}.csv`
     link.click()
+  }
+
+  const handleGenerateDossier = async () => {
+    setGeneratingDossier(true)
+    const toastId = toast.loading('Gerando dossiê financeiro com IA, aguarde...')
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-financial-dossier', {
+        body: { expenses: filteredExpenses },
+      })
+      if (error) throw error
+      if (data?.base64) {
+        const link = document.createElement('a')
+        link.href = `data:application/pdf;base64,${data.base64}`
+        link.download = `Dossie_Financeiro_${format(new Date(), 'yyyyMMdd')}.pdf`
+        link.click()
+        toast.success('Dossiê gerado com sucesso!', { id: toastId })
+      }
+    } catch (err: any) {
+      toast.error('Erro ao gerar dossiê', { description: err.message, id: toastId })
+    } finally {
+      setGeneratingDossier(false)
+    }
   }
 
   return (
@@ -169,18 +201,23 @@ export default function RelatorioDespesas() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-            <Receipt className="h-6 w-6 text-primary" /> Relatório de Despesas
+            <HandCoins className="h-6 w-6 text-primary" /> Relatório de Despesas
           </h1>
           <p className="text-muted-foreground mt-1 print-hidden">
-            Gerencie e analise os custos operacionais dos projetos.
+            Gerencie custos operacionais, compare orçamentos e exporte dossiês.
           </p>
         </div>
-        <div className="flex items-center gap-2 print-hidden">
+        <div className="flex flex-wrap items-center gap-2 print-hidden">
           <Button variant="outline" onClick={handleExportCSV}>
             <FileSpreadsheet className="h-4 w-4 mr-2 text-emerald-600" /> Excel
           </Button>
-          <Button variant="outline" onClick={() => window.print()}>
-            <FileText className="h-4 w-4 mr-2 text-rose-600" /> PDF
+          <Button variant="default" onClick={handleGenerateDossier} disabled={generatingDossier}>
+            {generatingDossier ? (
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            ) : (
+              <BookOpen className="h-4 w-4 mr-2" />
+            )}
+            Exportar Dossiê
           </Button>
           <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
             <DialogTrigger asChild>
@@ -197,7 +234,7 @@ export default function RelatorioDespesas() {
                   setIsFormOpen(false)
                   fetchData()
                 }}
-                clients={clients}
+                projects={projects}
                 onCancel={() => setIsFormOpen(false)}
               />
             </DialogContent>
@@ -247,7 +284,7 @@ export default function RelatorioDespesas() {
             </CardContent>
           </Card>
 
-          <ExpenseCharts expenses={filteredExpenses} />
+          <ExpenseCharts expenses={filteredExpenses} projects={projects} />
 
           <Card className="shadow-sm border-border mt-6">
             <CardHeader className="pb-4">

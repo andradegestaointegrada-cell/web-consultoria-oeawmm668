@@ -18,9 +18,10 @@ export function ExpenseTable({ expenses }: { expenses: any[] }) {
         <TableHeader>
           <TableRow className="bg-muted/50">
             <TableHead>Data</TableHead>
+            <TableHead>Consultor</TableHead>
             <TableHead>Categoria</TableHead>
             <TableHead>Descrição</TableHead>
-            <TableHead>Cliente</TableHead>
+            <TableHead>Projeto / Cliente</TableHead>
             <TableHead className="text-center w-[100px]">Anexo</TableHead>
             <TableHead className="text-right">Valor</TableHead>
           </TableRow>
@@ -28,7 +29,7 @@ export function ExpenseTable({ expenses }: { expenses: any[] }) {
         <TableBody>
           {expenses.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+              <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                 Nenhuma despesa encontrada para os filtros selecionados.
               </TableCell>
             </TableRow>
@@ -38,15 +39,20 @@ export function ExpenseTable({ expenses }: { expenses: any[] }) {
                 <TableCell className="font-medium">
                   {format(new Date(e.data), 'dd/MM/yyyy')}
                 </TableCell>
+                <TableCell className="text-muted-foreground">{e.usuarios?.nome || '-'}</TableCell>
                 <TableCell>
                   <Badge variant="secondary" className="capitalize font-normal">
                     {e.categoria}
                   </Badge>
                 </TableCell>
-                <TableCell className="max-w-[300px] truncate" title={e.descricao}>
+                <TableCell className="max-w-[200px] truncate" title={e.descricao}>
                   {e.descricao}
                 </TableCell>
-                <TableCell className="text-muted-foreground">{e.cliente_id || '-'}</TableCell>
+                <TableCell className="text-muted-foreground">
+                  {e.projeto_status
+                    ? `${e.projeto_status.projeto} (${e.projeto_status.cliente})`
+                    : e.cliente_id || '-'}
+                </TableCell>
                 <TableCell className="text-center">
                   {e.comprovante_url ? (
                     <a

@@ -52,20 +52,15 @@ export function BudgetDashboard({
   const projectBudgets = projects
     .map((p) => {
       const projectExpenses = expenses
-        .filter((e) => e.cliente_id === p.cliente)
+        .filter((e) => e.projeto_id === p.id || (!e.projeto_id && e.cliente_id === p.cliente))
         .reduce((sum, e) => sum + Number(e.valor), 0)
 
       const budget = Number(p.orcamento_previsto) || 0
       const isOverBudget = budget > 0 && projectExpenses > budget
-      const percentage = budget > 0 ? Math.min((projectExpenses / budget) * 100, 100) : 0
+      const percentage =
+        budget > 0 ? Math.min((projectExpenses / budget) * 100, 100) : projectExpenses > 0 ? 100 : 0
 
-      return {
-        ...p,
-        budget,
-        projectExpenses,
-        isOverBudget,
-        percentage,
-      }
+      return { ...p, budget, projectExpenses, isOverBudget, percentage }
     })
     .filter((p) => p.budget > 0 || p.projectExpenses > 0)
 
@@ -93,8 +88,12 @@ export function BudgetDashboard({
             className={`shadow-sm border-border transition-all hover:shadow-md ${p.isOverBudget ? 'border-destructive/50 bg-destructive/5' : ''}`}
           >
             <CardHeader className="pb-2 flex flex-row items-start justify-between space-y-0">
-              <CardTitle className="text-sm font-medium truncate pr-2" title={p.cliente}>
-                {p.cliente}
+              <CardTitle
+                className="text-sm font-medium truncate pr-2"
+                title={`${p.projeto} - ${p.cliente}`}
+              >
+                {p.projeto}{' '}
+                <span className="text-muted-foreground text-xs font-normal">({p.cliente})</span>
               </CardTitle>
               <Button
                 variant="ghost"
@@ -122,10 +121,16 @@ export function BudgetDashboard({
                     )}
                   </p>
                 </div>
-                {p.isOverBudget && (
+                {p.isOverBudget ? (
                   <Badge variant="destructive" className="ml-2 mb-1">
-                    Estourou
+                    Acima do Orçamento
                   </Badge>
+                ) : (
+                  p.budget > 0 && (
+                    <Badge className="ml-2 mb-1 bg-emerald-500 hover:bg-emerald-600 border-none">
+                      Dentro do Orçamento
+                    </Badge>
+                  )
                 )}
               </div>
               <Progress
@@ -145,7 +150,10 @@ export function BudgetDashboard({
           <div className="space-y-4 py-4">
             <div className="space-y-2">
               <Label>Projeto / Cliente</Label>
-              <Input value={editingProject?.cliente || ''} disabled />
+              <Input
+                value={`${editingProject?.projeto || ''} (${editingProject?.cliente || ''})`}
+                disabled
+              />
             </div>
             <div className="space-y-2">
               <Label>Orçamento (R$)</Label>
