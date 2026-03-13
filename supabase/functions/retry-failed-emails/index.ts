@@ -22,12 +22,9 @@ Deno.serve(async (req: Request) => {
     if (fetchError) throw fetchError
 
     if (!docs || docs.length === 0) {
-      return new Response(
-        JSON.stringify({ message: 'Nenhum documento pendente para reenvio.', processed: 0 }),
-        {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        },
-      )
+      return new Response(JSON.stringify({ message: 'Nenhum documento pendente para reenvio.', processed: 0 }), { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      })
     }
 
     const results = []
@@ -61,15 +58,15 @@ Deno.serve(async (req: Request) => {
         const res = await fetch(`${supabaseUrl}/functions/v1/send-email-document`, {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${supabaseKey}`,
-            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${supabaseKey}`,
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             documentIds: [doc.id],
             email: agendamento.destinatario,
             subject,
-            message,
-          }),
+            message
+          })
         })
 
         const success = res.ok
@@ -82,20 +79,20 @@ Deno.serve(async (req: Request) => {
           .update({
             tentativas_envio: newTentativas,
             ultima_tentativa: new Date().toISOString(),
-            status_envio: newStatus,
+            status_envio: newStatus
           })
           .eq('id', doc.id)
 
         results.push({ id: doc.id, success, tentativas: newTentativas })
       } catch (err: any) {
         console.error(`Erro no reenvio automático do documento ${doc.id}:`, err)
-
+        
         const newTentativas = (doc.tentativas_envio || 0) + 1
         await supabase
           .from('documento_gerado')
           .update({
             tentativas_envio: newTentativas,
-            ultima_tentativa: new Date().toISOString(),
+            ultima_tentativa: new Date().toISOString()
           })
           .eq('id', doc.id)
 
@@ -103,13 +100,14 @@ Deno.serve(async (req: Request) => {
       }
     }
 
-    return new Response(JSON.stringify({ processed: docs.length, results }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    return new Response(JSON.stringify({ processed: docs.length, results }), { 
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
     })
+
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 400,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    return new Response(JSON.stringify({ error: err.message }), { 
+      status: 400, 
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
     })
   }
 })
