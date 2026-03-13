@@ -13,6 +13,7 @@
     "retry-failed-emails": 1,
     "validate-excel-mapping": 1,
     "generate-chart-image": 1,
-    "generate-status-report": 1
+    "generate-status-report": 1,
+    "generate-financial-dossier": 1
   }
 }
