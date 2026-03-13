@@ -54,23 +54,25 @@ export function AuditForm({ onSuccess, onCancel }: AuditFormProps) {
         setAuditors([{ id: 'mock-user-1', nome: 'Consultor Exemplo' }])
       }
     }
+
     fetchOptions()
   }, [user])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
     if (!clienteId || !norma || !dataAuditoria || !auditorId) {
       return toast.error('Preencha todos os campos obrigatórios')
     }
 
     if (clienteId.startsWith('mock-')) {
-      toast.success('Auditoria cadastrada (Modo de Demonstração)')
+      toast.success('Auditoria cadastrada com sucesso (Modo de Demonstração)')
       return onSuccess()
     }
 
     setLoading(true)
-    const { error } = await supabase.from('auditorias' as any).insert({
-      usuario_id: user?.id,
+    const { error } = await supabase.from('auditorias').insert({
+      usuario_id: user?.id as string,
       cliente_id: clienteId,
       norma,
       data_auditoria: dataAuditoria,
@@ -93,7 +95,9 @@ export function AuditForm({ onSuccess, onCancel }: AuditFormProps) {
       <div className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="cliente">Cliente *</Label>
+            <Label htmlFor="cliente">
+              Cliente <span className="text-red-500">*</span>
+            </Label>
             <Select value={clienteId} onValueChange={setClienteId}>
               <SelectTrigger id="cliente">
                 <SelectValue placeholder="Selecione o cliente" />
@@ -108,7 +112,9 @@ export function AuditForm({ onSuccess, onCancel }: AuditFormProps) {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="norma">Norma *</Label>
+            <Label htmlFor="norma">
+              Norma <span className="text-red-500">*</span>
+            </Label>
             <Select value={norma} onValueChange={setNorma}>
               <SelectTrigger id="norma">
                 <SelectValue placeholder="Selecione a norma" />
@@ -128,7 +134,9 @@ export function AuditForm({ onSuccess, onCancel }: AuditFormProps) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="data">Data da Auditoria *</Label>
+            <Label htmlFor="data">
+              Data da Auditoria <span className="text-red-500">*</span>
+            </Label>
             <Input
               id="data"
               type="date"
@@ -138,7 +146,9 @@ export function AuditForm({ onSuccess, onCancel }: AuditFormProps) {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="auditor">Auditor Responsável *</Label>
+            <Label htmlFor="auditor">
+              Auditor Responsável <span className="text-red-500">*</span>
+            </Label>
             <Select value={auditorId} onValueChange={setAuditorId}>
               <SelectTrigger id="auditor">
                 <SelectValue placeholder="Selecione o auditor" />
@@ -155,13 +165,13 @@ export function AuditForm({ onSuccess, onCancel }: AuditFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="escopo">Escopo</Label>
+          <Label htmlFor="escopo">Escopo e Observações</Label>
           <Textarea
             id="escopo"
-            placeholder="Descreva o escopo da auditoria..."
+            placeholder="Descreva o escopo da auditoria, áreas avaliadas e demais detalhes..."
             value={escopo}
             onChange={(e) => setEscopo(e.target.value)}
-            className="min-h-[100px]"
+            className="min-h-[100px] resize-none"
           />
         </div>
       </div>
@@ -173,7 +183,7 @@ export function AuditForm({ onSuccess, onCancel }: AuditFormProps) {
         <Button type="submit" disabled={loading}>
           {loading ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Salvando
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Salvando...
             </>
           ) : (
             'Salvar Auditoria'

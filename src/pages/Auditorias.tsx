@@ -42,9 +42,17 @@ export default function Auditorias() {
   const fetchAudits = async () => {
     if (!user) return
     setLoading(true)
+
     const { data, error } = await supabase
-      .from('auditorias' as any)
-      .select(`*, projeto_status(cliente), auditor:usuarios!auditor_id(nome)`)
+      .from('auditorias')
+      .select(`
+        id,
+        norma,
+        data_auditoria,
+        status,
+        projeto_status ( cliente ),
+        auditor:usuarios!auditorias_auditor_id_fkey ( nome )
+      `)
       .eq('usuario_id', user.id)
       .order('created_at', { ascending: false })
 
@@ -53,6 +61,7 @@ export default function Auditorias() {
     } else if (data && data.length > 0) {
       setAudits(data)
     } else {
+      // Mock data for empty state
       setAudits([
         {
           id: 'mock-1',
@@ -77,37 +86,47 @@ export default function Auditorias() {
 
   useEffect(() => {
     fetchAudits()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   const handleDelete = async (id: string) => {
-    if (id.startsWith('mock-')) return setAudits(audits.filter((a) => a.id !== id))
+    if (id.startsWith('mock-')) {
+      setAudits(audits.filter((a) => a.id !== id))
+      toast.success('Auditoria excluída (Mock)')
+      return
+    }
+
     if (!confirm('Excluir auditoria permanentemente?')) return
-    const { error } = await supabase
-      .from('auditorias' as any)
-      .delete()
-      .eq('id', id)
-    if (error) toast.error('Erro ao excluir', { description: error.message })
-    else {
-      toast.success('Auditoria excluída')
+
+    const { error } = await supabase.from('auditorias').delete().eq('id', id)
+
+    if (error) {
+      toast.error('Erro ao excluir', { description: error.message })
+    } else {
+      toast.success('Auditoria excluída com sucesso')
       fetchAudits()
     }
   }
 
-  const filtered = audits.filter((a) =>
-    a.projeto_status?.cliente?.toLowerCase().includes(search.toLowerCase()),
-  )
+  const filtered = audits.filter((a) => {
+    const clienteName = Array.isArray(a.projeto_status)
+      ? a.projeto_status[0]?.cliente
+      : a.projeto_status?.cliente
+
+    return clienteName?.toLowerCase().includes(search.toLowerCase()) || false
+  })
 
   const getStatusBadge = (s: string) => {
     switch (s) {
       case 'concluida':
         return (
-          <Badge className="bg-green-100 text-green-800 hover:bg-green-100 border-none shadow-none">
+          <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-100 border-none shadow-none">
             Concluída
           </Badge>
         )
       case 'em_andamento':
         return (
-          <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100 border-none shadow-none">
+          <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100 border-none shadow-none">
             Em Andamento
           </Badge>
         )
@@ -118,7 +137,11 @@ export default function Auditorias() {
           </Badge>
         )
       default:
-        return <Badge variant="outline">{s}</Badge>
+        return (
+          <Badge variant="outline" className="capitalize">
+            {s.replace('_', ' ')}
+          </Badge>
+        )
     }
   }
 
@@ -130,10 +153,10 @@ export default function Auditorias() {
             <CheckCircle2 className="h-6 w-6 text-primary" /> Auditorias
           </h1>
           <p className="text-muted-foreground mt-1">
-            Acompanhe e gerencie auditorias em andamento.
+            Acompanhe e gerencie auditorias de conformidade em andamento.
           </p>
         </div>
-        <Button onClick={() => setIsDialogOpen(true)}>
+        <Button onClick={() => setIsDialogOpen(true)} className="shrink-0">
           <Plus className="mr-2 h-4 w-4" /> Nova Auditoria
         </Button>
       </div>
@@ -153,63 +176,72 @@ export default function Auditorias() {
 
         <Table>
           <TableHeader>
-            <TableRow className="bg-muted/50">
-              <TableHead>Cliente</TableHead>
-              <TableHead>Norma</TableHead>
-              <TableHead>Data da Auditoria</TableHead>
-              <TableHead>Auditor Responsável</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Ações</TableHead>
+            <TableRow className="bg-muted/50 hover:bg-muted/50">
+              <TableHead className="font-semibold text-foreground">Cliente</TableHead>
+              <TableHead className="font-semibold text-foreground">Norma</TableHead>
+              <TableHead className="font-semibold text-foreground">Data da Auditoria</TableHead>
+              <TableHead className="font-semibold text-foreground">Auditor Responsável</TableHead>
+              <TableHead className="font-semibold text-foreground">Status</TableHead>
+              <TableHead className="text-right font-semibold text-foreground">Ações</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center py-12">
-                  <Loader2 className="h-6 w-6 animate-spin mx-auto text-primary" />
+                  <Loader2 className="h-6 w-6 animate-spin mx-auto text-muted-foreground" />
                 </TableCell>
               </TableRow>
             ) : filtered.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
-                  Nenhuma auditoria encontrada.
+                  Nenhuma auditoria encontrada com os filtros atuais.
                 </TableCell>
               </TableRow>
             ) : (
-              filtered.map((a) => (
-                <TableRow key={a.id} className="hover:bg-muted/50">
-                  <TableCell className="font-medium text-slate-900 dark:text-slate-200">
-                    {a.projeto_status?.cliente || '-'}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="secondary" className="font-normal bg-background">
-                      {a.norma}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {format(parseISO(a.data_auditoria), 'dd/MM/yyyy', { locale: ptBR })}
-                  </TableCell>
-                  <TableCell>{a.auditor?.nome || '-'}</TableCell>
-                  <TableCell>{getStatusBadge(a.status)}</TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          className="text-destructive focus:bg-destructive/10 focus:text-destructive"
-                          onClick={() => handleDelete(a.id)}
-                        >
-                          <Trash2 className="mr-2 h-4 w-4" /> Excluir
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))
+              filtered.map((a) => {
+                const clienteName = Array.isArray(a.projeto_status)
+                  ? a.projeto_status[0]?.cliente
+                  : a.projeto_status?.cliente
+                const auditorName = Array.isArray(a.auditor) ? a.auditor[0]?.nome : a.auditor?.nome
+
+                return (
+                  <TableRow key={a.id} className="hover:bg-muted/50 transition-colors">
+                    <TableCell className="font-medium text-slate-900 dark:text-slate-200">
+                      {clienteName || '-'}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="secondary" className="font-normal bg-background">
+                        {a.norma}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {a.data_auditoria
+                        ? format(parseISO(a.data_auditoria), 'dd/MM/yyyy', { locale: ptBR })
+                        : '-'}
+                    </TableCell>
+                    <TableCell>{auditorName || '-'}</TableCell>
+                    <TableCell>{getStatusBadge(a.status)}</TableCell>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="h-8 w-8 p-0">
+                            <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem
+                            className="text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer"
+                            onClick={() => handleDelete(a.id)}
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" /> Excluir
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                )
+              })
             )}
           </TableBody>
         </Table>
@@ -220,7 +252,7 @@ export default function Auditorias() {
           <DialogHeader>
             <DialogTitle>Nova Auditoria</DialogTitle>
             <DialogDescription>
-              Preencha os dados técnicos e administrativos da auditoria.
+              Preencha os dados técnicos e administrativos para agendar a auditoria.
             </DialogDescription>
           </DialogHeader>
           <AuditForm
