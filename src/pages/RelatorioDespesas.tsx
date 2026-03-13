@@ -244,7 +244,7 @@ export default function RelatorioDespesas() {
                   setIsFormOpen(false)
                   fetchData()
                 }}
-                projects={dbProjects}
+                projects={projects}
                 onCancel={() => setIsFormOpen(false)}
               />
             </DialogContent>

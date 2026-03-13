@@ -80,13 +80,18 @@ export function ExpenseForm({
     const selectedProject = projects.find((p) => p.id === projeto)
     const isMockProject = selectedProject?.isMock
 
+    const isUUID = (str: string) =>
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str)
+
+    const validProjetoId = projeto !== 'none' && !isMockProject && isUUID(projeto) ? projeto : null
+
     const { error } = await supabase.from('despesas' as any).insert({
       usuario_id: user.id,
       data: format(data, 'yyyy-MM-dd'),
       categoria,
       valor: parsedValor,
       descricao: descricao.trim(),
-      projeto_id: projeto !== 'none' && !isMockProject ? projeto : null,
+      projeto_id: validProjetoId,
       cliente_id: projeto !== 'none' ? selectedProject?.cliente : null,
       comprovante_url,
     })

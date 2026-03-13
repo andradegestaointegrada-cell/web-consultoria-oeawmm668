@@ -2,22 +2,18 @@
   "_versions": {
     "gerar_documento_com_ia": 6,
     "parse_docx": 3,
-    "generate_docx": 2,
-    "functions": 4,
-    "parse-word-placeholders": 1,
-    "generate-word-document": 3,
-    "read-excel-rows": 1,
+    "generate_docx": 3,
+    "functions": 7,
+    "parse-word-placeholders": 3,
+    "generate-word-document": 5,
+    "read-excel-rows": 3,
     "send-email-document": 8,
     "cleanup-bucket": 1,
     "process-scheduled-emails": 2,
     "retry-failed-emails": 1,
-    "validate-excel-mapping": 1
-  }
-}
-generate-chart-image": 1
-  }
-}
-generate-status-report": 1,
+    "validate-excel-mapping": 1,
+    "generate-chart-image": 1,
+    "generate-status-report": 1,
     "generate-financial-dossier": 1
   }
 }
