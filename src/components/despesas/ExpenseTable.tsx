@@ -8,6 +8,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
+import { Paperclip } from 'lucide-react'
+import { supabase } from '@/lib/supabase/client'
 
 export function ExpenseTable({ expenses }: { expenses: any[] }) {
   return (
@@ -19,13 +21,14 @@ export function ExpenseTable({ expenses }: { expenses: any[] }) {
             <TableHead>Categoria</TableHead>
             <TableHead>Descrição</TableHead>
             <TableHead>Cliente</TableHead>
+            <TableHead className="text-center w-[100px]">Anexo</TableHead>
             <TableHead className="text-right">Valor</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {expenses.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+              <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                 Nenhuma despesa encontrada para os filtros selecionados.
               </TableCell>
             </TableRow>
@@ -44,6 +47,24 @@ export function ExpenseTable({ expenses }: { expenses: any[] }) {
                   {e.descricao}
                 </TableCell>
                 <TableCell className="text-muted-foreground">{e.cliente_id || '-'}</TableCell>
+                <TableCell className="text-center">
+                  {e.comprovante_url ? (
+                    <a
+                      href={
+                        supabase.storage.from('comprovantes').getPublicUrl(e.comprovante_url).data
+                          .publicUrl
+                      }
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center p-1.5 text-primary hover:bg-muted rounded-md transition-colors"
+                      title="Ver Comprovante"
+                    >
+                      <Paperclip className="h-4 w-4" />
+                    </a>
+                  ) : (
+                    <span className="text-muted-foreground text-xs">-</span>
+                  )}
+                </TableCell>
                 <TableCell className="text-right font-medium">
                   {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
                     e.valor,

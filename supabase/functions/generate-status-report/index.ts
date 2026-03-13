@@ -19,10 +19,13 @@ Deno.serve(async (req: Request) => {
     }
 
     const supabase = createClient(supabaseUrl, supabaseKey, {
-      global: { headers: { Authorization: authHeader } }
+      global: { headers: { Authorization: authHeader } },
     })
 
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser()
     if (userError || !user) throw new Error('Unauthorized')
 
     let query = supabase.from('projeto_status').select(`*`).eq('usuario_id', user.id)
@@ -42,7 +45,7 @@ Deno.serve(async (req: Request) => {
 
     let tableData = (rawData || []).map((row: any) => ({
       ...row,
-      responsavel_nome: userMap.get(row.responsavel_id) || 'Consultor'
+      responsavel_nome: userMap.get(row.responsavel_id) || 'Consultor',
     }))
 
     // Introduce mock data if DB is empty to ensure end-to-end working state for managers
@@ -89,11 +92,11 @@ Deno.serve(async (req: Request) => {
           responsavel_id: user.id,
           responsavel_nome: 'Carlos Mendes',
           status: 'atrasado',
-        }
+        },
       ]
     }
 
-    const chartDataMap = new Map<string, { cliente: string, planned: number, realized: number }>()
+    const chartDataMap = new Map<string, { cliente: string; planned: number; realized: number }>()
     for (const row of tableData) {
       if (!chartDataMap.has(row.cliente)) {
         chartDataMap.set(row.cliente, { cliente: row.cliente, planned: 0, realized: 0 })
@@ -106,41 +109,41 @@ Deno.serve(async (req: Request) => {
 
     if (action === 'export_excel') {
       const exportData = tableData.map((row: any) => ({
-        'Cliente': row.cliente,
-        'Projeto': row.projeto,
+        Cliente: row.cliente,
+        Projeto: row.projeto,
         'Data Início': row.data_inicio,
         'Data Fim': row.data_fim,
         'Concluído (%)': `${row.percentual_concluido}%`,
         'Visitas Planejadas': row.visitas_planejadas,
         'Visitas Realizadas': row.visitas_realizadas,
-        'Tipo': row.tipo_visita,
-        'Responsável': row.responsavel_nome,
-        'Status': row.status
+        Tipo: row.tipo_visita,
+        Responsável: row.responsavel_nome,
+        Status: row.status,
       }))
       const worksheet = XLSX.utils.json_to_sheet(exportData)
       const workbook = XLSX.utils.book_new()
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Status Report')
       const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' })
-      
+
       let binary = ''
       const bytes = new Uint8Array(excelBuffer)
       for (let i = 0; i < bytes.byteLength; i++) {
-          binary += String.fromCharCode(bytes[i])
+        binary += String.fromCharCode(bytes[i])
       }
       const base64Data = btoa(binary)
-      
+
       return new Response(JSON.stringify({ excelBase64: base64Data }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
     }
 
     return new Response(JSON.stringify({ tableData, chartData }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   } catch (err: any) {
     return new Response(JSON.stringify({ error: err.message }), {
       status: 400,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   }
 })

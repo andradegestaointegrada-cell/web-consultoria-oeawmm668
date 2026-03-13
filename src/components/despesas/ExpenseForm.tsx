@@ -35,6 +35,7 @@ export function ExpenseForm({
   const [valor, setValor] = useState('')
   const [descricao, setDescricao] = useState('')
   const [cliente, setCliente] = useState('none')
+  const [file, setFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -46,6 +47,21 @@ export function ExpenseForm({
     if (!user) return
     setLoading(true)
 
+    let comprovante_url = null
+
+    if (file) {
+      const ext = file.name.split('.').pop()
+      const path = `${user.id}/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`
+
+      const { error: uploadError } = await supabase.storage.from('comprovantes').upload(path, file)
+      if (uploadError) {
+        toast.error('Erro ao fazer upload do comprovante', { description: uploadError.message })
+        setLoading(false)
+        return
+      }
+      comprovante_url = path
+    }
+
     const { error } = await supabase.from('despesas' as any).insert({
       usuario_id: user.id,
       data: format(data, 'yyyy-MM-dd'),
@@ -53,6 +69,7 @@ export function ExpenseForm({
       valor: parseFloat(valor.replace(',', '.')),
       descricao,
       cliente_id: cliente !== 'none' ? cliente : null,
+      comprovante_url,
     })
 
     setLoading(false)
@@ -77,6 +94,7 @@ export function ExpenseForm({
                   'w-full justify-start text-left font-normal',
                   !data && 'text-muted-foreground',
                 )}
+                disabled={loading}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {data ? format(data, 'dd/MM/yyyy') : 'Selecione a data'}
@@ -95,7 +113,7 @@ export function ExpenseForm({
         </div>
         <div className="space-y-2">
           <Label>Categoria *</Label>
-          <Select value={categoria} onValueChange={setCategoria}>
+          <Select value={categoria} onValueChange={setCategoria} disabled={loading}>
             <SelectTrigger>
               <SelectValue placeholder="Selecione..." />
             </SelectTrigger>
@@ -120,11 +138,12 @@ export function ExpenseForm({
             placeholder="0.00"
             value={valor}
             onChange={(e) => setValor(e.target.value)}
+            disabled={loading}
           />
         </div>
         <div className="space-y-2">
           <Label>Cliente Associado</Label>
-          <Select value={cliente} onValueChange={setCliente}>
+          <Select value={cliente} onValueChange={setCliente} disabled={loading}>
             <SelectTrigger>
               <SelectValue placeholder="Opcional" />
             </SelectTrigger>
@@ -146,7 +165,20 @@ export function ExpenseForm({
           placeholder="Detalhes da despesa..."
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
+          disabled={loading}
         />
+      </div>
+
+      <div className="space-y-2">
+        <Label>Anexar Comprovante (Opcional)</Label>
+        <Input
+          type="file"
+          accept=".pdf,.jpg,.jpeg,.png"
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
+          disabled={loading}
+          className="cursor-pointer file:cursor-pointer"
+        />
+        <p className="text-xs text-muted-foreground">Formatos suportados: PDF, JPG, PNG.</p>
       </div>
 
       <div className="flex justify-end gap-2 pt-4">

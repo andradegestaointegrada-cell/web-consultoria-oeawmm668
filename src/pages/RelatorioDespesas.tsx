@@ -23,11 +23,13 @@ import { DateRange } from 'react-day-picker'
 import { ExpenseForm } from '@/components/despesas/ExpenseForm'
 import { ExpenseTable } from '@/components/despesas/ExpenseTable'
 import { ExpenseCharts } from '@/components/despesas/ExpenseCharts'
+import { BudgetDashboard } from '@/components/despesas/BudgetDashboard'
 import { format } from 'date-fns'
 
 export default function RelatorioDespesas() {
   const { user } = useAuth()
   const [expenses, setExpenses] = useState<any[]>([])
+  const [projects, setProjects] = useState<any[]>([])
   const [clients, setClients] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const [isFormOpen, setIsFormOpen] = useState(false)
@@ -39,13 +41,15 @@ export default function RelatorioDespesas() {
   const fetchData = async () => {
     if (!user) return
     setLoading(true)
-    const { data } = await supabase
+
+    // Fetch despesas
+    const { data: despesasData } = await supabase
       .from('despesas' as any)
       .select('*')
       .eq('usuario_id', user.id)
       .order('data', { ascending: false })
 
-    let finalData = data || []
+    let finalData = despesasData || []
     if (finalData.length === 0) {
       finalData = [
         {
@@ -55,6 +59,7 @@ export default function RelatorioDespesas() {
           valor: 150.5,
           descricao: 'Uber para cliente',
           cliente_id: 'Tech Solutions',
+          comprovante_url: null,
         },
         {
           id: 'm2',
@@ -63,6 +68,7 @@ export default function RelatorioDespesas() {
           valor: 450.0,
           descricao: 'Hotel SP',
           cliente_id: 'Global Systems',
+          comprovante_url: null,
         },
         {
           id: 'm3',
@@ -71,6 +77,7 @@ export default function RelatorioDespesas() {
           valor: 85.0,
           descricao: 'Almoço reuniões',
           cliente_id: 'Global Systems',
+          comprovante_url: null,
         },
         {
           id: 'm4',
@@ -79,20 +86,38 @@ export default function RelatorioDespesas() {
           valor: 320.0,
           descricao: 'Impressões e encadernação',
           cliente_id: 'Alpha Industries',
+          comprovante_url: null,
         },
       ]
     }
-
     setExpenses(finalData)
+
+    // Fetch projetos for budget tracking
+    const { data: projetosData } = await supabase
+      .from('projeto_status' as any)
+      .select('*')
+      .eq('usuario_id', user.id)
+
+    let finalProjetos = projetosData || []
+    if (finalProjetos.length === 0) {
+      finalProjetos = [
+        { id: 'p1', cliente: 'Tech Solutions', orcamento_previsto: 2000, usuario_id: user.id },
+        { id: 'p2', cliente: 'Global Systems', orcamento_previsto: 500, usuario_id: user.id },
+        { id: 'p3', cliente: 'Alpha Industries', orcamento_previsto: 1000, usuario_id: user.id },
+      ]
+    }
+    setProjects(finalProjetos)
 
     const { data: clientsData } = await supabase
       .from('documentos')
       .select('nome_cliente')
       .eq('usuario_id', user.id)
+
     const uniqueClients = Array.from(
       new Set([
         ...(clientsData?.map((c) => c.nome_cliente) || []),
         ...finalData.map((d) => d.cliente_id).filter(Boolean),
+        ...finalProjetos.map((p) => p.cliente).filter(Boolean),
       ]),
     )
     setClients(uniqueClients as string[])
@@ -180,48 +205,51 @@ export default function RelatorioDespesas() {
         </div>
       </div>
 
-      <Card className="shadow-sm print-hidden border-border">
-        <CardContent className="p-4 sm:p-6 flex flex-col md:flex-row gap-4">
-          <div className="w-full md:w-auto flex-1">
-            <DatePickerWithRange date={dateRange} setDate={setDateRange} />
-          </div>
-          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-            <SelectTrigger className="w-full md:w-[200px]">
-              <SelectValue placeholder="Categoria" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todas as Categorias</SelectItem>
-              <SelectItem value="transporte">Transporte</SelectItem>
-              <SelectItem value="hospedagem">Hospedagem</SelectItem>
-              <SelectItem value="alimentação">Alimentação</SelectItem>
-              <SelectItem value="material">Material</SelectItem>
-              <SelectItem value="outros">Outros</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select value={clientFilter} onValueChange={setClientFilter}>
-            <SelectTrigger className="w-full md:w-[220px]">
-              <SelectValue placeholder="Cliente" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todos os Clientes</SelectItem>
-              {clients.map((c) => (
-                <SelectItem key={c} value={c}>
-                  {c}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </CardContent>
-      </Card>
-
       {loading ? (
         <div className="h-64 flex items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       ) : (
         <>
+          <BudgetDashboard expenses={expenses} projects={projects} onUpdate={fetchData} />
+
+          <Card className="shadow-sm print-hidden border-border mb-6">
+            <CardContent className="p-4 sm:p-6 flex flex-col md:flex-row gap-4">
+              <div className="w-full md:w-auto flex-1">
+                <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+              </div>
+              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                <SelectTrigger className="w-full md:w-[200px]">
+                  <SelectValue placeholder="Categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todas as Categorias</SelectItem>
+                  <SelectItem value="transporte">Transporte</SelectItem>
+                  <SelectItem value="hospedagem">Hospedagem</SelectItem>
+                  <SelectItem value="alimentação">Alimentação</SelectItem>
+                  <SelectItem value="material">Material</SelectItem>
+                  <SelectItem value="outros">Outros</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={clientFilter} onValueChange={setClientFilter}>
+                <SelectTrigger className="w-full md:w-[220px]">
+                  <SelectValue placeholder="Cliente" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos os Clientes</SelectItem>
+                  {clients.map((c) => (
+                    <SelectItem key={c} value={c}>
+                      {c}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </CardContent>
+          </Card>
+
           <ExpenseCharts expenses={filteredExpenses} />
-          <Card className="shadow-sm border-border">
+
+          <Card className="shadow-sm border-border mt-6">
             <CardHeader className="pb-4">
               <CardTitle className="text-lg">Histórico de Despesas</CardTitle>
               <CardDescription className="print-hidden">
@@ -230,7 +258,7 @@ export default function RelatorioDespesas() {
             </CardHeader>
             <CardContent className="p-0 sm:p-6 sm:pt-0">
               <ExpenseTable expenses={filteredExpenses} />
-              <div className="mt-4 flex justify-end font-bold text-lg mr-4">
+              <div className="mt-4 flex justify-end font-bold text-lg mr-4 pb-4 sm:pb-0">
                 Total:{' '}
                 {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
                   filteredExpenses.reduce((a, b) => a + Number(b.valor), 0),
