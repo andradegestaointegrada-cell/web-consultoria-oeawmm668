@@ -10,6 +10,6 @@ Deno.serve(async (req: Request) => {
     JSON.stringify({ message: 'This is a dummy function to satisfy the directory structure.' }),
     {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    },
+    }
   )
 })
