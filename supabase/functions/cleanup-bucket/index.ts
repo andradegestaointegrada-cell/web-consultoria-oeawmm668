@@ -28,14 +28,14 @@ Deno.serve(async (req: Request) => {
     if (errGen) throw errGen
 
     if (oldGenDocs && oldGenDocs.length > 0) {
-      const urls = oldGenDocs.map((d) => d.arquivo_url).filter(Boolean) as string[]
-
+      const urls = oldGenDocs.map(d => d.arquivo_url).filter(Boolean) as string[]
+      
       // Delete from storage buckets
       await supabase.storage.from('documentos').remove(urls)
       await supabase.storage.from('generated_docs').remove(urls)
-
+      
       // Update DB
-      const ids = oldGenDocs.map((d) => d.id)
+      const ids = oldGenDocs.map(d => d.id)
       await supabase.from('documento_gerado').update({ arquivo_url: null }).in('id', ids)
       deletedCount += ids.length
     }
@@ -48,23 +48,23 @@ Deno.serve(async (req: Request) => {
       .not('arquivo_url', 'is', null)
 
     if (!errStd && oldStdDocs && oldStdDocs.length > 0) {
-      const stdUrls = oldStdDocs.map((d) => d.arquivo_url).filter(Boolean) as string[]
+      const stdUrls = oldStdDocs.map(d => d.arquivo_url).filter(Boolean) as string[]
       await supabase.storage.from('documentos').remove(stdUrls)
       await supabase.storage.from('generated_docs').remove(stdUrls)
-
-      const stdIds = oldStdDocs.map((d) => d.id)
+      
+      const stdIds = oldStdDocs.map(d => d.id)
       await supabase.from('documentos').update({ arquivo_url: null }).in('id', stdIds)
       deletedCount += stdIds.length
     }
 
     return new Response(
-      JSON.stringify({ success: true, message: 'Cleanup completed', deletedCount }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      JSON.stringify({ success: true, message: 'Cleanup completed', deletedCount }), 
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
+    return new Response(
+      JSON.stringify({ error: err.message }), 
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
   }
 })
