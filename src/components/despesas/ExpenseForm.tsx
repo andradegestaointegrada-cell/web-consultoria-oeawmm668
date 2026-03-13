@@ -77,14 +77,17 @@ export function ExpenseForm({
       comprovante_url = path
     }
 
+    const selectedProject = projects.find((p) => p.id === projeto)
+    const isMockProject = selectedProject?.isMock
+
     const { error } = await supabase.from('despesas' as any).insert({
       usuario_id: user.id,
       data: format(data, 'yyyy-MM-dd'),
       categoria,
       valor: parsedValor,
       descricao: descricao.trim(),
-      projeto_id: projeto !== 'none' ? projeto : null,
-      cliente_id: projeto !== 'none' ? projects.find((p) => p.id === projeto)?.cliente : null,
+      projeto_id: projeto !== 'none' && !isMockProject ? projeto : null,
+      cliente_id: projeto !== 'none' ? selectedProject?.cliente : null,
       comprovante_url,
     })
 
