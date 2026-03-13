@@ -23,23 +23,18 @@ Deno.serve(async (req: Request) => {
         throw new Error(`Coluna inválida ou ausente para o placeholder {{${item.placeholder}}}.`)
       }
       if (!item.type || !validTypes.includes(item.type)) {
-        throw new Error(
-          `Tipo de dado inválido para o placeholder {{${item.placeholder}}}. Permitidos: ${validTypes.join(', ')}.`,
-        )
+        throw new Error(`Tipo de dado inválido para o placeholder {{${item.placeholder}}}. Permitidos: ${validTypes.join(', ')}.`)
       }
     }
 
-    return new Response(
-      JSON.stringify({ valid: true, message: 'Mapeamento validado com sucesso' }),
-      {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      },
-    )
+    return new Response(JSON.stringify({ valid: true, message: 'Mapeamento validado com sucesso' }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    })
   } catch (err: any) {
     return new Response(JSON.stringify({ valid: false, error: err.message }), {
       status: 400,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     })
   }
 })
