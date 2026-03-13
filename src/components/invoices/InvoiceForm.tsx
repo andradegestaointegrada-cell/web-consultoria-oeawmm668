@@ -32,7 +32,10 @@ import {
 } from '@/components/ui/select'
 
 const invoiceSchema = z.object({
-  cliente_id: z.string().min(1, 'Selecione um cliente'),
+  cliente_id: z
+    .string()
+    .uuid('Selecione um cliente válido cadastrado')
+    .min(1, 'Selecione um cliente'),
   cnpj_cliente: z.string().min(14, 'CNPJ inválido'),
   data_emissao: z.date({ required_error: 'Data de emissão é obrigatória' }),
   data_vencimento: z.date({ required_error: 'Data de vencimento é obrigatória' }),
@@ -81,10 +84,17 @@ export function InvoiceForm({ projects, onSuccess, onCancel }: InvoiceFormProps)
         valor: data.valor,
         descricao: data.descricao,
         centro_custo: data.centro_custo,
-        status: 'emitida',
+        status: 'rascunho',
       })
 
-      if (error) throw error
+      if (error) {
+        if (error.message.includes('invalid input syntax for type uuid')) {
+          throw new Error(
+            'O identificador do cliente é inválido. Certifique-se de selecionar um cliente cadastrado.',
+          )
+        }
+        throw new Error(error.message)
+      }
 
       toast.success('Fatura criada com sucesso!')
       onSuccess()
@@ -113,7 +123,13 @@ export function InvoiceForm({ projects, onSuccess, onCancel }: InvoiceFormProps)
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Selecione o cliente" />
+                      <SelectValue
+                        placeholder={
+                          uniqueClients.length === 0
+                            ? 'Nenhum cliente cadastrado'
+                            : 'Selecione o cliente'
+                        }
+                      />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -293,7 +309,7 @@ export function InvoiceForm({ projects, onSuccess, onCancel }: InvoiceFormProps)
         />
 
         <div className="flex justify-end gap-2 pt-4">
-          <Button type="button" variant="outline" onClick={onCancel}>
+          <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
             Cancelar
           </Button>
           <Button type="submit" disabled={isSubmitting}>

@@ -36,59 +36,30 @@ export default function Invoices() {
     if (!user) return
     setLoading(true)
 
-    // Fetch clients/projects for the dropdowns
-    const { data: projData } = await supabase
-      .from('projeto_status' as any)
-      .select('id, cliente')
-      .eq('usuario_id', user.id)
+    try {
+      // Fetch clients/projects for the dropdowns - REAL DATA ONLY
+      const { data: projData, error: projError } = await supabase
+        .from('projeto_status' as any)
+        .select('id, cliente')
+        .eq('usuario_id', user.id)
 
-    let finalProj = projData || []
-    if (finalProj.length === 0) {
-      finalProj = [
-        { id: 'mock-proj-1', cliente: 'Tech Solutions' },
-        { id: 'mock-proj-2', cliente: 'Global Systems' },
-      ]
+      if (projError) throw projError
+      setProjects(projData || [])
+
+      // Fetch Invoices
+      const { data: invData, error: invError } = await supabase
+        .from('invoices' as any)
+        .select('*, projeto_status(cliente)')
+        .eq('usuario_id', user.id)
+        .order('data_criacao', { ascending: false })
+
+      if (invError) throw invError
+      setInvoices(invData || [])
+    } catch (err: any) {
+      toast.error('Erro ao buscar dados', { description: err.message })
+    } finally {
+      setLoading(false)
     }
-    setProjects(finalProj)
-
-    // Fetch Invoices
-    const { data: invData, error } = await supabase
-      .from('invoices' as any)
-      .select('*, projeto_status(cliente)')
-      .eq('usuario_id', user.id)
-      .order('data_criacao', { ascending: false })
-
-    if (error) {
-      toast.error('Erro ao buscar faturas', { description: error.message })
-    }
-
-    let finalInvoices = invData || []
-
-    // Inject mock data if empty
-    if (finalInvoices.length === 0) {
-      const mockInvoices = [
-        {
-          id: '123e4567-e89b-12d3-a456-426614174000',
-          usuario_id: user.id,
-          cliente_id: finalProj[0]?.id,
-          data_emissao: '2025-08-25',
-          data_vencimento: '2025-09-10',
-          servico: 'consultoria',
-          valor: 5425.0,
-          descricao:
-            'Abertura e Tratamento de Não Conformidades, Análise Crítica dos Processos, Elaboração e revisão de Informação documentada.',
-          centro_custo: 'Operações SP',
-          cnpj_cliente: '12.345.678/0001-99',
-          status: 'emitida',
-          data_criacao: new Date().toISOString(),
-          projeto_status: { cliente: finalProj[0]?.cliente },
-        },
-      ]
-      finalInvoices = mockInvoices
-    }
-
-    setInvoices(finalInvoices)
-    setLoading(false)
   }
 
   useEffect(() => {
