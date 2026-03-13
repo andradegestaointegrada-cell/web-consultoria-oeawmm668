@@ -40,10 +40,25 @@ export function ExpenseForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!data || !categoria || !valor || !descricao) {
-      toast.error('Preencha os campos obrigatórios')
+
+    if (!data) {
+      toast.error('Selecione a data da despesa')
       return
     }
+    if (!categoria) {
+      toast.error('Selecione uma categoria')
+      return
+    }
+    const parsedValor = parseFloat(valor.replace(',', '.'))
+    if (!valor || isNaN(parsedValor) || parsedValor <= 0) {
+      toast.error('Informe um valor numérico válido maior que zero')
+      return
+    }
+    if (!descricao || !descricao.trim()) {
+      toast.error('Informe a descrição da despesa')
+      return
+    }
+
     if (!user) return
     setLoading(true)
 
@@ -66,8 +81,8 @@ export function ExpenseForm({
       usuario_id: user.id,
       data: format(data, 'yyyy-MM-dd'),
       categoria,
-      valor: parseFloat(valor.replace(',', '.')),
-      descricao,
+      valor: parsedValor,
+      descricao: descricao.trim(),
       projeto_id: projeto !== 'none' ? projeto : null,
       cliente_id: projeto !== 'none' ? projects.find((p) => p.id === projeto)?.cliente : null,
       comprovante_url,
@@ -75,7 +90,12 @@ export function ExpenseForm({
 
     setLoading(false)
     if (error) {
-      toast.error('Erro ao salvar despesa', { description: error.message })
+      console.error('Erro no Supabase:', error)
+      let friendlyMsg = 'Não foi possível registrar a despesa. Tente novamente.'
+      if (error.message?.includes('uuid')) {
+        friendlyMsg = 'O projeto selecionado não é válido.'
+      }
+      toast.error(friendlyMsg, { description: error.message })
     } else {
       toast.success('Despesa registrada com sucesso!')
       onSuccess()

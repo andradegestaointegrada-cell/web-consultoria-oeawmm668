@@ -15,7 +15,7 @@ Deno.serve(async (req: Request) => {
     // Ensure we check time against the default BRT timezone context since DATE/TIME stored are naive
     const spTimeStr = new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' })
     const spWallTime = new Date(spTimeStr)
-    
+
     const yyyy = spWallTime.getFullYear()
     const mm = String(spWallTime.getMonth() + 1).padStart(2, '0')
     const dd = String(spWallTime.getDate()).padStart(2, '0')
@@ -36,16 +36,20 @@ Deno.serve(async (req: Request) => {
     if (fetchError) throw fetchError
 
     // Filter ensuring we only trigger events that have actually reached their scheduled time
-    const validSchedules = schedules?.filter(s => {
-      if (s.data_agendada < currentDate) return true
-      if (s.data_agendada === currentDate && s.hora_agendada <= currentTime) return true
-      return false
-    }) || []
+    const validSchedules =
+      schedules?.filter((s) => {
+        if (s.data_agendada < currentDate) return true
+        if (s.data_agendada === currentDate && s.hora_agendada <= currentTime) return true
+        return false
+      }) || []
 
     if (validSchedules.length === 0) {
-      return new Response(JSON.stringify({ message: 'Nenhum agendamento pendente no momento', processed: 0 }), { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      })
+      return new Response(
+        JSON.stringify({ message: 'Nenhum agendamento pendente no momento', processed: 0 }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        },
+      )
     }
 
     const results = []
@@ -64,15 +68,15 @@ Deno.serve(async (req: Request) => {
         const res = await fetch(`${supabaseUrl}/functions/v1/send-email-document`, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${supabaseKey}`,
-            'Content-Type': 'application/json'
+            Authorization: `Bearer ${supabaseKey}`,
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             documentIds: [schedule.documento_id],
             email: schedule.destinatario,
             subject: template.assunto,
-            message: template.corpo
-          })
+            message: template.corpo,
+          }),
         })
 
         if (!res.ok) {
@@ -90,24 +94,20 @@ Deno.serve(async (req: Request) => {
       } catch (err: any) {
         console.error(`Erro ao processar agendamento ${schedule.id}:`, err)
         // Update status to 'erro'
-        await supabase
-          .from('agendamentos_email')
-          .update({ status: 'erro' })
-          .eq('id', schedule.id)
+        await supabase.from('agendamentos_email').update({ status: 'erro' }).eq('id', schedule.id)
 
         results.push({ id: schedule.id, status: 'erro', error: err.message })
       }
     }
 
-    return new Response(JSON.stringify({ processed: validSchedules.length, results }), { 
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+    return new Response(JSON.stringify({ processed: validSchedules.length, results }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
-
   } catch (err: any) {
     console.error('Erro na função process-scheduled-emails:', err)
-    return new Response(JSON.stringify({ error: err.message }), { 
-      status: 400, 
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   }
 })

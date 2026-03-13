@@ -95,14 +95,16 @@ export function BudgetDashboard({
                 {p.projeto}{' '}
                 <span className="text-muted-foreground text-xs font-normal">({p.cliente})</span>
               </CardTitle>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6 -mr-2 -mt-2 text-muted-foreground hover:text-foreground"
-                onClick={() => handleEdit(p)}
-              >
-                <Edit2 className="h-3 w-3" />
-              </Button>
+              {!p.isMock && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6 -mr-2 -mt-2 text-muted-foreground hover:text-foreground"
+                  onClick={() => handleEdit(p)}
+                >
+                  <Edit2 className="h-3 w-3" />
+                </Button>
+              )}
             </CardHeader>
             <CardContent>
               <div className="flex justify-between items-end mb-2">

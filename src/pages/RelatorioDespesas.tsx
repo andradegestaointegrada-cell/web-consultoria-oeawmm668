@@ -31,6 +31,7 @@ export default function RelatorioDespesas() {
   const { user } = useAuth()
   const [expenses, setExpenses] = useState<any[]>([])
   const [projects, setProjects] = useState<any[]>([])
+  const [dbProjects, setDbProjects] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [generatingDossier, setGeneratingDossier] = useState(false)
@@ -44,8 +45,10 @@ export default function RelatorioDespesas() {
     setLoading(true)
 
     const { data: projetosData } = await supabase.from('projeto_status' as any).select('*')
+    const realProjects = projetosData || []
+    setDbProjects(realProjects)
 
-    let finalProjetos = projetosData || []
+    let finalProjetos = [...realProjects]
     if (finalProjetos.length === 0) {
       finalProjetos = [
         {
@@ -54,6 +57,7 @@ export default function RelatorioDespesas() {
           projeto: 'Implementação de QMS',
           orcamento_previsto: 2000,
           usuario_id: user.id,
+          isMock: true,
         },
         {
           id: 'p2',
@@ -61,6 +65,7 @@ export default function RelatorioDespesas() {
           projeto: 'Auditoria Externa',
           orcamento_previsto: 500,
           usuario_id: user.id,
+          isMock: true,
         },
         {
           id: 'p3',
@@ -68,6 +73,7 @@ export default function RelatorioDespesas() {
           projeto: 'Treinamento de Equipe',
           orcamento_previsto: 1000,
           usuario_id: user.id,
+          isMock: true,
         },
       ]
     }
@@ -91,6 +97,7 @@ export default function RelatorioDespesas() {
           comprovante_url: null,
           usuarios: { nome: 'Ana Paula' },
           projeto_status: { projeto: 'Implementação de QMS', cliente: 'Tech Solutions' },
+          isMock: true,
         },
         {
           id: 'm2',
@@ -102,6 +109,7 @@ export default function RelatorioDespesas() {
           comprovante_url: null,
           usuarios: { nome: 'Carlos Mendes' },
           projeto_status: { projeto: 'Auditoria Externa', cliente: 'Global Systems' },
+          isMock: true,
         },
         {
           id: 'm3',
@@ -113,6 +121,7 @@ export default function RelatorioDespesas() {
           comprovante_url: null,
           usuarios: { nome: 'Lino e Consuelo' },
           projeto_status: { projeto: 'Auditoria Externa', cliente: 'Global Systems' },
+          isMock: true,
         },
         {
           id: 'm4',
@@ -124,6 +133,7 @@ export default function RelatorioDespesas() {
           comprovante_url: null,
           usuarios: { nome: 'Ana Paula' },
           projeto_status: { projeto: 'Treinamento de Equipe', cliente: 'Alpha Industries' },
+          isMock: true,
         },
       ]
     }
@@ -234,7 +244,7 @@ export default function RelatorioDespesas() {
                   setIsFormOpen(false)
                   fetchData()
                 }}
-                projects={projects}
+                projects={dbProjects}
                 onCancel={() => setIsFormOpen(false)}
               />
             </DialogContent>
